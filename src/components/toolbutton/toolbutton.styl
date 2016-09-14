@@ -1,0 +1,22 @@
+@import '../../styles/variables.styl'
+
+.toolbutton
+  width: 70px
+  height: 70px
+  border-bottom: 1px solid colors['paleblue']
+  border-left: 8px solid colors['deeppaleblue']
+  cursor: pointer
+
+  &:first-child
+    border-top-right-radius: 6px
+
+  &__icon
+    margin: 15px 11px
+    fill: colors['grey']
+
+  &:hover, &.active
+    border-left-color: colors['seagreen']
+    background: colors['deeppaleblue']
+
+    .toolbutton__icon
+      fill: colors['seagreen']

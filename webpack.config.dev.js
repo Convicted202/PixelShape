@@ -56,9 +56,7 @@ const config = {
     ]
   },
   resolve: {
-    root: [
-      path.resolve('./src')
-    ]
+    modulesDirectories: ['node_modules', 'src']
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -66,6 +64,9 @@ const config = {
       template: 'src/index.html',
       inject: 'body',
       cache: true
+    }),
+    new webpack.DefinePlugin({
+      'ENV': JSON.stringify('develop')
     }),
     new webpack.HotModuleReplacementPlugin({
       multiStep: true

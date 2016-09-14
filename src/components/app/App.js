@@ -1,11 +1,24 @@
-import React from 'react'
+import './app.styl';
 
-class App extends React.Component {
+import React, { Component } from 'react';
+import Toolbar from 'containers/toolbar/Toolbar';
+import Surface from 'components/surface/Surface';
+import Sidebar from 'components/sidebar/Sidebar';
+import Framebar from 'components/framebar/Framebar';
+
+class App extends Component {
   render() {
     return (
-      <div>Hello World</div>
+      <div className="app">
+        <Toolbar />
+        <div className="app__content">
+          <Surface />
+          <Framebar />
+        </div>
+        <Sidebar />
+      </div>
     )
   }
 }
 
-export { App };
+export default App;

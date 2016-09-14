@@ -1,10 +1,17 @@
 import React from 'react';
 import { render } from 'react-dom';
+import {Provider} from 'react-redux';
 
-import { App } from 'components/app/App';
+import createStore from 'store';
+
+import App from 'components/app/App';
 
 import 'styles/main.styl';
 
+const store = createStore();
+
 render(
-  <App />
+  <Provider store={store}>
+    <App />
+  </Provider>
 , document.getElementById('root'));

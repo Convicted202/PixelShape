@@ -42,12 +42,18 @@ const config = {
       }
     ]
   },
+  resolve: {
+    modulesDirectories: ['node_modules', 'src']
+  },
   plugins: [
     ExtractStyl,
     new HtmlWebpackPlugin({
       title: 'PixelEdit',
       template: 'src/index.html',
       inject: 'body'
+    }),
+    new webpack.DefinePlugin({
+      'ENV': JSON.stringify('production')
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
