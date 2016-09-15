@@ -3,6 +3,10 @@ class AbstractTool {
     // base tool constructor
   }
 
+  _assignWithRenderingContext(ctx) {
+    this._ctx = ctx;
+  }
+
   draw() {
     throw Error('Tool draw event not implemented');
   }
