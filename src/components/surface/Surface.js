@@ -7,13 +7,17 @@ import toolsMap from 'modules/toolsMap';
 class Surface extends Component {
   constructor(...args) {
     super(...args);
-    this.tool = new (toolsMap.get('pencil'))();
+    this.tool = toolsMap.get(this.props.tool);
   }
 
   componentDidMount() {
     this.ctx = this._canvas.getContext('2d');
-    this.ctx.fillStyle = '#F4A261';
+    // this.ctx.fillStyle = '#F4A261';
     this.boundRect = this._canvas.getBoundingClientRect();
+  }
+
+  componentDidUpdate() {
+    this.tool = toolsMap.get(this.props.tool);
   }
 
   normalizeEvent(ev) {

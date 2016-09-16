@@ -14,6 +14,10 @@ class Toolbar extends Component {
     this.state = {selected: 0};
   }
 
+  componentDidMount() {
+    this.props.setTool('brush');
+  }
+
   getButtons() {
     return icons
       .map((icon, keyValue) => (

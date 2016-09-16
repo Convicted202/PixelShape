@@ -5,7 +5,7 @@ import {setTool} from '../../actions/tools';
 import Toolbar from 'components/toolbar/Toolbar.js';
 
 const mapDispatchToProps = dispatch => ({
-  setTool (tool) {
+  setTool(tool) {
     return dispatch(setTool(tool));
   }
 });

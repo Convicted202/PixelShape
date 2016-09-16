@@ -1,6 +1,7 @@
 import AbstractTool from '../basetool/AbstractTool';
+import lineTo from 'utils/lineTo';
 
-class Pencil extends AbstractTool {
+class Brush extends AbstractTool {
   constructor(...args) {
     super(...args);
     this.x = null;
@@ -26,40 +27,8 @@ class Pencil extends AbstractTool {
     [this.x, this.y] = [null, null];
   }
 
-  /**
-  * Bresenham's line algorithm
-  */
   line (ctx, x1, y1, x2, y2) {
-    let x, y, error = 0;
-    const steep = (Math.abs(y2 - y1) > Math.abs(x2 - x1));
-    if (steep){
-      [x1, y1] = [y1, x1];
-      [x2, y2] = [y2, x2];
-    }
-    if (x1 > x2) {
-      [x1, x2] = [x2, x1];
-      [y1, y2] = [y2, y1];
-    }
-
-    y = y1;
-
-    const [dx, dy] = [x2 - x1, Math.abs(y2 - y1)],
-          de = dy / dx,
-          yStep = y1 < y2 ? 1 : -1;
-
-    for (x = x1; x < x2; x++) {
-      if (steep) {
-        this.draw(ctx, y, x);
-      } else {
-        this.draw(ctx, x, y);
-      }
-
-      error += de;
-      if (error >= 0.5) {
-        y += yStep;
-        error -= 1.0;
-      }
-    }
+    lineTo(this.draw.bind(this), ...arguments);
   }
 
   // makes it look crispy/pixelated
@@ -69,4 +38,4 @@ class Pencil extends AbstractTool {
   }
 }
 
-export default Pencil;
+export default Brush;

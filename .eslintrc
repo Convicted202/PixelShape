@@ -46,6 +46,7 @@
         'before': true,
         'after': true
     }], // enforce spacing around the * in generator functions
+    'no-unused-vars': 1,
     'no-class-assign': 2, //disallow modifying variables of class declarations (recommended)
     'no-confusing-arrow': 0, //disallow arrow functions where they could be confused with comparisons
     'no-const-assign': 2, //disallow modifying variables that are declared using const (recommended)

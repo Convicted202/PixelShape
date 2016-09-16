@@ -2,7 +2,7 @@ import './app.styl';
 
 import React, { Component } from 'react';
 import Toolbar from 'containers/toolbar/Toolbar';
-import Surface from 'components/surface/Surface';
+import Surface from 'containers/surface/Surface';
 import Sidebar from 'components/sidebar/Sidebar';
 import Framebar from 'components/framebar/Framebar';
 
