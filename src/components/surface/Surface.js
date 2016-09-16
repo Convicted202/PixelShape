@@ -13,7 +13,7 @@ class Surface extends Component {
   componentDidMount() {
     this.ctx = this._canvas.getContext('2d');
     // this.ctx.fillStyle = '#F4A261';
-    this.boundRect = this._canvas.getBoundingClientRect();
+    // this.boundRect = this._canvas.getBoundingClientRect();
   }
 
   componentDidUpdate() {
@@ -21,6 +21,7 @@ class Surface extends Component {
   }
 
   normalizeEvent(ev) {
+    this.boundRect = this._canvas.getBoundingClientRect();
     return [ev.clientX - this.boundRect.left, ev.clientY - this.boundRect.top]
   }
 

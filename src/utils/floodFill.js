@@ -38,6 +38,14 @@ const equallyColored = (imageData, pixelIndex, color) => {
   return !diff;
 }
 
+const colorsEqual = (color0, color1) => {
+  let i = 0, diff = 0;
+  for (; i < RGBA; i++) {
+    diff += Math.abs(color0[i] - color1[i]);
+  }
+  return diff < Number.EPSILON;
+}
+
 const getPixelPosition = (imageData, direction, pixelIndex) => {
   const directionShifts = {
     WEST :  1,
@@ -58,9 +66,13 @@ export default (context, fillColor, x, y) => {
         imageData = context.getImageData(0, 0, baseCanvas.width, baseCanvas.height),
         rgbaColor = hexToRGBA(fillColor);
 
+  [x, y] = [Math.round(x), Math.round(y)];
+
   let pixelIndex = getPixelFromImageData(imageData, x, y);
 
   const initialColor = imageData.data.slice(pixelIndex, pixelIndex + RGBA);
+
+  if (colorsEqual(rgbaColor, initialColor)) return;
 
   queue.push(pixelIndex);
 
