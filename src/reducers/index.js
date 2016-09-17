@@ -11,8 +11,23 @@ function tools (state = {tool: 'brush'}, action) {
   }
 }
 
+function userPalette (state = [], action) {
+  switch (action.type) {
+    case 'ADD_COLOR':
+      return [
+        ...state,
+        {color: action.color}
+      ];
+    case 'GET_USER_COLORS':
+      return state;
+    default:
+      return state;
+  }
+}
+
 const reducers = {
-  tools
+  tools,
+  userPalette
 }
 
 export default reducers;

@@ -1,7 +1,7 @@
 import './sidebar.styl';
 
 import React, { Component } from 'react';
-import Colorbar from 'components/colorbar/Colorbar';
+import Colorbar from 'containers/colorbar/Colorbar';
 
 class Sidebar extends Component {
   render() {

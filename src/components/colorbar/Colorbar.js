@@ -22,11 +22,22 @@ const colors = [
 class Colorbar extends Component {
   getDefaultColorPalette() {
     return colors
-      .map((color, key) => (
+      .map(color => (
         <Coloritem
           key={color}
           color={color}>
           {color}
+        </Coloritem>
+      ));
+  }
+
+  getUserColorPalette() {
+    return this.props.userColors
+      .map(colorObj => (
+        <Coloritem
+          key={colorObj.color}
+          color={colorObj.color}>
+          {colorObj.color}
         </Coloritem>
       ));
   }
@@ -38,7 +49,12 @@ class Colorbar extends Component {
           <div className="colorbar__label">Palette</div>
           {this.getDefaultColorPalette()}
         </div>
-        <Colorpicker />
+        <Colorpicker
+          addColor={this.props.addColor.bind(this)} />
+        <div className="colorbar__user-palette">
+          <div className="colorbar__label">Custom</div>
+          {this.getUserColorPalette()}
+        </div>
       </div>
     )
   }
