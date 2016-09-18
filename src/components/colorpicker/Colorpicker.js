@@ -34,8 +34,13 @@ class Colorpicker extends Component {
     });
   }
 
+  getUserColorsList() {
+    return this.props.userColors.map(colorObj => colorObj.color);
+  }
+
   onClick(ev) {
-    if (this.state.currentColor.match(this.pattern)) {
+    if (!this.state.currentColor.match(this.pattern)) return;
+    if (!this.getUserColorsList().includes(this.state.currentColor)) {
       this.props.addColor(this.state.currentColor);
     }
   }
