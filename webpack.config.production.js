@@ -32,6 +32,13 @@ const config = {
         exclude: /node_modules/
       },
       {
+        test: /\.png$/,
+        loader: 'file',
+        query: {
+          name: 'images/[name].[ext]'
+        }
+      },
+      {
         test: /\.woff/,
         loader: 'url',
         query: {

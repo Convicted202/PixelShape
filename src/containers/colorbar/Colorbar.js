@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
 import {getCustomColors, getCurrentColor} from 'selectors';
-import {getUserColors, addColor} from 'actions/palette';
+import {addColor} from 'actions/palette';
 import {setColor} from 'actions/tools';
 
 import Colorbar from 'components/colorbar/Colorbar.js';

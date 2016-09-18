@@ -45,6 +45,13 @@ const config = {
         include: path.join(__dirname, 'src')
       },
       {
+        test: /\.png$/,
+        loader: 'file',
+        query: {
+          name: 'images/[name].[ext]'
+        }
+      },
+      {
         test: /\.woff/,
         loader: 'url',
         query: {

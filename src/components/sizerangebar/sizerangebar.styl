@@ -1,0 +1,31 @@
+@import '../../styles/variables.styl'
+
+.sizerangebar
+  padding: 5px
+
+  &__label
+    padding: 8px
+    padding-bottom: 10px
+    color: colors['greyblue']
+
+  &__input[type=range]
+    margin-left: 10px
+    width: 130px
+    display: inline-block
+    vertical-align: bottom
+
+  &__value
+    display: inline-block
+    width: 40px
+    margin-left: 30px
+    margin-bottom: 1px
+    font-size: 2em
+    font-family: 'robotothin'
+    border-bottom: 1px solid silver
+    vertical-align: bottom
+    color: colors['grey']
+    text-align: center
+
+    &.active
+      color: colors['seagreen']
+      border-color: colors['seagreen']

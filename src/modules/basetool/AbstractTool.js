@@ -2,7 +2,7 @@ class AbstractTool {
   constructor() {
     // TODO: take default settings from defaults
     this.state = {
-      stroke: 10,
+      size: 10,
       color: '#000000',
       tool: 'abstract'
     }
@@ -17,15 +17,26 @@ class AbstractTool {
   }
 
   drawPixelCell(ctx, x, y) {
-    const [roundX, roundY] = [Math.floor(x / this.state.stroke), Math.floor(y / this.state.stroke)];
-    ctx.lineWidth = this.state.stroke;
+    const [roundX, roundY] = [Math.floor(x / this.state.size), Math.floor(y / this.state.size)];
+    ctx.lineWidth = this.state.size;
     ctx.fillStyle = this.state.color;
     ctx.globalCompositeOperation = 'source-over';
     ctx.fillRect(
-      roundX * this.state.stroke,
-      roundY * this.state.stroke,
-      this.state.stroke,
-      this.state.stroke
+      roundX * this.state.size,
+      roundY * this.state.size,
+      this.state.size,
+      this.state.size
+    );
+  }
+
+  clearPixelCell(ctx, x, y) {
+    const [roundX, roundY] = [Math.floor(x / this.state.size), Math.floor(y / this.state.size)];
+    ctx.lineWidth = this.state.size;
+    ctx.clearRect(
+      roundX * this.state.size,
+      roundY * this.state.size,
+      this.state.size,
+      this.state.size
     );
   }
 

@@ -1,12 +1,13 @@
 import {
   SET_TOOL,
-  SET_CURRENT_COLOR
+  SET_COLOR,
+  SET_SIZE
 } from 'actions/tools';
 
 const initialState = {
   tool: 'brush',
   color: '#1B2631',
-  stroke: 10
+  size: 10
 }
 
 function tools (state = initialState, action) {
@@ -17,9 +18,14 @@ function tools (state = initialState, action) {
         tool: action.tool
       });
 
-    case SET_CURRENT_COLOR:
+    case SET_COLOR:
       return Object.assign({}, state, {
         color: action.color
+      });
+
+    case SET_SIZE:
+      return Object.assign({}, state, {
+        size: action.size
       });
 
     default:

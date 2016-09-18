@@ -15,3 +15,21 @@ body, html, #root
 
 body
   font-family: 'Roboto'
+
+input[type=range]
+  display: block
+  -webkit-appearance: none
+  background-color: silver
+  height: 2px
+  margin: 0 auto
+  width: 90%
+  outline: none
+
+input[type="range"]::-webkit-slider-thumb
+  -webkit-appearance: none
+  background-color: colors['seagreen']
+  border: 2px solid colors['blue']
+  width: 20px
+  height: 20px
+  border-radius: 50%
+  cursor: pointer
