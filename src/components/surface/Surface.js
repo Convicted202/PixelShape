@@ -8,6 +8,7 @@ class Surface extends Component {
   constructor(...args) {
     super(...args);
     this.tool = toolsMap.get(this.props.tool);
+    this.tool.applyState(this.props.toolSettings);
   }
 
   componentDidMount() {
@@ -18,6 +19,7 @@ class Surface extends Component {
 
   componentDidUpdate() {
     this.tool = toolsMap.get(this.props.tool);
+    this.tool.applyState(this.props.toolSettings);
   }
 
   normalizeEvent(ev) {

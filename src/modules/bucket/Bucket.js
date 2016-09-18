@@ -4,7 +4,6 @@ import floodFill from 'utils/floodFill';
 class Bucket extends AbstractTool {
   constructor(...args) {
     super(...args);
-    this.fillColor = 0xefefef;
   }
 
   onMouseDown(ctx, x, y) {
@@ -13,8 +12,6 @@ class Bucket extends AbstractTool {
   }
 
   onMouseMove(ctx, x, y) {
-    // if (!this.filling) return;
-    // this.draw(ctx, x, y);
     this.filling = false;
   }
 
@@ -23,7 +20,7 @@ class Bucket extends AbstractTool {
   }
 
   draw(ctx, x, y) {
-    floodFill(ctx, this.fillColor, x, y);
+    floodFill(ctx, this.state.color, x, y);
   }
 }
 

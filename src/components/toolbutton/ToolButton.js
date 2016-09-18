@@ -9,7 +9,6 @@ class ToolButton extends Component {
   }
 
   onClick() {
-    this.props.onClick();
     this.props.setTool();
   }
 

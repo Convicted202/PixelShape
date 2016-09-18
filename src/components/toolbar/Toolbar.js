@@ -11,11 +11,12 @@ const icons = [
 class Toolbar extends Component {
   constructor(props) {
     super(props);
-    this.state = {selected: 0};
+    // this.state = {selected: 0};
   }
 
   componentDidMount() {
     this.props.setTool('brush');
+    // console.log(this.props.tool);
   }
 
   getButtons() {
@@ -24,14 +25,9 @@ class Toolbar extends Component {
         <ToolButton
           key={keyValue}
           icon={icon}
-          isActive={this.state.selected === keyValue}
-          setTool={this.props.setTool.bind(this, icon)}
-          onClick={this.clickButton.bind(this, keyValue)} />
+          isActive={this.props.tool === icon}
+          setTool={this.props.setTool.bind(this, icon)} />
       ));
-  }
-
-  clickButton(id) {
-    this.setState({selected: id});
   }
 
   render() {

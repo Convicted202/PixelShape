@@ -5,6 +5,11 @@ const WEST = 'WEST',
 
 const RGBA = 4;
 
+const stringToHex = str => {
+  const num = str.match(/\w+/);
+  return parseInt(num, 16);
+}
+
 const hexToRGBA = hex => {
     const [r, g, b] = [
       hex >> 16,
@@ -64,7 +69,7 @@ export default (context, fillColor, x, y) => {
   const queue = [],
         baseCanvas = context.canvas,
         imageData = context.getImageData(0, 0, baseCanvas.width, baseCanvas.height),
-        rgbaColor = hexToRGBA(fillColor);
+        rgbaColor = hexToRGBA(stringToHex(fillColor));
 
   [x, y] = [Math.round(x), Math.round(y)];
 

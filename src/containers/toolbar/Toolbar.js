@@ -1,8 +1,13 @@
 import {connect} from 'react-redux';
 
 import {setTool} from '../../actions/tools';
+import {getTool} from 'selectors';
 
 import Toolbar from 'components/toolbar/Toolbar.js';
+
+const mapStateToProps = state => ({
+  tool: getTool(state)
+});
 
 const mapDispatchToProps = dispatch => ({
   setTool(tool) {
@@ -11,7 +16,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const ToolbarContainer = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Toolbar);
 
