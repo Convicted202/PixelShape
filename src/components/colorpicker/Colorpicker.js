@@ -2,6 +2,7 @@ import './colorpicker.styl';
 
 import React, { Component } from 'react';
 
+// TODO: move this to defaults file
 const defaultColor='#b7b7b7';
 
 class Colorpicker extends Component {

@@ -1,55 +1,17 @@
+import {
+  RGBA,
+  stringToHex,
+  hexToRGBA,
+  getPixelFromImageData,
+  putColor,
+  equallyColored,
+  colorsEqual
+} from './colorUtils';
+
 const WEST = 'WEST',
       EAST = 'EAST',
       NORTH = 'NORTH',
       SOUTH = 'SOUTH';
-
-const RGBA = 4;
-
-const stringToHex = str => {
-  const num = str.match(/\w+/);
-  return parseInt(num, 16);
-}
-
-const hexToRGBA = hex => {
-    const [r, g, b] = [
-      hex >> 16,
-      hex >> 8 & 0xFF,
-      hex & 0xFF
-    ];
-
-    return [r, g, b, 255];
-}
-
-const getPixelFromImageData = (imageData, x, y) => (y * imageData.width + x) * RGBA;
-
-const putColor = (imageData, pixelIndex, color) => {
-  let i = 0;
-  for (; i < RGBA; i++) {
-    imageData.data[pixelIndex + i] = color[i];
-  }
-}
-
-const equallyColored = (imageData, pixelIndex, color) => {
-  let [diff, i] = [0, 0];
-
-  if (pixelIndex < 0 ||
-      pixelIndex + RGBA - 1 > imageData.data.length) {
-      return false;
-  }
-
-  for (; i < RGBA; i++) {
-      diff += Math.abs(imageData.data[pixelIndex + i] - color[i]);
-  }
-  return !diff;
-}
-
-const colorsEqual = (color0, color1) => {
-  let i = 0, diff = 0;
-  for (; i < RGBA; i++) {
-    diff += Math.abs(color0[i] - color1[i]);
-  }
-  return diff < Number.EPSILON;
-}
 
 const getPixelPosition = (imageData, direction, pixelIndex) => {
   const directionShifts = {

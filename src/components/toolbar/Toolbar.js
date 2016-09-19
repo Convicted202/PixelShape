@@ -3,6 +3,7 @@ import './toolbar.styl';
 import React, { Component } from 'react';
 import ToolButton from 'components/toolbutton/ToolButton';
 
+// TODO: move these to defaults file
 const icons = [
   'brush', 'colorfill', 'eraser', 'dropper',
   'rect', 'circle', 'gridon', 'selectcrop', 'sizing'
