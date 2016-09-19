@@ -8,21 +8,23 @@ class Surface extends Component {
   constructor(...args) {
     super(...args);
     this.tool = toolsMap.get(this.props.tool);
+  }
+
+  applyAllContextInformation() {
     this.tool.applyState(this.props.toolSettings);
+    this.tool._assignRenderingContext(this.ctx);
+    this.tool._assignBufferContext(this.buffer);
   }
 
   componentDidMount() {
     this.ctx = this._canvas.getContext('2d');
     this.buffer = this._buffer.getContext('2d');
-    this.tool._assignRenderingContext(this.ctx);
-    this.tool._assignBufferContext(this.buffer);
+    this.applyAllContextInformation();
   }
 
   componentDidUpdate() {
     this.tool = toolsMap.get(this.props.tool);
-    this.tool.applyState(this.props.toolSettings);
-    this.tool._assignRenderingContext(this.ctx);
-    this.tool._assignBufferContext(this.buffer);
+    this.applyAllContextInformation();
   }
 
   normalizeEvent(ev) {

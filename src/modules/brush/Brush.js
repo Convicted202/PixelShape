@@ -11,8 +11,11 @@ class Brush extends AbstractTool {
   handleBufferBrushMove(x, y) {
     // "ghost" moving
     // on each move clear previous pixel and draw current
+    this._buffer.save();
+    this.useGhostStateOn(this._buffer);
     this.clearPixelCell(this._buffer, this.buf_x, this.buf_y);
     this.drawPixelCell(this._buffer, x, y);
+    this._buffer.restore();
     [this.buf_x, this.buf_y] = [x, y];
   }
 

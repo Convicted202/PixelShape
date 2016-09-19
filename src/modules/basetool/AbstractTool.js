@@ -4,8 +4,13 @@ class AbstractTool {
     this.state = {
       size: 10,
       color: '#000000',
+      alpha: 1,
       compositeOperation: 'source-over',
-      tool: 'abstract'
+      tool: 'abstract',
+      ghostData: {
+        color: '#000000',
+        alpha: 0.4
+      }
     }
     this._ctx = null;
     this._buffer = null;
@@ -15,10 +20,14 @@ class AbstractTool {
     this._buffer = ctx;
     // prevent artifacts from previous tools to appear
     this._buffer.clearRect(0, 0, this._buffer.canvas.width, this._buffer.canvas.height);
+    // this implies that new state was already set up
+    this.useStateOn(this._buffer);
   }
 
   _assignRenderingContext(ctx) {
     this._ctx = ctx;
+    // this implies that new state was already set up
+    this.useStateOn(this._ctx);
   }
 
   applyState(state) {
@@ -27,14 +36,21 @@ class AbstractTool {
 
   useStateOn(ctx) {
     ctx.lineWidth = this.state.size;
-    ctx.fillStyle = this.state.color
+    ctx.fillStyle = this.state.color;
+    ctx.strokeStyle = this.state.color;
+    ctx.globalAlpha = this.state.alpha;
     ctx.globalCompositeOperation = this.state.compositeOperation;
+  }
+
+  useGhostStateOn(ctx) {
+    ctx.globalAlpha = this.state.ghostData.alpha;
+    ctx.fillStyle = this.state.ghostData.color;
+    ctx.strokeStyle = this.state.ghostData.color;
   }
 
   drawPixelCell(ctx, x, y) {
     if (!x || !y) return;
     const [roundX, roundY] = [Math.floor(x / this.state.size), Math.floor(y / this.state.size)];
-    this.useStateOn(ctx);
     ctx.fillRect(
       roundX * this.state.size,
       roundY * this.state.size,
@@ -46,7 +62,6 @@ class AbstractTool {
   clearPixelCell(ctx, x, y) {
     if (!x || !y) return;
     const [roundX, roundY] = [Math.floor(x / this.state.size), Math.floor(y / this.state.size)];
-    this.useStateOn(ctx);
     ctx.clearRect(
       roundX * this.state.size,
       roundY * this.state.size,
