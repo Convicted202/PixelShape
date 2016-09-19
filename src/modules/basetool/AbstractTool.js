@@ -48,23 +48,36 @@ class AbstractTool {
     ctx.strokeStyle = this.state.ghostData.color;
   }
 
+  getPixeledCoords(x, y) {
+    if (!x || !y) return false;
+    const [timesX, timesY] = [Math.floor(x / this.state.size), Math.floor(y / this.state.size)];
+    return {
+      x: timesX * this.state.size,
+      y: timesY * this.state.size
+    }
+  }
+
   drawPixelCell(ctx, x, y) {
-    if (!x || !y) return;
-    const [roundX, roundY] = [Math.floor(x / this.state.size), Math.floor(y / this.state.size)];
+    const coords = this.getPixeledCoords(x, y),
+          roundCoords = coords ? coords : [null, null];
+
+    if (!coords) return;
     ctx.fillRect(
-      roundX * this.state.size,
-      roundY * this.state.size,
+      roundCoords.x,
+      roundCoords.y,
       this.state.size,
       this.state.size
     );
   }
 
   clearPixelCell(ctx, x, y) {
-    if (!x || !y) return;
-    const [roundX, roundY] = [Math.floor(x / this.state.size), Math.floor(y / this.state.size)];
+    const coords = this.getPixeledCoords(x, y),
+          roundCoords = coords ? coords : [null, null];
+
+    if (!coords) return;
     ctx.clearRect(
-      roundX * this.state.size,
-      roundY * this.state.size,
+      roundCoords.x,
+      roundCoords.y,
       this.state.size,
       this.state.size
     );
