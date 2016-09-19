@@ -1,14 +1,57 @@
 @import '../../styles/variables.styl'
 
 .framebar
-    position: absolute
-    bottom: 0
+  position: absolute
+  bottom: 0
+  left: 0
+  right: 0
+  width: 650px
+  height: 180px
+  padding: 10px
+  margin: 0 auto
+  border-top-right-radius: 6px
+  border-top-left-radius: 6px
+  background: colors['blue']
+
+  &__frames-controls
+    width: 240px
+    height: 60px
     left: 0
     right: 0
-    width: 600px
-    height: 100px
     margin: 0 auto
-    border-top-right-radius: 6px
-    border-top-left-radius: 6px
-    background: colors['blue']
 
+    &-button
+      width: 50px
+      height: 50px
+      margin-right: 10px
+      background: silver
+      display: inline-block
+
+      &__icon
+        margin: 13px
+
+  &__container
+    width: 100%
+    display: flex
+
+  &__gif-container
+    width: 110px
+    height: 100px
+    padding-right: 10px
+    border-right: 1px solid black
+
+  &__gif
+    width: 100%
+    height: 100%
+    background: grey
+
+  &__frames-container
+    flex-grow: 1
+    padding-left: 10px
+
+  &__frame
+    height: 100%
+    width: 100px
+    display: inline-block
+    margin-right: 10px
+    background: #1B2631
