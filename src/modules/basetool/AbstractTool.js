@@ -87,6 +87,10 @@ class AbstractTool {
     this.useStateOn(ctx);
   }
 
+  storeCallback() {
+    throw Error('Store callback was not provided');
+  }
+
   onMouseDown() {
     throw Error('Tool mouseDown event not implemented');
   }

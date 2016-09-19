@@ -1,17 +1,17 @@
 import {
   ADD_COLOR,
-  GET_USER_COLORS
+  SET_TEMP_COLOR
 } from 'actions/palette';
 
-function userPalette (state = [], action) {
+function userPalette (state = { tempColor: '', colors: [] }, action) {
+  let userColors;
+
   switch (action.type) {
     case ADD_COLOR:
-      return [
-        ...state,
-        {color: action.color}
-      ];
-    case GET_USER_COLORS:
-      return state;
+      userColors = [...state.colors, { color: action.color }];
+      return Object.assign({}, state, { colors: userColors });
+    case SET_TEMP_COLOR:
+      return Object.assign({}, state, { tempColor: action.color });
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 
-import {getCustomColors, getCurrentColor} from 'selectors';
+import {getCustomColors, getCurrentColor, getTempColor} from 'selectors';
 import {addColor} from 'actions/palette';
 import {setColor} from 'actions/tools';
 
@@ -8,7 +8,8 @@ import Colorbar from 'components/colorbar/Colorbar.js';
 
 const mapStateToProps = state => ({
   userColors: getCustomColors(state),
-  currentColor: getCurrentColor(state)
+  currentColor: getCurrentColor(state),
+  tempColor: getTempColor(state)
 });
 
 const mapDispatchToProps = dispatch => ({

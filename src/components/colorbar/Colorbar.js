@@ -42,7 +42,8 @@ class Colorbar extends Component {
         </div>
         <Colorpicker
           addColor={this.props.addColor.bind(this)}
-          userColors={this.props.userColors} />
+          userColors={this.props.userColors}
+          tempColor={this.props.tempColor} />
         <div className="colorbar__user-palette">
           <div className="colorbar__label">Custom</div>
           {this.getUserColorPalette()}

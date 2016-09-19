@@ -55,6 +55,7 @@ class Dropper extends AbstractTool {
   processColor(color) {
     // TODO: this method should change actual state for colorpicker Component input values
     // console.log(color);
+    this.storeCallback(color);
   }
 }
 

@@ -25,6 +25,7 @@ class Surface extends Component {
   componentDidUpdate() {
     this.tool = toolsMap.get(this.props.tool);
     this.applyAllContextInformation();
+    this.tool.storeCallback = this.props.setTempColor.bind(this);
   }
 
   normalizeEvent(ev) {
