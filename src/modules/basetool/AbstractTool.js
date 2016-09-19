@@ -4,6 +4,7 @@ class AbstractTool {
     this.state = {
       size: 10,
       color: '#000000',
+      compositeOperation: 'source-over',
       tool: 'abstract'
     }
     this._ctx = null;
@@ -12,6 +13,8 @@ class AbstractTool {
 
   _assignBufferContext(ctx) {
     this._buffer = ctx;
+    // prevent artifacts from previous tools to appear
+    this._buffer.clearRect(0, 0, this._buffer.canvas.width, this._buffer.canvas.height);
   }
 
   _assignRenderingContext(ctx) {
@@ -22,12 +25,16 @@ class AbstractTool {
     Object.assign(this.state, state);
   }
 
+  useStateOn(ctx) {
+    ctx.lineWidth = this.state.size;
+    ctx.fillStyle = this.state.color
+    ctx.globalCompositeOperation = this.state.compositeOperation;
+  }
+
   drawPixelCell(ctx, x, y) {
     if (!x || !y) return;
     const [roundX, roundY] = [Math.floor(x / this.state.size), Math.floor(y / this.state.size)];
-    ctx.lineWidth = this.state.size;
-    ctx.fillStyle = this.state.color;
-    ctx.globalCompositeOperation = 'source-over';
+    this.useStateOn(ctx);
     ctx.fillRect(
       roundX * this.state.size,
       roundY * this.state.size,
@@ -39,7 +46,7 @@ class AbstractTool {
   clearPixelCell(ctx, x, y) {
     if (!x || !y) return;
     const [roundX, roundY] = [Math.floor(x / this.state.size), Math.floor(y / this.state.size)];
-    ctx.lineWidth = this.state.size;
+    this.useStateOn(ctx);
     ctx.clearRect(
       roundX * this.state.size,
       roundY * this.state.size,
@@ -48,8 +55,8 @@ class AbstractTool {
     );
   }
 
-  draw() {
-    throw Error('Tool draw event not implemented');
+  draw(ctx, x0, y0, x1, y1) {
+    this.useStateOn(ctx);
   }
 
   onMouseDown() {

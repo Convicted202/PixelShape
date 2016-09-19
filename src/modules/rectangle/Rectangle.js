@@ -1,5 +1,4 @@
 import AbstractTool from '../basetool/AbstractTool';
-import {ellipse} from 'utils/ellipseCircle';
 
 class Ellipse extends AbstractTool {
   constructor(...args) {
@@ -43,7 +42,7 @@ class Ellipse extends AbstractTool {
 
   draw(ctx, x0, y0, x1, y1) {
     super.draw(...arguments);
-    ellipse(this.drawPixelCell.bind(this), ...arguments);
+    ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
   }
 }
 
