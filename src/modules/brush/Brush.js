@@ -4,25 +4,35 @@ import lineTo from 'utils/lineTo';
 class Brush extends AbstractTool {
   constructor(...args) {
     super(...args);
-    this.x = null;
-    this.y = null;
+    [this.x, this.y] = [null, null];
+    [this.buf_x, this.buf_y] = [null, null];
   }
 
-  onMouseDown(ctx, x, y) {
+  handleBufferBrushMove(x, y) {
+    // "ghost" moving
+    // on each move clear previous pixel and draw current
+    this.clearPixelCell(this._buffer, this.buf_x, this.buf_y);
+    this.drawPixelCell(this._buffer, x, y);
+    [this.buf_x, this.buf_y] = [x, y];
+  }
+
+  onMouseDown(x, y) {
     this.mouseDown = true;
     [this.x, this.y] = [x, y];
-    this.drawPixelCell(ctx, x, y);
+    this.drawPixelCell(this._ctx, x, y);
   }
 
-  onMouseMove(ctx, x, y) {
+  onMouseMove(x, y) {
+    this.handleBufferBrushMove(x, y);
+    // actual drawing
     if (!this.mouseDown) return;
-    this.draw(ctx, this.x, this.y, x, y);
+    this.draw(this._ctx, this.x, this.y, x, y);
     [this.x, this.y] = [x, y];
   }
 
-  onMouseUp(ctx, x, y) {
+  onMouseUp(x, y) {
     this.mouseDown = false;
-    this.draw(ctx, x, y, this.x, this.y);
+    this.draw(this._ctx, x, y, this.x, this.y);
     [this.x, this.y] = [null, null];
   }
 

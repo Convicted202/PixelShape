@@ -13,13 +13,16 @@ class Surface extends Component {
 
   componentDidMount() {
     this.ctx = this._canvas.getContext('2d');
-    // this.ctx.fillStyle = '#F4A261';
-    // this.boundRect = this._canvas.getBoundingClientRect();
+    this.buffer = this._buffer.getContext('2d');
+    this.tool._assignRenderingContext(this.ctx);
+    this.tool._assignBufferContext(this.buffer);
   }
 
   componentDidUpdate() {
     this.tool = toolsMap.get(this.props.tool);
     this.tool.applyState(this.props.toolSettings);
+    this.tool._assignRenderingContext(this.ctx);
+    this.tool._assignBufferContext(this.buffer);
   }
 
   normalizeEvent(ev) {
@@ -28,15 +31,15 @@ class Surface extends Component {
   }
 
   onMouseDown(ev) {
-    this.tool.onMouseDown(this.ctx, ...this.normalizeEvent(ev));
+    this.tool.onMouseDown(...this.normalizeEvent(ev));
   }
 
   onMouseMove(ev) {
-    this.tool.onMouseMove(this.ctx, ...this.normalizeEvent(ev));
+    this.tool.onMouseMove(...this.normalizeEvent(ev));
   }
 
   onMouseUp(ev) {
-    this.tool.onMouseUp(this.ctx, ...this.normalizeEvent(ev));
+    this.tool.onMouseUp(...this.normalizeEvent(ev));
   }
 
   render() {
@@ -44,12 +47,20 @@ class Surface extends Component {
       <main className="surface">
         <section className="surface__drawer">
           <canvas
+            className="main-rendering-canvas"
             ref={c => this._canvas = c}
+            height="700"
+            width="700">
+          </canvas>
+          <canvas
+            className="buffer-canvas"
+            ref={c => this._buffer = c}
             height="700"
             width="700"
             onMouseDown={this.onMouseDown.bind(this)}
             onMouseMove={this.onMouseMove.bind(this)}
-            onMouseUp={this.onMouseUp.bind(this)}></canvas>
+            onMouseUp={this.onMouseUp.bind(this)} >
+          </canvas>
         </section>
       </main>
     )

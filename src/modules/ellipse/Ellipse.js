@@ -4,40 +4,42 @@ import {ellipse} from 'utils/ellipseCircle';
 class Ellipse extends AbstractTool {
   constructor(...args) {
     super(...args);
-    this.x0 = null;
-    this.y0 = null;
-    this.x1 = null;
-    this.y1 = null;
+    this.clearCoords();
   }
 
-  onMouseDown(ctx, x, y) {
+  clearCoords() {
+    this.coords = {
+      x0: null, y0: null,
+      x1: null, y1: null
+    };
+  }
+
+  onMouseDown(x, y) {
     this.drawing = true;
-    this.x0 = x;
-    this.y0 = y;
+    this.coords.x0 = x;
+    this.coords.y0 = y;
   }
 
-  onMouseMove(ctx, x, y) {
+  onMouseMove(x, y) {
     if (!this.drawing) return;
-    this.update(ctx, x, y);
+    this._buffer.clearRect(0, 0, this._buffer.canvas.width, this._buffer.canvas.height);
+    this.update(this._buffer, x, y);
   }
 
-  onMouseUp(ctx, x, y) {
+  onMouseUp(x, y) {
     this.drawing = false;
-    this.update(ctx, x, y);
-    this.x0 = null;
-    this.y0 = null;
-    this.x1 = null;
-    this.y1 = null;
+    this.update(this._ctx, x, y);
+    this._buffer.clearRect(0, 0, this._buffer.canvas.width, this._buffer.canvas.height);
+    this.clearCoords();
   }
 
   update(ctx, x, y) {
-    this.x1 = x;
-    this.y1 = y;
-    this.draw(ctx, this.x0, this.y0, this.x1, this.y1);
+    this.coords.x1 = x;
+    this.coords.y1 = y;
+    this.draw(ctx, this.coords.x0, this.coords.y0, this.coords.x1, this.coords.y1);
   }
 
   draw(ctx, x0, y0, x1, y1) {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ellipse(this.drawPixelCell.bind(this), ...arguments);
   }
 }

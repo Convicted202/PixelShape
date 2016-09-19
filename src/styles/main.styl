@@ -25,8 +25,25 @@ input[type=range]
   width: 90%
   outline: none
 
-input[type="range"]::-webkit-slider-thumb
+input[type=range]::-webkit-slider-thumb
   -webkit-appearance: none
+  background-color: colors['seagreen']
+  border: 2px solid colors['blue']
+  width: 20px
+  height: 20px
+  border-radius: 50%
+  cursor: pointer
+
+input[type=range]::-moz-range-thumb
+  background-color: colors['seagreen']
+  border: 2px solid colors['blue']
+  width: 20px
+  height: 20px
+  border-radius: 50%
+  cursor: pointer
+
+// this stuff is not working... without padding in input
+input[type=range]::-ms-thumb
   background-color: colors['seagreen']
   border: 2px solid colors['blue']
   width: 20px

@@ -6,9 +6,15 @@ class AbstractTool {
       color: '#000000',
       tool: 'abstract'
     }
+    this._ctx = null;
+    this._buffer = null;
   }
 
-  _assignWithRenderingContext(ctx) {
+  _assignBufferContext(ctx) {
+    this._buffer = ctx;
+  }
+
+  _assignRenderingContext(ctx) {
     this._ctx = ctx;
   }
 
@@ -17,6 +23,7 @@ class AbstractTool {
   }
 
   drawPixelCell(ctx, x, y) {
+    if (!x || !y) return;
     const [roundX, roundY] = [Math.floor(x / this.state.size), Math.floor(y / this.state.size)];
     ctx.lineWidth = this.state.size;
     ctx.fillStyle = this.state.color;
@@ -30,6 +37,7 @@ class AbstractTool {
   }
 
   clearPixelCell(ctx, x, y) {
+    if (!x || !y) return;
     const [roundX, roundY] = [Math.floor(x / this.state.size), Math.floor(y / this.state.size)];
     ctx.lineWidth = this.state.size;
     ctx.clearRect(
