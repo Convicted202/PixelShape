@@ -23,8 +23,9 @@ class Dropper extends AbstractTool {
   }
 
   getUnderlyingColor(x, y) {
-    const imageData = this._ctx.getImageData(0, 0, this._ctx.canvas.width, this._ctx.canvas.height),
-          index = getPixelFromImageData(imageData, x, y),
+    const rounds = this.getPixeledCoords(x, y),
+          imageData = this._ctx.getImageData(0, 0, this._ctx.canvas.width, this._ctx.canvas.height),
+          index = getPixelFromImageData(imageData, rounds.x, rounds.y),
           rgbaColor = getColor(imageData, index);
 
     return rgbToHex(...rgbaColor);
@@ -53,8 +54,6 @@ class Dropper extends AbstractTool {
   }
 
   processColor(color) {
-    // TODO: this method should change actual state for colorpicker Component input values
-    // console.log(color);
     this.storeCallback(color);
   }
 }
