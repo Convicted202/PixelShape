@@ -9,6 +9,13 @@ const ellipse = (drawPointCallback, renderingContext, x0, y0, x1, y1) => {
 
   let x, y, sigma;
 
+  // without this we will run ourself into infinite loop in the first half
+  // if a2 === 0 and b2 === 0 then b2 * x === a2 *y === 0
+  if (!a2 && !b2) {
+    drawPointCallback(renderingContext, xc, yc);
+    return;
+  }
+
   /* first half */
   x = 0;
   y = height;
