@@ -5,9 +5,9 @@
   bottom: 0
   left: 0
   right: 0
-  width: 650px
+  width: 550px
   height: 180px
-  padding: 10px
+  padding: 5px 10px 0
   margin: 0 auto
   border: 1px solid #3a3a3a
   border-bottom: 0
@@ -16,9 +16,29 @@
   box-shadow: 0px 2px 4px #000000
   background: colors['blue']
 
+  &__controls
+    display: flex
+    margin-bottom: 2px
+
+  &__gif-controls
+    height: 50px
+    display: inline-flex
+    padding-right: 9px
+    align-items: center
+
+  &__gif-slider[type=range]
+    width: 100px
+    margin-left: 0
+    display: inline-block
+
+    &::-webkit-slider-thumb
+      background-color: #1b2631
+
   &__frames-controls
-    width: 240px
-    height: 60px
-    left: 0
-    right: 0
-    margin: 0 auto
+    width: 100%
+    height: 50px
+    display: inline-flex
+    margin: 0
+    padding: 0
+    align-items: center
+    justify-content: center

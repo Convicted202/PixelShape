@@ -4,6 +4,7 @@
 
   &__gif-container
     width: 110px
+    min-width: 110px
     height: 100px
     padding-right: 10px
     border-right: 1px solid #6d858e
@@ -12,11 +13,28 @@
   &__gif
     width: 100%
     height: 100%
-    background: grey
+    position: relative
+    background: url(../../images/tile-light.png) repeat
+    border: 4px solid #1b2631
+
+    &-fps
+      width: 40px
+      height: 20px
+      position: absolute
+      right: 0
+      text-align: center
+      font-size: .9em
+      opacity: 0.8
+      color: #5b5c5d
+      background: #b7b7b7
 
   &__frames
     flex-grow: 1
+    display: block
     padding-left: 10px
+    overflow: auto
+    overflow-y: hidden
+    white-space: nowrap
 
     &-addframe
       height: 90px
@@ -26,6 +44,13 @@
       margin: 5px 0
       vertical-align: top
       border: 4px dashed #1b2631
+      fill: #1b2631
+      transition: border-color 200ms, fill 200ms
+      cursor: pointer
+
+      &:hover
+        border-color: #b7b7b7
+        fill: #b7b7b7
 
       &__icon
         position: absolute
@@ -34,4 +59,4 @@
         left: 0
         bottom: 0
         margin: auto
-        fill: #1b2631
+        fill: inherit

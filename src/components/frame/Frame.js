@@ -9,7 +9,7 @@ class Frame extends Component {
   }
 
   onClick() {
-
+    this.props.setActive();
   }
 
   render() {
@@ -18,7 +18,9 @@ class Frame extends Component {
     return (
       <div
         className={classes}
-        onClick={this.onClick.bind(this)} ></div>
+        onClick={this.onClick.bind(this)} >
+        <span className="frame__index">{this.props.index}</span>
+      </div>
     )
   }
 }
