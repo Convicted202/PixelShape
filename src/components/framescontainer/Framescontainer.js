@@ -16,10 +16,8 @@ class FramesContainer extends Component {
     super(...args);
     this.framePrefix = 'frame_';
     this.state = {
-      frames,
-      active: 0,
-      fps: 2
-    }
+      frameAdded: false
+    };
   }
 
   componentWillMount() {
@@ -57,10 +55,23 @@ class FramesContainer extends Component {
     return frame;
   }
 
+  componentDidUpdate() {
+    if (this.state.frameAdded) {
+      this._add_button.scrollIntoView();
+      this.setState({
+        frameAdded: false
+      });
+    }
+  }
+
   addFrame() {
     const frame = this.createFrame(Object.keys(this.props.framesCollection).length);
 
     this.props.addFrame(frame);
+
+    this.setState({
+      frameAdded: true
+    });
   }
 
   render() {
@@ -75,6 +86,7 @@ class FramesContainer extends Component {
           {this.getFrames()}
           <div
             className="framescontainer__frames-addframe"
+            ref={b => this._add_button = b}
             onClick={this.addFrame.bind(this)}>
             <svg className="framescontainer__frames-addframe__icon" viewBox="0 0 24 24" width="40" height="40">
               <use xlinkHref="#plus"></use>
