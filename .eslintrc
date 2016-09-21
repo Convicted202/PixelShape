@@ -70,6 +70,7 @@
 
     "no-useless-constructor": 0,
     'no-unused-vars': 0,
+    'no-case-declarations': 0,
 
   },
   "plugins": [

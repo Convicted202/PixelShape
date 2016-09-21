@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {getToolSettings} from 'selectors';
 import {setSize} from 'actions/tools';
 
-import Sizerangebar from 'components/sizerangebar/Sizerangebar.js';
+import Sizerangebar from 'components/sizerangebar/Sizerangebar';
 
 const mapStateToProps = state => ({
   currentSize: getToolSettings(state).size

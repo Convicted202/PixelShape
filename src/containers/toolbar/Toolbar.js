@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {setTool} from '../../actions/tools';
 import {getTool} from 'selectors';
 
-import Toolbar from 'components/toolbar/Toolbar.js';
+import Toolbar from 'components/toolbar/Toolbar';
 
 const mapStateToProps = state => ({
   tool: getTool(state)

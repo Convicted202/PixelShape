@@ -4,7 +4,7 @@ import {getCustomColors, getCurrentColor, getTempColor} from 'selectors';
 import {addColor} from 'actions/palette';
 import {setColor} from 'actions/tools';
 
-import Colorbar from 'components/colorbar/Colorbar.js';
+import Colorbar from 'components/colorbar/Colorbar';
 
 const mapStateToProps = state => ({
   userColors: getCustomColors(state),

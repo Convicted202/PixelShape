@@ -2,7 +2,7 @@ import './framebar.styl';
 
 import React, { Component } from 'react';
 import FrameButton from 'components/framebutton/FrameButton';
-import FramesContainer from 'components/framescontainer/FramesContainer';
+import FramesContainer from 'containers/framescontainer/FramesContainer';
 
 class Framebar extends Component {
   render() {
@@ -12,8 +12,8 @@ class Framebar extends Component {
           <div className="framebar__gif-controls">
             <input
               className="framebar__gif-slider"
-              type="range" step="10" min="10" max="100"
-              defaultValue={10} />
+              type="range" step="1" min="0" max="24"
+              defaultValue={2} />
           </div>
           <ul className="framebar__frames-controls">
             <FrameButton icon="duplicate" />

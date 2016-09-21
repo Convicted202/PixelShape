@@ -17,3 +17,16 @@ export function getCustomColors(state) {
 export function getTempColor(state) {
   return state.userPalette.tempColor;
 }
+
+export function getCurrentFrameUUID(state) {
+  return state.frames.currentFrame;
+}
+
+export function getCurrentFrame(state) {
+  const frames = state.frames;
+  return frames.framesCollection[frames.currentFrame];
+}
+
+export function getAllFrames(state) {
+  return state.frames.framesCollection;
+}

@@ -3,11 +3,16 @@ import './surface.styl';
 import React, { Component } from 'react';
 
 import toolsMap from 'modules/toolsMap';
+// import debounce from 'utils/debounce';
 
 class Surface extends Component {
   constructor(...args) {
     super(...args);
     this.tool = toolsMap.get(this.props.tool);
+    // this.debouncedUpdateFrameImageData = debounce(
+    //   () => {
+    //     this.updateFrameImageData();
+    //   }, 500);
   }
 
   applyAllContextInformation() {
@@ -26,6 +31,16 @@ class Surface extends Component {
     this.tool = toolsMap.get(this.props.tool);
     this.applyAllContextInformation();
     this.tool.storeCallback = this.props.setTempColor.bind(this);
+    if (this.props.currentFrame.imageData) {
+      this.ctx.putImageData(this.props.currentFrame.imageData, 0, 0);
+    }
+  }
+
+  updateFrameImageData() {
+    this.props.updateFrameImageData(
+      this.props.currentFrameUUID,
+      this.ctx.getImageData(0, 0, this._canvas.width, this._canvas.height)
+    );
   }
 
   normalizeEvent(ev) {
@@ -39,10 +54,12 @@ class Surface extends Component {
 
   onMouseMove(ev) {
     this.tool.onMouseMove(...this.normalizeEvent(ev));
+    // this.debouncedUpdateFrameImageData();
   }
 
   onMouseUp(ev) {
     this.tool.onMouseUp(...this.normalizeEvent(ev));
+    this.updateFrameImageData();
   }
 
   render() {
