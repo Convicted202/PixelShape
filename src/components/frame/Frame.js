@@ -9,9 +9,8 @@ class Frame extends Component {
   }
 
   componentDidMount() {
-    let freshImageData;
-    this.context = this._fr_canvas.getContext('2d');
-    freshImageData = this.context.getImageData(0, 0, this._fr_canvas.width, this._fr_canvas.height);
+    this.context = this._frcanvas.getContext('2d');
+    const freshImageData = this.context.getImageData(0, 0, this._frcanvas.width, this._frcanvas.height);
     this.props.updateFrameImageData(this.props.uuid, freshImageData);
   }
 
@@ -31,7 +30,7 @@ class Frame extends Component {
         className={classes}
         onClick={this.onClick.bind(this)} >
         <span className="frame__index">{this.props.index}</span>
-        <canvas height="700" width="700" ref={c => this._fr_canvas = c}></canvas>
+        <canvas height="700" width="700" ref={c => this._frcanvas = c}></canvas>
       </div>
     )
   }

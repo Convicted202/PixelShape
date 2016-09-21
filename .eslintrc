@@ -15,6 +15,9 @@
     "node": true,
     "es6": true
   },
+  "globals": {
+    "ENV": false
+  },
   "rules": {
     "quotes": [2, "single"],
     "strict": [2, "never"],

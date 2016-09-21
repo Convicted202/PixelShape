@@ -8,8 +8,12 @@ const logger = createLogger({
   collapsed: true
 });
 
+const middleware = [];
+
+if (ENV === 'develop') middleware.push(logger);
+
 const createStoreWithMiddleware = applyMiddleware(
-  logger
+  ...middleware
 )(createStore);
 
 const reducer = combineReducers(
