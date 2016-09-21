@@ -10,6 +10,17 @@ class Sidebar extends Component {
       <aside className="sidebar">
         <Colorbar />
         <Sizerangebar />
+
+        <div className="sidebar__about">
+          <div>
+            <strong>
+              <a href="https://github.com/Convicted202/PixelShape">PixelShape</a>
+            </strong> v0.0.1
+          </div>
+          <div>Created by <strong>Alexander Yanovych</strong></div>
+          <div><strong>alexander.yanovych@gmail.com</strong></div>
+        </div>
+
       </aside>
     )
   }
