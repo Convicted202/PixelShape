@@ -8,7 +8,7 @@ class FrameButton extends Component {
   }
 
   onClick() {
-
+    this.props.doAction();
   }
 
   render() {

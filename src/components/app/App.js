@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import Toolbar from 'containers/toolbar/Toolbar';
 import Surface from 'containers/surface/Surface';
 import Sidebar from 'components/sidebar/Sidebar';
-import Framebar from 'components/framebar/Framebar';
+import Framebar from 'containers/framebar/Framebar';
 
 class App extends Component {
   render() {
