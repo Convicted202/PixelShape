@@ -90,6 +90,14 @@ class Framebar extends Component {
     this.updateIndexes(currentUUID, 'add');
   }
 
+  saveCurrentFrameName() {
+    this.props.updateFrameName(this.props.currentFrameUUID, this._name_input.value);
+  }
+
+  componentDidUpdate() {
+    this._name_input.value = this.props.currentFrameName;
+  }
+
   render() {
     return (
       <aside className="framebar">
@@ -114,6 +122,12 @@ class Framebar extends Component {
               icon="move-right"
               doAction={this.moveCurrentFrameRight.bind(this)} />
           </ul>
+          <div className="framebar__framename">
+            <input
+              className="framebar__framename-input"
+              ref={inp => this._name_input = inp}
+              onBlur={this.saveCurrentFrameName.bind(this)} />
+          </div>
         </div>
         <FramesContainer />
       </aside>

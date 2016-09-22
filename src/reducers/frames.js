@@ -2,6 +2,7 @@ import {
   ADD_FRAME,
   UPDATE_FRAME_INDEX,
   UPDATE_FRAME_IMAGE_DATA,
+  UPDATE_FRAME_NAME,
   SET_CURRENT_FRAME,
   REMOVE_FRAME
 } from 'actions/frames';
@@ -41,6 +42,12 @@ function frames (state = initialState, action) {
       currentFrame = state.framesCollection[action.frameUUID];
       frame = {};
       frame[action.frameUUID] = Object.assign({}, currentFrame, { index: action.index });
+      framesCollection = Object.assign({}, state.framesCollection, frame);
+      return Object.assign({}, state, { framesCollection });
+    case UPDATE_FRAME_NAME:
+      currentFrame = state.framesCollection[action.frameUUID];
+      frame = {};
+      frame[action.frameUUID] = Object.assign({}, currentFrame, { name: action.name });
       framesCollection = Object.assign({}, state.framesCollection, frame);
       return Object.assign({}, state, { framesCollection });
     case SET_CURRENT_FRAME:

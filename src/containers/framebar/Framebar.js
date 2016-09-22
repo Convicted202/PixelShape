@@ -4,18 +4,21 @@ import {
   addFrame,
   removeFrame,
   setCurrentFrame,
-  updateFrameIndex
+  updateFrameIndex,
+  updateFrameName
 } from 'actions/frames';
 
 import {
   getCurrentFrameUUID,
-  getAllFrames
+  getAllFrames,
+  getCurrentFrameName
 } from 'selectors';
 
 import Framebar from 'components/framebar/Framebar';
 
 const mapStateToProps = state => ({
   currentFrameUUID: getCurrentFrameUUID(state),
+  currentFrameName: getCurrentFrameName(state),
   framesCollection: getAllFrames(state)
 });
 
@@ -31,6 +34,9 @@ const mapDispatchToProps = dispatch => ({
   },
   updateFrameIndex(frameUUID, index) {
     return dispatch(updateFrameIndex(frameUUID, index))
+  },
+  updateFrameName(frameUUID, name) {
+    return dispatch(updateFrameName(frameUUID, name));
   }
 })
 

@@ -30,3 +30,8 @@ export function getCurrentFrame(state) {
 export function getAllFrames(state) {
   return state.frames.framesCollection;
 }
+
+export function getCurrentFrameName(state) {
+  const frames = state.frames;
+  return frames.currentFrame && frames.framesCollection[frames.currentFrame].name;
+}

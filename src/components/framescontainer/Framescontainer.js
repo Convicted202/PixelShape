@@ -50,7 +50,7 @@ class FramesContainer extends Component {
     frame = {
       uuid,
       index: index || 0,
-      name: 'default',
+      name: `default_${index || 0}`,
       imageData: null
     };
 

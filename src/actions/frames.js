@@ -2,6 +2,7 @@ export const ADD_FRAME = 'ADD_FRAME';
 export const REMOVE_FRAME = 'REMOVE_FRAME';
 export const UPDATE_FRAME_IMAGE_DATA = 'UPDATE_FRAME_IMAGE_DATA';
 export const UPDATE_FRAME_INDEX = 'UPDATE_FRAME_INDEX';
+export const UPDATE_FRAME_NAME = 'SET_FRAME_NAME';
 export const SET_CURRENT_FRAME = 'SET_CURRENT_FRAME';
 
 export const addFrame = frame => ({
@@ -24,6 +25,12 @@ export const updateFrameIndex = (frameUUID, index) => ({
   type: UPDATE_FRAME_INDEX,
   frameUUID,
   index
+});
+
+export const updateFrameName = (frameUUID, name) => ({
+  type: UPDATE_FRAME_NAME,
+  frameUUID,
+  name
 });
 
 export const setCurrentFrame = uuid => ({
