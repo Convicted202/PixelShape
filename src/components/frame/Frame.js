@@ -9,9 +9,15 @@ class Frame extends Component {
   }
 
   componentDidMount() {
+    let imageData;
     this.context = this._frcanvas.getContext('2d');
-    const freshImageData = this.context.getImageData(0, 0, this._frcanvas.width, this._frcanvas.height);
-    this.props.updateFrameImageData(this.props.uuid, freshImageData);
+    // if statement most likely will only be used when user duplicates current frame
+    if (this.props.imageData) {
+      this.forceUpdate();
+    } else {
+      imageData = this.context.getImageData(0, 0, this._frcanvas.width, this._frcanvas.height);
+      this.props.updateFrameImageData(this.props.uuid, imageData);
+    }
   }
 
   componentDidUpdate() {

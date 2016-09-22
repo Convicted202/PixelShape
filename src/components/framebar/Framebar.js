@@ -4,14 +4,23 @@ import React, { Component } from 'react';
 import FrameButton from 'components/framebutton/FrameButton';
 import FramesContainer from 'containers/framescontainer/FramesContainer';
 
+import uniqueId from 'utils/uuid';
+
 class Framebar extends Component {
 
-  updateIndexesOnRemove(newFrameUUID) {
-    const collection = this.props.framesCollection;
+  constructor(...args) {
+    super(...args);
+    this.framePrefix = 'frame_';
+  }
+
+  updateIndexes(newFrameUUID, action) {
+    const collection = this.props.framesCollection,
+          shift = action === 'remove' ? -1 : 1;
+
     Object.keys(collection)
       .forEach(frameUUID => {
         if (collection[frameUUID].index > collection[newFrameUUID].index) {
-          this.props.updateFrameIndex(frameUUID, collection[frameUUID].index - 1);
+          this.props.updateFrameIndex(frameUUID, collection[frameUUID].index + shift);
         }
       });
   }
@@ -30,7 +39,7 @@ class Framebar extends Component {
 
     // no nextFrame means we have sole frame in the collection
     if (!nextFrame) return;
-    this.updateIndexesOnRemove(currentUUID);
+    this.updateIndexes(currentUUID, 'remove');
     this.props.setCurrentFrame(nextFrame);
     this.props.removeFrame(currentUUID);
   }
@@ -59,6 +68,28 @@ class Framebar extends Component {
     this.props.updateFrameIndex(nextFrame, col[nextFrame].index - shift);
   }
 
+  duplicateCurrentFrame() {
+    const uuid = uniqueId(this.framePrefix),
+          currentUUID = this.props.currentFrameUUID,
+          collection = this.props.framesCollection,
+          currentImageData = collection[currentUUID].imageData;
+    let   frame = {}, imageData = null, dataCopy = null;
+
+    imageData = new ImageData(currentImageData.width, currentImageData.height);
+    dataCopy = new Uint8ClampedArray(currentImageData.data);
+    imageData.data.set(dataCopy);
+
+    frame = {
+      uuid,
+      index: collection[currentUUID].index + 1,
+      name: 'default',
+      imageData
+    };
+
+    this.props.addFrame(frame);
+    this.updateIndexes(currentUUID, 'add');
+  }
+
   render() {
     return (
       <aside className="framebar">
@@ -70,7 +101,9 @@ class Framebar extends Component {
               defaultValue={2} />
           </div>
           <ul className="framebar__frames-controls">
-            <FrameButton icon="duplicate" />
+            <FrameButton
+              icon="duplicate"
+              doAction={this.duplicateCurrentFrame.bind(this)} />
             <FrameButton
               icon="remove"
               doAction={this.removeCurrentFrame.bind(this)} />

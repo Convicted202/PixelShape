@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 
 import {
+  addFrame,
   removeFrame,
   setCurrentFrame,
   updateFrameIndex
@@ -19,6 +20,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  addFrame(frame) {
+    return dispatch(addFrame(frame));
+  },
   removeFrame(frameUUID) {
     return dispatch(removeFrame(frameUUID));
   },
