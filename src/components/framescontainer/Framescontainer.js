@@ -28,16 +28,18 @@ class FramesContainer extends Component {
   }
 
   getFrames() {
-    return Object.keys(this.props.framesCollection)
+    const collection = this.props.framesCollection;
+    return Object.keys(collection)
+      .sort((frameUUID1, frameUUID2) => collection[frameUUID1].index - collection[frameUUID2].index)
       .map((uuid, index) => (
         <Frame
           key={uuid}
           uuid={uuid}
           isActive={uuid === this.props.currentUUID}
           index={index + 1}
-          originalIndex={this.props.framesCollection[uuid].index}
+          originalIndex={collection[uuid].index}
           setActive={this.props.setCurrentFrame.bind(this, uuid)}
-          imageData={this.props.framesCollection[uuid].imageData} />
+          imageData={collection[uuid].imageData} />
       ));
   }
 

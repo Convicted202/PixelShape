@@ -35,6 +35,30 @@ class Framebar extends Component {
     this.props.removeFrame(currentUUID);
   }
 
+  moveCurrentFrameRight() {
+    this.moveCurrentFrame('right');
+  }
+
+  moveCurrentFrameLeft() {
+    this.moveCurrentFrame('left');
+  }
+
+  moveCurrentFrame(direction) {
+    const shift = direction === 'right' ? 1 : -1,
+          currentUUID = this.props.currentFrameUUID,
+          currentFrameIndex = this.props.framesCollection[currentUUID].index,
+          col = this.props.framesCollection,
+          nextFrame = Object.keys(col)
+                        .find(el => {
+                          if (el === this.props.currentFrameUUID) return false;
+                          if (col[el].index - currentFrameIndex === shift) return true;
+                        });
+
+    if(!nextFrame) return;
+    this.props.updateFrameIndex(currentUUID, col[currentUUID].index + shift);
+    this.props.updateFrameIndex(nextFrame, col[nextFrame].index - shift);
+  }
+
   render() {
     return (
       <aside className="framebar">
@@ -50,8 +74,12 @@ class Framebar extends Component {
             <FrameButton
               icon="remove"
               doAction={this.removeCurrentFrame.bind(this)} />
-            <FrameButton icon="move-left" />
-            <FrameButton icon="move-right" />
+            <FrameButton
+              icon="move-left"
+              doAction={this.moveCurrentFrameLeft.bind(this)} />
+            <FrameButton
+              icon="move-right"
+              doAction={this.moveCurrentFrameRight.bind(this)} />
           </ul>
         </div>
         <FramesContainer />
