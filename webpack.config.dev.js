@@ -31,7 +31,8 @@ const config = {
       {
         test: /\.js$/,
         loader: 'eslint',
-        include: path.join(__dirname, 'src')
+        include: path.join(__dirname, 'src'),
+        exclude: path.join(__dirname, 'src/libs')
       }
     ],
     loaders: [

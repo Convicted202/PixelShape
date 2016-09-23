@@ -5,18 +5,23 @@ import Frame from 'containers/frame/Frame';
 
 import uniqueId from 'utils/uuid';
 
-const frames = [
-  {name: ''},
-  // {name: ''},
-  // {name: ''}
-];
+import {GIFEncoder, encode64} from 'libs/gif/index';
+
+// require 'libs/gif.worker';
+// require 'libs/gif';
 
 class FramesContainer extends Component {
   constructor(...args) {
     super(...args);
     this.framePrefix = 'frame_';
+    this.encoder = new GIFEncoder();
+    this.encoder.setRepeat(0);
+    this.encoder.setDelay(500);
+    this.encoder.setSize(700, 700);
+    this.encoder.setTransparent(0xffffff);
     this.state = {
-      frameAdded: false
+      frameAdded: false,
+      fps: 2
     };
   }
 
@@ -29,8 +34,12 @@ class FramesContainer extends Component {
 
   getFrames() {
     const collection = this.props.framesCollection;
-    return Object.keys(collection)
-      .sort((frameUUID1, frameUUID2) => collection[frameUUID1].index - collection[frameUUID2].index)
+
+    this.sortedFrames =
+      Object.keys(collection)
+        .sort((frameUUID1, frameUUID2) => collection[frameUUID1].index - collection[frameUUID2].index);
+
+    return this.sortedFrames
       .map((uuid, index) => (
         <Frame
           key={uuid}
@@ -66,6 +75,16 @@ class FramesContainer extends Component {
     }
   }
 
+  generateGif() {
+    const root = this;
+    this.encoder.start();
+    this.sortedFrames
+      .forEach(uuid => root.encoder.addFrame(root.props.framesCollection[uuid].imageData.data, true));
+    this.encoder.finish();
+    const binary_gif = this.encoder.stream().getData();
+    // console.log(`data:image/gif;base64,${encode64(binary_gif)}`);
+  }
+
   addFrame() {
     const frame = this.createFrame(Object.keys(this.props.framesCollection).length);
 
@@ -80,7 +99,7 @@ class FramesContainer extends Component {
     return (
       <div className="framescontainer">
         <div className="framescontainer__gif-container">
-          <div className="framescontainer__gif">
+          <div className="framescontainer__gif" onClick={this.generateGif.bind(this)}>
             <span className="framescontainer__gif-fps">{this.state.fps}fps</span>
           </div>
         </div>
