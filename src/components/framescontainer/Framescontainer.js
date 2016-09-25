@@ -5,24 +5,38 @@ import Frame from 'containers/frame/Frame';
 
 import uniqueId from 'utils/uuid';
 
-import {GIFEncoder, encode64} from 'libs/gif/index';
+import {encode64} from 'libs/gif/index';
 
-// require 'libs/gif.worker';
-// require 'libs/gif';
+const Worker = require('worker!workers/generateGif.worker.js');
 
 class FramesContainer extends Component {
   constructor(...args) {
     super(...args);
     this.framePrefix = 'frame_';
-    this.encoder = new GIFEncoder();
-    this.encoder.setRepeat(0);
-    this.encoder.setDelay(500);
-    this.encoder.setSize(700, 700);
-    this.encoder.setTransparent(0xffffff);
+
+    this.initializeGifWorker();
     this.state = {
       frameAdded: false,
+      initialWorkerUpdate: true,
       fps: 2
     };
+  }
+
+  initializeGifWorker() {
+    this.animationFrames = null;
+    this.worker = new Worker();
+    this.worker.addEventListener('message', event => {
+      let gif, j;
+      const length = this.animationFrames.length;
+
+      this.animationFrames[event.data.frameIndex] = event.data.frameData;
+
+      for (j = 0; j < length; j++) {
+        if (!this.animationFrames[j]) return;
+      }
+      gif = this.animationFrames.join('');
+      this._gif_img.src = 'data:image/gif;base64,' + window.btoa(gif);
+    });
   }
 
   componentWillMount() {
@@ -66,23 +80,37 @@ class FramesContainer extends Component {
     return frame;
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.generateGif();
+  }
+
   componentDidUpdate() {
     if (this.state.frameAdded) {
       this._add_button.scrollIntoView();
-      this.setState({
-        frameAdded: false
-      });
+      this.setState({frameAdded: false});
+    }
+    if (this.state.initialWorkerUpdate) {
+      this.generateGif();
     }
   }
 
   generateGif() {
-    const root = this;
-    this.encoder.start();
+    const gifLength = this.sortedFrames.length;
+
+    this.animationFrames = new Array(this.sortedFrames.length);
+
     this.sortedFrames
-      .forEach(uuid => root.encoder.addFrame(root.props.framesCollection[uuid].imageData.data, true));
-    this.encoder.finish();
-    const binary_gif = this.encoder.stream().getData();
-    // console.log(`data:image/gif;base64,${encode64(binary_gif)}`);
+      .forEach((uuid, key) => {
+        if (!this.props.framesCollection[uuid].imageData) return;
+        this.worker.postMessage({
+          frameNum: key,
+          framesLength: gifLength,
+          height: 700,
+          width: 700,
+          delay: 500,
+          imageData: this.props.framesCollection[uuid].imageData.data
+        });
+      });
   }
 
   addFrame() {
@@ -99,7 +127,8 @@ class FramesContainer extends Component {
     return (
       <div className="framescontainer">
         <div className="framescontainer__gif-container">
-          <div className="framescontainer__gif" onClick={this.generateGif.bind(this)}>
+          <div className="framescontainer__gif">
+            <img src="" ref={img => this._gif_img = img} />
             <span className="framescontainer__gif-fps">{this.state.fps}fps</span>
           </div>
         </div>
