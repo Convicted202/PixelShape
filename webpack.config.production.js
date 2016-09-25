@@ -5,8 +5,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const ExtractStyl = new ExtractTextPlugin('[name].css');
 
-const validate = require('webpack-validator');
-
 const config = {
   entry: './src/index.js',
   output: {
@@ -18,7 +16,8 @@ const config = {
       {
         test: /\.js$/,
         loader: 'eslint',
-        include: path.join(__dirname, 'src')
+        include: path.join(__dirname, 'src'),
+        exclude: path.join(__dirname, 'src/libs')
       }
     ],
     loaders: [
@@ -50,7 +49,10 @@ const config = {
     ]
   },
   resolve: {
-    modulesDirectories: ['node_modules', 'src']
+    modules: [
+      path.resolve('./src'),
+      'node_modules'
+    ]
   },
   plugins: [
     ExtractStyl,
@@ -58,6 +60,18 @@ const config = {
       title: 'PixelEdit',
       template: 'src/index.html',
       inject: 'body'
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false,
+      options: {
+        worker: {
+          output: {
+            filename: "generateGif.worker.js",
+            chunkFilename: "[id].generateGif.worker.js"
+          }
+        }
+      }
     }),
     new webpack.DefinePlugin({
       'ENV': JSON.stringify('production'),
@@ -76,4 +90,4 @@ const config = {
   ]
 };
 
-module.exports = validate(config);
+module.exports = config;

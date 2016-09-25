@@ -2,8 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const validate = require('webpack-validator');
-
 const config = {
   entry: './src/index.js',
   output: {
@@ -64,7 +62,10 @@ const config = {
     ]
   },
   resolve: {
-    modulesDirectories: ['node_modules', 'src']
+    modules: [
+      path.resolve('./src'),
+      'node_modules'
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -72,6 +73,18 @@ const config = {
       template: 'src/index.html',
       inject: 'body',
       cache: true
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false,
+      options: {
+        worker: {
+          output: {
+            filename: "generateGif.worker.js",
+            chunkFilename: "[id].generateGif.worker.js"
+          }
+        }
+      }
     }),
     new webpack.DefinePlugin({
       'ENV': JSON.stringify('develop')
@@ -90,4 +103,4 @@ const config = {
   ]
 };
 
-module.exports = validate(config);
+module.exports = config;
