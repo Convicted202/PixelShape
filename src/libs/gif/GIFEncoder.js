@@ -341,7 +341,7 @@ const GIFEncoder = function() {
       var dg = g - (colorTab[i++] & 0xff);
       var db = b - (colorTab[i] & 0xff);
       var d = dr * dr + dg * dg + db * db;
-      var index = i / 3;
+      var index = i / 3 | 0;
       if (usedEntry[index] && (d < dmin)) {
         dmin = d;
         minpos = index;

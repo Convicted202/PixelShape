@@ -14,9 +14,10 @@ self.onmessage = event => {
   const encoder = new GIFEncoder(); //create a new GIFEncoder for every new job
 
   encoder.setRepeat(0);
+  // encoder.setQuality(10);
   encoder.setDelay(delay);
   encoder.setSize(width, height);
-  encoder.setTransparent(0xffffff);
+  encoder.setTransparent(0x000000);
 
   if(frameNum == 0) {
     encoder.start();
