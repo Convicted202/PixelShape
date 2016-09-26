@@ -49,9 +49,9 @@ const config = {
     ]
   },
   resolve: {
-    modules: [
-      path.resolve('./src'),
-      'node_modules'
+    modulesDirectories: [
+      'node_modules',
+      'src'
     ]
   },
   plugins: [
@@ -60,18 +60,6 @@ const config = {
       title: 'PixelEdit',
       template: 'src/index.html',
       inject: 'body'
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false,
-      options: {
-        worker: {
-          output: {
-            filename: "generateGif.worker.js",
-            chunkFilename: "[id].generateGif.worker.js"
-          }
-        }
-      }
     }),
     new webpack.DefinePlugin({
       'ENV': JSON.stringify('production'),
@@ -87,7 +75,13 @@ const config = {
         comments: false
       }
     })
-  ]
+  ],
+  worker: {
+    output: {
+      filename: "generateGif.worker.js",
+      chunkFilename: "[id].generateGif.worker.js"
+    }
+  }
 };
 
 module.exports = config;

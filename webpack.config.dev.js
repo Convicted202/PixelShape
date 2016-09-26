@@ -14,6 +14,7 @@ const config = {
     inline: true,
     port: 9090,
     open: true,
+    contentBase: './src'
     // quiet: true
     //stats: 'errors-only',
   },
@@ -62,9 +63,9 @@ const config = {
     ]
   },
   resolve: {
-    modules: [
-      path.resolve('./src'),
-      'node_modules'
+    modulesDirectories: [
+      'node_modules',
+      'src'
     ]
   },
   plugins: [
@@ -73,18 +74,6 @@ const config = {
       template: 'src/index.html',
       inject: 'body',
       cache: true
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false,
-      options: {
-        worker: {
-          output: {
-            filename: "generateGif.worker.js",
-            chunkFilename: "[id].generateGif.worker.js"
-          }
-        }
-      }
     }),
     new webpack.DefinePlugin({
       'ENV': JSON.stringify('develop')
@@ -100,7 +89,13 @@ const config = {
         comments: false
       }
     })
-  ]
+  ],
+  worker: {
+    output: {
+      filename: "generateGif.worker.js",
+      chunkFilename: "[id].generateGif.worker.js"
+    }
+  }
 };
 
 module.exports = config;
