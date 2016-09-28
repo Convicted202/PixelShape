@@ -81,7 +81,7 @@ class FramesContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.generateGif();
+    // this.generateGif();
   }
 
   componentDidUpdate() {
