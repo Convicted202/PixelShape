@@ -3,6 +3,7 @@ class AbstractTool {
     // TODO: take default settings from defaults
     this.state = {
       size: 10,
+      gridCellSize: 10,
       color: '#000000',
       alpha: 1,
       compositeOperation: 'source-over',
@@ -50,10 +51,16 @@ class AbstractTool {
 
   getPixeledCoords(x, y) {
     if (!x || !y) return false;
-    const [timesX, timesY] = [Math.floor(x / this.state.size), Math.floor(y / this.state.size)];
+    // shift x and y half a brush size and get how much grid pixels are in it
+    const [timesX, timesY] =
+            [
+              Math.floor((x - this.state.size / 2) / this.state.gridCellSize),
+              Math.floor((y - this.state.size / 2) / this.state.gridCellSize)
+            ];
+
     return {
-      x: timesX * this.state.size,
-      y: timesY * this.state.size
+      x: timesX * this.state.gridCellSize,
+      y: timesY * this.state.gridCellSize
     }
   }
 
