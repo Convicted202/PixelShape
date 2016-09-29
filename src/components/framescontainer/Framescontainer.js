@@ -26,7 +26,7 @@ class FramesContainer extends Component {
     this.animationFrames = null;
     this.worker = new Worker();
     this.worker.addEventListener('message', event => {
-      let gif, j;
+      let gif = '', j;
       const length = this.animationFrames.length;
 
       this.animationFrames[event.data.frameIndex] = event.data.frameData;
@@ -35,7 +35,7 @@ class FramesContainer extends Component {
         if (!this.animationFrames[j]) return;
       }
       gif = this.animationFrames.join('');
-      this._gif_img.src = 'data:image/gif;base64,' + window.btoa(gif);
+      this._gif_img.src = `data:image/gif;base64,${window.btoa(gif)}`;
     });
   }
 
