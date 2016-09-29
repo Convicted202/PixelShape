@@ -11,7 +11,11 @@ class Framebar extends Component {
 
   constructor(...args) {
     super(...args);
+    this.state = {
+      fps: 2
+    }
     this.framePrefix = 'frame_';
+    this.setFPS = debounce(this.props.setFPS, 300);
   }
 
   updateIndexes(newFrameUUID, action) {
@@ -91,10 +95,11 @@ class Framebar extends Component {
     this.updateIndexes(currentUUID, 'add');
   }
 
-  setFPS(ev) {
-    // TODO: need to figure out better approach, to not set fps too frequently
-    // since this depends on onChange event of the slider
-    this.props.setFPS(ev.target.value);
+  onChange(ev) {
+    // setting just state, to make slider movable
+    this.setState({ fps: ev.target.value });
+    // and then setting actual fps debounced to apply changes
+    this.setFPS(this.state.fps);
   }
 
   saveCurrentFrameName() {
@@ -114,8 +119,8 @@ class Framebar extends Component {
               className="framebar__gif-slider"
               ref={s => this._fps_slider = s}
               type="range" step="1" min="1" max="24"
-              value={this.props.fps}
-              onChange={this.setFPS.bind(this)} />
+              value={this.state.fps}
+              onChange={this.onChange.bind(this)} />
           </div>
           <ul className="framebar__frames-controls">
             <FrameButton
