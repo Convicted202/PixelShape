@@ -107,7 +107,7 @@ class FramesContainer extends Component {
           framesLength: gifLength,
           height: 700,
           width: 700,
-          delay: 500,
+          fps: this.props.fps,
           imageData: this.props.framesCollection[uuid].imageData.data
         });
       });
@@ -129,7 +129,7 @@ class FramesContainer extends Component {
         <div className="framescontainer__gif-container">
           <div className="framescontainer__gif">
             <img src="" ref={img => this._gif_img = img} />
-            <span className="framescontainer__gif-fps">{this.state.fps}fps</span>
+            <span className="framescontainer__gif-fps">{this.props.fps}fps</span>
           </div>
         </div>
         <div className="framescontainer__frames">

@@ -18,6 +18,10 @@ export function getTempColor(state) {
   return state.userPalette.tempColor;
 }
 
+export function getFPS(state) {
+  return state.frames.fps;
+}
+
 export function getCurrentFrameUUID(state) {
   return state.frames.currentFrame;
 }

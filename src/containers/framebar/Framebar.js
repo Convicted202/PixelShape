@@ -5,13 +5,15 @@ import {
   removeFrame,
   setCurrentFrame,
   updateFrameIndex,
-  updateFrameName
+  updateFrameName,
+  setFPS
 } from 'actions/frames';
 
 import {
   getCurrentFrameUUID,
   getAllFrames,
-  getCurrentFrameName
+  getCurrentFrameName,
+  getFPS
 } from 'selectors';
 
 import Framebar from 'components/framebar/Framebar';
@@ -19,7 +21,8 @@ import Framebar from 'components/framebar/Framebar';
 const mapStateToProps = state => ({
   currentFrameUUID: getCurrentFrameUUID(state),
   currentFrameName: getCurrentFrameName(state),
-  framesCollection: getAllFrames(state)
+  framesCollection: getAllFrames(state),
+  fps: getFPS(state)
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -37,6 +40,9 @@ const mapDispatchToProps = dispatch => ({
   },
   updateFrameName(frameUUID, name) {
     return dispatch(updateFrameName(frameUUID, name));
+  },
+  setFPS(fps) {
+    return dispatch(setFPS(fps));
   }
 })
 

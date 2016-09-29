@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import {
   getCurrentFrame,
   getAllFrames,
-  getCurrentFrameUUID
+  getCurrentFrameUUID,
+  getFPS
 } from 'selectors';
 import {
   addFrame,
@@ -16,7 +17,8 @@ import Framescontainer from 'components/framescontainer/Framescontainer';
 const mapStateToProps = state => ({
   currentUUID: getCurrentFrameUUID(state),
   currentFrame: getCurrentFrame(state),
-  framesCollection: getAllFrames(state)
+  framesCollection: getAllFrames(state),
+  fps: getFPS(state)
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -4,6 +4,7 @@ export const UPDATE_FRAME_IMAGE_DATA = 'UPDATE_FRAME_IMAGE_DATA';
 export const UPDATE_FRAME_INDEX = 'UPDATE_FRAME_INDEX';
 export const UPDATE_FRAME_NAME = 'SET_FRAME_NAME';
 export const SET_CURRENT_FRAME = 'SET_CURRENT_FRAME';
+export const SET_FPS = 'SET_FPS';
 
 export const addFrame = frame => ({
   type: ADD_FRAME,
@@ -38,3 +39,7 @@ export const setCurrentFrame = uuid => ({
   uuid
 });
 
+export const setFPS = fps => ({
+  type: SET_FPS,
+  fps
+});

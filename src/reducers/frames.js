@@ -4,11 +4,13 @@ import {
   UPDATE_FRAME_IMAGE_DATA,
   UPDATE_FRAME_NAME,
   SET_CURRENT_FRAME,
-  REMOVE_FRAME
+  REMOVE_FRAME,
+  SET_FPS
 } from 'actions/frames';
 
 const initialState = {
   currentFrame: null,
+  fps: 2,
   framesCollection: {
     /*
     frame looks like
@@ -56,6 +58,8 @@ function frames (state = initialState, action) {
       newState = Object.assign({}, state);
       delete newState.framesCollection[action.uuid]
       return Object.assign(newState);
+    case SET_FPS:
+      return Object.assign({}, state, { fps: action.fps });
     default:
       return state;
   }
