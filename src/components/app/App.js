@@ -5,6 +5,7 @@ import Toolbar from 'containers/toolbar/Toolbar';
 import Surface from 'containers/surface/Surface';
 import Sidebar from 'components/sidebar/Sidebar';
 import Framebar from 'containers/framebar/Framebar';
+import Apptoolbox from 'components/apptoolbox/Apptoolbox';
 
 class App extends Component {
   render() {
@@ -12,6 +13,7 @@ class App extends Component {
       <div className="app">
         <Toolbar />
         <div className="app__content">
+          <Apptoolbox />
           <Surface />
           <Framebar />
         </div>
