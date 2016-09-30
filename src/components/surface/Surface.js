@@ -43,6 +43,14 @@ class Surface extends Component {
     );
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    // this is very important, since we are tracking currentFrame object
+    // which is being changed all the time when framesContainer is updated
+    // render will be triggered one useless time, and slow performance
+    if (this.props.currentFrameUUID === nextProps.currentFrameUUID) return false;
+    return true;
+  }
+
   normalizeEvent(ev) {
     this.boundRect = this._canvas.getBoundingClientRect();
     return [ev.clientX - this.boundRect.left, ev.clientY - this.boundRect.top]

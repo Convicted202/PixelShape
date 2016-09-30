@@ -12,10 +12,10 @@ class Apptoolbox extends Component {
 
   downloadGIF() {
     const byteChars = this.props.gifFramesArray.join(''),
-      len = byteChars.length,
-      bytes = new Array(len);
+          len = byteChars.length,
+          bytes = new Array(len);
 
-    let i = 0, blob;
+    let i = 0, blob = null;
 
     for (; i < len; i++) {
         bytes[i] = byteChars.charCodeAt(i);
@@ -23,6 +23,10 @@ class Apptoolbox extends Component {
 
     blob = new Blob([new Uint8Array(bytes)], {type: 'image/gif'});
     FileSaver.saveAs(blob, 'myGif.gif');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
   }
 
   render() {

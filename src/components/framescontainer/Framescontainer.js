@@ -36,8 +36,7 @@ class FramesContainer extends Component {
       }
       gif = this.animationFrames.join('');
       this._gif_img.src = `data:image/gif;base64,${window.btoa(gif)}`;
-      // TODO: this is causing major delays when trying to create frames fast,
-      // and rewrites frames; should be done asynchronously
+
       this.props.updateGifFramesArray(this.animationFrames);
     });
   }
