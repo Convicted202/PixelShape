@@ -18,6 +18,10 @@ export function getTempColor(state) {
   return state.userPalette.tempColor;
 }
 
+export function getGifFramesArray(state) {
+  return state.frames.framesDataArray;
+}
+
 export function getFPS(state) {
   return state.frames.fps;
 }

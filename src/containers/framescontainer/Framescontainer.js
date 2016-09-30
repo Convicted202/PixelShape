@@ -9,6 +9,7 @@ import {
 import {
   addFrame,
   setCurrentFrame,
+  updateGifFramesArray,
   updateFrame
 } from 'actions/frames';
 
@@ -27,6 +28,9 @@ const mapDispatchToProps = dispatch => ({
   },
   setCurrentFrame(frame) {
     return dispatch(setCurrentFrame(frame));
+  },
+  updateGifFramesArray(framesDataArray) {
+    return dispatch(updateGifFramesArray(framesDataArray));
   }
 })
 

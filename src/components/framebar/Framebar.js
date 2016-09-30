@@ -87,7 +87,7 @@ class Framebar extends Component {
     frame = {
       uuid,
       index: collection[currentUUID].index + 1,
-      name: 'default',
+      name: collection[currentUUID].name + '_copy',
       imageData
     };
 
