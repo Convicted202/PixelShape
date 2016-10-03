@@ -7,11 +7,11 @@ export const DUPLICATE_FRAME = 'DUPLICATE_FRAME';
 export const UPDATE_FRAME_NAME = 'SET_FRAME_NAME';
 export const SET_CURRENT_FRAME = 'SET_CURRENT_FRAME';
 export const UPDATE_GIF_FRAMES_ARRAY = 'UPDATE_GIF_FRAMES_ARRAY';
+export const RESET_FRAMES_STATE = 'RESET_FRAMES_STATE';
 export const SET_FPS = 'SET_FPS';
 
-export const addFrame = frame => ({
-  type: ADD_FRAME,
-  frame
+export const addFrame = () => ({
+  type: ADD_FRAME
 });
 
 export const removeFrame = uuid => ({
@@ -59,4 +59,8 @@ export const updateGifFramesArray = framesDataArray => ({
 export const setFPS = fps => ({
   type: SET_FPS,
   fps
+});
+
+export const resetFramesState = () => ({
+  type: RESET_FRAMES_STATE
 });

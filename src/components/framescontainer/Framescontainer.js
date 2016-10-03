@@ -37,7 +37,7 @@ class FramesContainer extends Component {
   }
 
   componentWillMount() {
-    this.createFrame();
+    this.props.addFrame();
   }
 
   getFrames() {
@@ -53,13 +53,6 @@ class FramesContainer extends Component {
           setActive={this.props.setCurrentFrame.bind(this, uuid)}
           imageData={collection[uuid].imageData} />
       ));
-  }
-
-  createFrame() {
-    this.props.addFrame({
-      name: `default_${this.props.framesOrder.length}`,
-      imageData: null
-    });
   }
 
   // componentWillReceiveProps(nextProps) {
@@ -96,8 +89,7 @@ class FramesContainer extends Component {
   }
 
   addFrame() {
-    this.createFrame();
-
+    this.props.addFrame();
     this.setState({ frameAdded: true });
   }
 

@@ -8,6 +8,7 @@ import {
   SET_CURRENT_FRAME,
   REMOVE_FRAME,
   UPDATE_GIF_FRAMES_ARRAY,
+  RESET_FRAMES_STATE,
   SET_FPS
 } from 'actions/frames';
 
@@ -31,8 +32,12 @@ const initialState = {
   }
 }
 
+// TODO: to be moved to defaults or configs
+const frameSize = {width: 700, height: 700};
+
 function frames (state = initialState, action) {
-  const framePrefix = 'frame_';
+  const framePrefix = 'frame_',
+        frameName = 'default_';
 
   let frame,
       framesOrder = [],
@@ -47,8 +52,8 @@ function frames (state = initialState, action) {
       id = uniqueId(framePrefix);
       framesOrder = [...state.framesOrder, id];
       framesCollection[id] = {
-        name: action.frame.name,
-        imageData: action.frame.imageData
+        name: `${frameName}${state.framesOrder.length}`,
+        imageData: new ImageData(frameSize.width, frameSize.height)
       };
 
       return Object.assign({}, state, {
@@ -152,6 +157,10 @@ function frames (state = initialState, action) {
       return Object.assign({}, state, { framesDataArray: action.framesDataArray });
     case SET_FPS:
       return Object.assign({}, state, { fps: action.fps });
+
+    case RESET_FRAMES_STATE:
+      return Object.assign({}, initialState);
+
     default:
       return state;
   }

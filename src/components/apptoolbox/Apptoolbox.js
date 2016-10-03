@@ -25,15 +25,16 @@ class Apptoolbox extends Component {
     FileSaver.saveAs(blob, 'myGif.gif');
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return false;
-  // }
+  resetProject() {
+    this.props.resetFramesState();
+    this.props.addFrame();
+  }
 
   render() {
     return (
       <aside className="apptoolbox">
         <ul className="apptoolbox__buttons">
-          <li className="apptoolbox__buttons-button">
+          <li className="apptoolbox__buttons-button" onClick={this.resetProject.bind(this)}>
             <svg className="apptoolbox__buttons-button-icon" viewBox="0 0 24 24" width="30" height="30">
               <use xlinkHref="#new-project"></use>
             </svg>
