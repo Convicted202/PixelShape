@@ -1,6 +1,8 @@
 import {
   ADD_FRAME,
-  UPDATE_FRAME_INDEX,
+  MOVE_FRAME_RIGHT,
+  MOVE_FRAME_LEFT,
+  DUPLICATE_FRAME,
   UPDATE_FRAME_IMAGE_DATA,
   UPDATE_FRAME_NAME,
   SET_CURRENT_FRAME,
@@ -9,10 +11,13 @@ import {
   SET_FPS
 } from 'actions/frames';
 
+import uniqueId from 'utils/uuid';
+
 const initialState = {
   currentFrame: null,
   fps: 2,
   framesDataArray: [],
+  framesOrder: [],
   framesCollection: {
     /*
     frame looks like
@@ -27,39 +32,122 @@ const initialState = {
 }
 
 function frames (state = initialState, action) {
-  let frame, framesCollection, newState, currentFrame;
+  const framePrefix = 'frame_';
+
+  let frame,
+      framesOrder = [],
+      framesCollection = {},
+      newState,
+      currentFrame,
+      index,
+      id
 
   switch (action.type) {
     case ADD_FRAME:
-      const { index, name, imageData, uuid } = action.frame;
-      frame = {};
-      frame[uuid] = { index, name, imageData};
-      framesCollection = Object.assign({}, state.framesCollection, frame);
-      return Object.assign({}, state, { framesCollection });
+      id = uniqueId(framePrefix);
+      framesOrder = [...state.framesOrder, id];
+      framesCollection[id] = {
+        name: action.frame.name,
+        imageData: action.frame.imageData
+      };
+
+      return Object.assign({}, state, {
+        currentFrame: state.currentFrame ? state.currentFrame : id,
+        framesOrder,
+        framesCollection: Object.assign({}, state.framesCollection, framesCollection)
+      });
+
     case UPDATE_FRAME_IMAGE_DATA:
       currentFrame = state.framesCollection[action.frameUUID];
       frame = {};
       frame[action.frameUUID] = Object.assign({}, currentFrame, { imageData: action.imageData });
       framesCollection = Object.assign({}, state.framesCollection, frame);
       return Object.assign({}, state, { framesCollection });
-    case UPDATE_FRAME_INDEX:
-      currentFrame = state.framesCollection[action.frameUUID];
-      frame = {};
-      frame[action.frameUUID] = Object.assign({}, currentFrame, { index: action.index });
-      framesCollection = Object.assign({}, state.framesCollection, frame);
-      return Object.assign({}, state, { framesCollection });
+
+    case MOVE_FRAME_RIGHT:
+      index = state.framesOrder.findIndex(el => el === action.uuid);
+      if (index === state.framesOrder.length - 1) return state;
+
+      framesOrder = [
+        ...state.framesOrder.slice(0, index),
+        state.framesOrder[index + 1],
+        state.framesOrder[index]
+      ];
+
+      if (state.framesOrder.length > index + 2) {
+        framesOrder = [...framesOrder, ...state.framesOrder.slice(index + 2)];
+      }
+
+      return Object.assign({}, state, { framesOrder });
+
+    case MOVE_FRAME_LEFT:
+      index = state.framesOrder.findIndex(el => el === action.uuid);
+      if (index === 0) return state;
+
+      framesOrder = [
+        ...state.framesOrder.slice(0, index - 1),
+        state.framesOrder[index],
+        state.framesOrder[index - 1]
+      ];
+
+      if (state.framesOrder.length > index + 1) {
+        framesOrder = [...framesOrder, ...state.framesOrder.slice(index + 1)];
+      }
+
+      return Object.assign({}, state, { framesOrder });
+
+    case DUPLICATE_FRAME:
+      index = state.framesOrder.findIndex(el => el === action.uuid);
+      id = uniqueId(framePrefix);
+
+      const currentImgData = state.framesCollection[action.uuid].imageData,
+            imageData = new ImageData(currentImgData.width, currentImgData.height),
+            dataCopy = new Uint8ClampedArray(currentImgData.data);
+
+      imageData.data.set(dataCopy);
+
+      framesCollection[id] = {
+        name: `${state.framesCollection[action.uuid].name}_copy`,
+        imageData
+      };
+
+      framesOrder = [...state.framesOrder.slice(0, index + 1), id];
+      if (state.framesOrder[index + 1]) {
+        framesOrder = [...framesOrder, ...state.framesOrder.splice(index + 1)];
+      }
+
+      return Object.assign({}, state, {
+        framesOrder,
+        framesCollection: Object.assign({}, state.framesCollection, framesCollection)
+      });
+
     case UPDATE_FRAME_NAME:
       currentFrame = state.framesCollection[action.frameUUID];
       frame = {};
       frame[action.frameUUID] = Object.assign({}, currentFrame, { name: action.name });
       framesCollection = Object.assign({}, state.framesCollection, frame);
       return Object.assign({}, state, { framesCollection });
+
     case SET_CURRENT_FRAME:
       return Object.assign({}, state, { currentFrame: action.uuid });
+
     case REMOVE_FRAME:
-      newState = Object.assign({}, state);
+      index = state.framesOrder.findIndex(el => el === action.uuid);
+      if (state.framesOrder.length === 1) return state;
+
+      framesOrder = [...state.framesOrder.slice(0, index)];
+
+      if (state.framesOrder[index + 1]) {
+        framesOrder = [...framesOrder, ...state.framesOrder.slice(index + 1)];
+        currentFrame = state.framesOrder[index + 1];
+      } else {
+        currentFrame = state.framesOrder[index - 1];
+      }
+
+      newState = Object.assign({}, state, { currentFrame, framesOrder });
       delete newState.framesCollection[action.uuid]
       return Object.assign(newState);
+
     case UPDATE_GIF_FRAMES_ARRAY:
       return Object.assign({}, state, { framesDataArray: action.framesDataArray });
     case SET_FPS:

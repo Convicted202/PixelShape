@@ -1,10 +1,10 @@
 import {connect} from 'react-redux';
 
 import {
-  addFrame,
   removeFrame,
-  setCurrentFrame,
-  updateFrameIndex,
+  moveFrameRight,
+  moveFrameLeft,
+  duplicateFrame,
   updateFrameName,
   setFPS
 } from 'actions/frames';
@@ -26,17 +26,17 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addFrame(frame) {
-    return dispatch(addFrame(frame));
-  },
   removeFrame(frameUUID) {
     return dispatch(removeFrame(frameUUID));
   },
-  setCurrentFrame(frameUUID) {
-    return dispatch(setCurrentFrame(frameUUID));
+  moveFrameRight(uuid) {
+    return dispatch(moveFrameRight(uuid));
   },
-  updateFrameIndex(frameUUID, index) {
-    return dispatch(updateFrameIndex(frameUUID, index))
+  moveFrameLeft(uuid) {
+    return dispatch(moveFrameLeft(uuid));
+  },
+  duplicateFrame(uuid) {
+    return dispatch(duplicateFrame(uuid));
   },
   updateFrameName(frameUUID, name) {
     return dispatch(updateFrameName(frameUUID, name));

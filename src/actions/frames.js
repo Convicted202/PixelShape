@@ -1,7 +1,9 @@
 export const ADD_FRAME = 'ADD_FRAME';
 export const REMOVE_FRAME = 'REMOVE_FRAME';
 export const UPDATE_FRAME_IMAGE_DATA = 'UPDATE_FRAME_IMAGE_DATA';
-export const UPDATE_FRAME_INDEX = 'UPDATE_FRAME_INDEX';
+export const MOVE_FRAME_RIGHT = 'MOVE_FRAME_RIGHT';
+export const MOVE_FRAME_LEFT = 'MOVE_FRAME_LEFT';
+export const DUPLICATE_FRAME = 'DUPLICATE_FRAME';
 export const UPDATE_FRAME_NAME = 'SET_FRAME_NAME';
 export const SET_CURRENT_FRAME = 'SET_CURRENT_FRAME';
 export const UPDATE_GIF_FRAMES_ARRAY = 'UPDATE_GIF_FRAMES_ARRAY';
@@ -23,10 +25,19 @@ export const updateFrameImageData = (frameUUID, imageData) => ({
   imageData
 });
 
-export const updateFrameIndex = (frameUUID, index) => ({
-  type: UPDATE_FRAME_INDEX,
-  frameUUID,
-  index
+export const moveFrameRight = uuid => ({
+  type: MOVE_FRAME_RIGHT,
+  uuid
+});
+
+export const moveFrameLeft = uuid => ({
+  type: MOVE_FRAME_LEFT,
+  uuid
+});
+
+export const duplicateFrame = uuid => ({
+  type: DUPLICATE_FRAME,
+  uuid
 });
 
 export const updateFrameName = (frameUUID, name) => ({

@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import FrameButton from 'components/framebutton/FrameButton';
 import FramesContainer from 'containers/framescontainer/FramesContainer';
 
-import uniqueId from 'utils/uuid';
 import debounce from 'utils/debounce';
 
 class Framebar extends Component {
@@ -18,81 +17,20 @@ class Framebar extends Component {
     this.setFPS = debounce(this.props.setFPS, 300);
   }
 
-  updateIndexes(newFrameUUID, action) {
-    const collection = this.props.framesCollection,
-          shift = action === 'remove' ? -1 : 1;
-
-    Object.keys(collection)
-      .forEach(frameUUID => {
-        if (collection[frameUUID].index > collection[newFrameUUID].index) {
-          this.props.updateFrameIndex(frameUUID, collection[frameUUID].index + shift);
-        }
-      });
-  }
-
   removeCurrentFrame() {
-    const currentUUID = this.props.currentFrameUUID,
-          currentFrameIndex = this.props.framesCollection[currentUUID].index,
-          col = this.props.framesCollection,
-          nextFrame = Object.keys(col)
-                        .find(el => {
-                          if (el === this.props.currentFrameUUID) return false;
-                          // first try taking the frame to the left if exists and then to the right
-                          if (currentFrameIndex - col[el].index === 1) return true;
-                          if (col[el].index - currentFrameIndex === 1) return true;
-                        });
-
-    // no nextFrame means we have sole frame in the collection
-    if (!nextFrame) return;
-    this.updateIndexes(currentUUID, 'remove');
-    this.props.setCurrentFrame(nextFrame);
-    this.props.removeFrame(currentUUID);
+    this.props.removeFrame(this.props.currentFrameUUID);
   }
 
   moveCurrentFrameRight() {
-    this.moveCurrentFrame('right');
+    this.props.moveFrameRight(this.props.currentFrameUUID);
   }
 
   moveCurrentFrameLeft() {
-    this.moveCurrentFrame('left');
-  }
-
-  moveCurrentFrame(direction) {
-    const shift = direction === 'right' ? 1 : -1,
-          currentUUID = this.props.currentFrameUUID,
-          currentFrameIndex = this.props.framesCollection[currentUUID].index,
-          col = this.props.framesCollection,
-          nextFrame = Object.keys(col)
-                        .find(el => {
-                          if (el === this.props.currentFrameUUID) return false;
-                          if (col[el].index - currentFrameIndex === shift) return true;
-                        });
-
-    if(!nextFrame) return;
-    this.props.updateFrameIndex(currentUUID, col[currentUUID].index + shift);
-    this.props.updateFrameIndex(nextFrame, col[nextFrame].index - shift);
+    this.props.moveFrameLeft(this.props.currentFrameUUID);
   }
 
   duplicateCurrentFrame() {
-    const uuid = uniqueId(this.framePrefix),
-          currentUUID = this.props.currentFrameUUID,
-          collection = this.props.framesCollection,
-          currentImageData = collection[currentUUID].imageData;
-    let   frame = {}, imageData = null, dataCopy = null;
-
-    imageData = new ImageData(currentImageData.width, currentImageData.height);
-    dataCopy = new Uint8ClampedArray(currentImageData.data);
-    imageData.data.set(dataCopy);
-
-    frame = {
-      uuid,
-      index: collection[currentUUID].index + 1,
-      name: `${collection[currentUUID].name}_copy`,
-      imageData
-    };
-
-    this.props.addFrame(frame);
-    this.updateIndexes(currentUUID, 'add');
+    this.props.duplicateFrame(this.props.currentFrameUUID);
   }
 
   onChange(ev) {

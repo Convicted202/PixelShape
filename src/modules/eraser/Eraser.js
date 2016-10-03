@@ -12,7 +12,7 @@ class Eraser extends Brush {
     this.clearPixelCell(this._ctx, x, y);
   }
 
-  draw(ctx, x1, y1, x2, y2) {
+  draw(/* ctx, x1, y1, x2, y2 */) {
     lineTo(this.clearPixelCell.bind(this), ...arguments);
   }
 }

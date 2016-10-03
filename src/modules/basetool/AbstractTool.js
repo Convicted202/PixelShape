@@ -90,7 +90,7 @@ class AbstractTool {
     );
   }
 
-  draw(ctx, x0, y0, x1, y1) {
+  draw(ctx /*, x0, y0, x1, y1 */) {
     this.useStateOn(ctx);
   }
 

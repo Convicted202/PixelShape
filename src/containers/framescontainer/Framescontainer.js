@@ -4,13 +4,14 @@ import {
   getCurrentFrame,
   getAllFrames,
   getCurrentFrameUUID,
+  getFramesOrder,
   getFPS
 } from 'selectors';
+
 import {
   addFrame,
   setCurrentFrame,
-  updateGifFramesArray,
-  updateFrame
+  updateGifFramesArray
 } from 'actions/frames';
 
 import Framescontainer from 'components/framescontainer/Framescontainer';
@@ -19,6 +20,7 @@ const mapStateToProps = state => ({
   currentUUID: getCurrentFrameUUID(state),
   currentFrame: getCurrentFrame(state),
   framesCollection: getAllFrames(state),
+  framesOrder: getFramesOrder(state),
   fps: getFPS(state)
 });
 

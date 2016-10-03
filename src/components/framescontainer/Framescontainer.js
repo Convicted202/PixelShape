@@ -3,16 +3,11 @@ import './framescontainer.styl';
 import React, { Component } from 'react';
 import Frame from 'containers/frame/Frame';
 
-import uniqueId from 'utils/uuid';
-
-import {encode64} from 'libs/gif/index';
-
 const Worker = require('worker!workers/generateGif.worker.js');
 
 class FramesContainer extends Component {
   constructor(...args) {
     super(...args);
-    this.framePrefix = 'frame_';
 
     this.initializeGifWorker();
     this.state = {
@@ -42,49 +37,34 @@ class FramesContainer extends Component {
   }
 
   componentWillMount() {
-    const frame = this.createFrame();
-
-    this.props.addFrame(frame);
-    this.props.setCurrentFrame(frame.uuid);
+    this.createFrame();
   }
 
   getFrames() {
     const collection = this.props.framesCollection;
 
-    this.sortedFrames =
-      Object.keys(collection)
-        .sort((frameUUID1, frameUUID2) => collection[frameUUID1].index - collection[frameUUID2].index);
-
-    return this.sortedFrames
+    return this.props.framesOrder
       .map((uuid, index) => (
         <Frame
           key={uuid}
           uuid={uuid}
           isActive={uuid === this.props.currentUUID}
           index={index + 1}
-          originalIndex={collection[uuid].index}
           setActive={this.props.setCurrentFrame.bind(this, uuid)}
           imageData={collection[uuid].imageData} />
       ));
   }
 
-  createFrame(index) {
-    const uuid = uniqueId(this.framePrefix);
-    let   frame = {};
-
-    frame = {
-      uuid,
-      index: index || 0,
-      name: `default_${index || 0}`,
+  createFrame() {
+    this.props.addFrame({
+      name: `default_${this.props.framesOrder.length}`,
       imageData: null
-    };
-
-    return frame;
+    });
   }
 
-  componentWillReceiveProps(nextProps) {
-    // this.generateGif();
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   // this.generateGif();
+  // }
 
   componentDidUpdate() {
     if (this.state.frameAdded) {
@@ -97,11 +77,11 @@ class FramesContainer extends Component {
   }
 
   generateGif() {
-    const gifLength = this.sortedFrames.length;
+    const gifLength = this.props.framesOrder.length;
 
-    this.animationFrames = new Array(this.sortedFrames.length);
+    this.animationFrames = new Array(gifLength);
 
-    this.sortedFrames
+    this.props.framesOrder
       .forEach((uuid, key) => {
         if (!this.props.framesCollection[uuid].imageData) return;
         this.worker.postMessage({
@@ -116,13 +96,9 @@ class FramesContainer extends Component {
   }
 
   addFrame() {
-    const frame = this.createFrame(Object.keys(this.props.framesCollection).length);
+    this.createFrame();
 
-    this.props.addFrame(frame);
-
-    this.setState({
-      frameAdded: true
-    });
+    this.setState({ frameAdded: true });
   }
 
   render() {

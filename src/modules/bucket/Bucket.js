@@ -11,11 +11,11 @@ class Bucket extends AbstractTool {
     this.draw(this._ctx, x, y);
   }
 
-  onMouseMove(x, y) {
+  onMouseMove(/* x, y */) {
     this.filling = false;
   }
 
-  onMouseUp(x, y) {
+  onMouseUp(/* x, y */) {
     this.filling = false;
   }
 

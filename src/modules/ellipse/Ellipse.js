@@ -6,7 +6,7 @@ class Ellipse extends Boundshape {
     super(...args);
   }
 
-  draw(ctx, x0, y0, x1, y1) {
+  draw(/* ctx, x0, y0, x1, y1 */) {
     super.draw(...arguments);
     ellipse(this.drawPixelCell.bind(this), ...arguments);
   }

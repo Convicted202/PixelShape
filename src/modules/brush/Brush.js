@@ -39,7 +39,7 @@ class Brush extends AbstractTool {
     [this.x, this.y] = [null, null];
   }
 
-  draw(ctx, x1, y1, x2, y2) {
+  draw(/* ctx, x1, y1, x2, y2 */) {
     lineTo(this.drawPixelCell.bind(this), ...arguments);
   }
 }

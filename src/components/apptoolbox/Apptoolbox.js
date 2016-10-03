@@ -25,9 +25,9 @@ class Apptoolbox extends Component {
     FileSaver.saveAs(blob, 'myGif.gif');
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return false;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return false;
+  // }
 
   render() {
     return (

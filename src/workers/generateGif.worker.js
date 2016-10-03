@@ -9,8 +9,7 @@ self.onmessage = event => {
   // Need to rework this, to deal with the "REAL" black
   const isTransparencyPresent = (imageDataArr, transparentColor) => {
     let i = 0, transpUsed = -1;
-    const len = imageDataArr.length,
-          RGBA = 4;
+    const len = imageDataArr.length;
 
     for (; i < len;) {
       transpUsed *=
