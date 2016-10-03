@@ -3,16 +3,11 @@ import './surface.styl';
 import React, { Component } from 'react';
 
 import toolsMap from 'modules/toolsMap';
-// import debounce from 'utils/debounce';
 
 class Surface extends Component {
   constructor(...args) {
     super(...args);
     this.tool = toolsMap.get(this.props.tool);
-    // this.debouncedUpdateFrameImageData = debounce(
-    //   () => {
-    //     this.updateFrameImageData();
-    //   }, 500);
   }
 
   applyAllContextInformation() {
@@ -28,9 +23,8 @@ class Surface extends Component {
   }
 
   componentDidUpdate() {
-    this.tool = toolsMap.get(this.props.tool);
-    this.applyAllContextInformation();
-    this.tool.storeCallback = this.props.setTempColor.bind(this);
+    // new imageData has arrived with a new currentFrame -
+    // need to apply to the surface
     if (this.props.currentFrame.imageData) {
       this.ctx.putImageData(this.props.currentFrame.imageData, 0, 0);
     }
@@ -43,10 +37,10 @@ class Surface extends Component {
     );
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     // this is very important, since we are tracking currentFrame object
     // which is being changed all the time when framesContainer is updated
-    // render will be triggered one useless time, and slow performance
+    // do not redraw component if currentFrame doesn't change
     if (this.props.currentFrameUUID === nextProps.currentFrameUUID) return false;
     return true;
   }
@@ -57,12 +51,16 @@ class Surface extends Component {
   }
 
   onMouseDown(ev) {
+    // TODO: reorganize this later (put in external module)
+    this.tool = toolsMap.get(this.props.tool);
+    this.applyAllContextInformation();
+    this.tool.storeCallback = this.props.setTempColor.bind(this);
+
     this.tool.onMouseDown(...this.normalizeEvent(ev));
   }
 
   onMouseMove(ev) {
     this.tool.onMouseMove(...this.normalizeEvent(ev));
-    // this.debouncedUpdateFrameImageData();
   }
 
   onMouseUp(ev) {
