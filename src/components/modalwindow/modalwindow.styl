@@ -1,0 +1,50 @@
+.modalwindow
+  position: absolute
+  width: 350px
+  left: -1000%
+  top: 120px
+  transform: translateX(-50%)
+  margin: 0 auto
+  z-index: 100
+  opacity: 0
+  background: #ffffff
+  box-shadow: rgb(167, 167, 167) 0px 10px 18px
+  transition: opacity 0.1s, top 0.3s
+
+  &.shown
+    left: 50%
+    top: 180px
+    opacity: 1
+
+  header
+    padding: 24px 24px 20px
+    margin: 0px 0px -1px
+    border-bottom: 1px solid rgb(224, 224, 224)
+    font-weight: bold
+    text-transform: uppercase
+    color: #264653
+
+  section
+    padding: 10px 24px
+
+  footer
+    padding: 8px
+    margin-top: -1px
+    border-top: 1px solid rgb(224, 224, 224)
+    text-align: right
+
+    button
+      height: 36px
+      line-height: 36px
+      min-width: 88px
+      border: 0
+      padding: 0
+      outline: none
+      background: transparent
+      text-transform: uppercase
+      font-weight: bold
+      color: rgb(38, 70, 83)
+      cursor: pointer
+
+      &:hover
+        background: rgba(138, 138, 138, 0.1)
