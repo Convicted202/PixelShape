@@ -88,3 +88,35 @@ input[type=range]::-ms-thumb
     &:after
       left: 20px
       background: #70c1b3
+
+[data-tooltip]
+  &:before
+    content: attr(data-tooltip)
+    position: absolute
+    white-space: nowrap
+    padding: 3px 6px
+    font-size: 0.8em
+    border-radius: 4px
+    font-family: robotothin
+    background: #264653
+    color: #ebebeb
+    pointer-events: none
+    display: block
+    opacity: 0
+    text-transform: capitalize
+    transition: opacity .2s
+
+  &:hover:before
+    opacity: 1
+
+.tooltip-bottom[data-tooltip]
+  &:before
+    top: calc(100% + 7px)
+
+.tooltip-right[data-tooltip]
+  &:before
+    left: calc(100% + 7px)
+
+.tooltip-top[data-tooltip]
+  &:before
+    bottom: calc(100% + 7px)

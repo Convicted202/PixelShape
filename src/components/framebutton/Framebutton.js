@@ -13,7 +13,7 @@ class FrameButton extends Component {
 
   render() {
     return (
-      <li className="framebutton" onClick={this.onClick.bind(this)}>
+      <li className="framebutton tooltip-top" onClick={this.onClick.bind(this)} data-tooltip={this.props.btnTooltip}>
         <svg className="framebutton__icon" viewBox="0 0 24 24" width="24" height="24">
           <use xlinkHref={`#${this.props.icon}`}></use>
         </svg>

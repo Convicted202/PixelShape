@@ -6,7 +6,8 @@ import ToolButton from 'components/toolbutton/ToolButton';
 // TODO: move these to defaults file
 const icons = [
   'brush', 'colorfill', 'eraser', 'dropper',
-  'rect', 'circle', 'gridon', 'selectcrop', 'sizing'
+  'rect', 'circle', 'lightener', 'selectcrop'
+  // , 'sizing'
 ]
 
 class Toolbar extends Component {
@@ -25,6 +26,7 @@ class Toolbar extends Component {
       .map((icon, keyValue) => (
         <ToolButton
           key={keyValue}
+          btnTooltip={icon}
           icon={icon}
           isActive={this.props.tool === icon}
           setTool={this.props.setTool.bind(this, icon)} />

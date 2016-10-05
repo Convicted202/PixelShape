@@ -62,15 +62,19 @@ class Framebar extends Component {
           </div>
           <ul className="framebar__frames-controls">
             <FrameButton
+              btnTooltip="Duplicate"
               icon="duplicate"
               doAction={this.duplicateCurrentFrame.bind(this)} />
             <FrameButton
+              btnTooltip="Remove"
               icon="remove"
               doAction={this.removeCurrentFrame.bind(this)} />
             <FrameButton
+              btnTooltip="Move left"
               icon="move-left"
               doAction={this.moveCurrentFrameLeft.bind(this)} />
             <FrameButton
+              btnTooltip="Move right"
               icon="move-right"
               doAction={this.moveCurrentFrameRight.bind(this)} />
           </ul>

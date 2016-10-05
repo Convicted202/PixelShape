@@ -82,18 +82,23 @@ class Apptoolbox extends Component {
       <aside className="apptoolbox">
         <ul className="apptoolbox__buttons">
           <AppToolButton
+            btnTooltip="New project"
             width="30" height="30" icon="new-project"
             doAction={this.resetProject.bind(this)} />
           <AppToolButton
+            btnTooltip="Undo"
             width="30" height="30" icon="undo"
             doAction={() => {}} />
           <AppToolButton
+            btnTooltip="Redo"
             width="30" height="30" icon="redo"
             doAction={() => {}} />
           <AppToolButton
+            btnTooltip="Download"
             width="30" height="30" icon="download"
             doAction={this.downloadProject.bind(this)} />
           <AppToolButton
+            btnTooltip="Settings"
             width="30" height="30" icon="settings"
             doAction={this.customizeSettings.bind(this)} />
         </ul>
