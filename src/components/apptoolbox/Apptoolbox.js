@@ -9,32 +9,32 @@ import FileSaver from 'file-saver';
 
 class Apptoolbox extends Component {
 
-  constructor(...args) {
+  constructor (...args) {
     super(...args);
     this.state = {
       newProjectShow: false,
       downloadProjectShow: false,
       customizeSettingsShow: false
-    }
+    };
   }
 
-  downloadGIF() {
-    const byteChars = this.props.gifFramesArray.join(''),
-          len = byteChars.length,
-          bytes = new Array(len);
+  downloadGIF () {
+    const
+      byteChars = this.props.gifFramesArray.join(''),
+      len = byteChars.length,
+      bytes = new Array(len);
 
     let i = 0, blob = null;
 
-    for (; i < len; i++) {
-        bytes[i] = byteChars.charCodeAt(i);
-    }
+    for (; i < len; i++)
+      bytes[i] = byteChars.charCodeAt(i);
 
     blob = new Blob([new Uint8Array(bytes)], {type: 'image/gif'});
     FileSaver.saveAs(blob, 'myGif.gif');
   }
 
   // RESET PROJECT callbacks start
-  resetProject() {
+  resetProject () {
     this.setState({
       newProjectShow: true,
       downloadProjectShow: false,
@@ -42,19 +42,19 @@ class Apptoolbox extends Component {
     });
   }
 
-  resetProjectConfirm() {
+  resetProjectConfirm () {
     this.props.resetFramesState();
     this.props.addFrame();
     this.setState({ newProjectShow: false });
   }
 
-  resetProjectCancel() {
+  resetProjectCancel () {
     this.setState({ newProjectShow: false });
   }
   // RESET PROJECT callbacks end
 
   // SAVE PROJECT callbacks start
-  downloadProject() {
+  downloadProject () {
     this.setState({
       newProjectShow: false,
       downloadProjectShow: true,
@@ -62,35 +62,35 @@ class Apptoolbox extends Component {
     });
   }
 
-  downloadProjectConfirm() {
+  downloadProjectConfirm () {
     this.downloadGIF();
     this.setState({ downloadProjectShow: false });
   }
 
-  downloadProjectCancel() {
+  downloadProjectCancel () {
     this.setState({ downloadProjectShow: false });
   }
   // SAVE PROJECT callbacks end
 
   // CUSTOMIZE SETTINGS callbacks start
-  customizeSettings() {
+  customizeSettings () {
     this.setState({
       newProjectShow: false,
       downloadProjectShow: false,
       customizeSettingsShow: true
-    })
+    });
   }
 
-  customizeSettingsConfirm() {
+  customizeSettingsConfirm () {
     this.setState({ customizeSettingsShow: false });
   }
 
-  customizeSettingsCancel() {
-    this.setState({ customizeSettingsShow: false })
+  customizeSettingsCancel () {
+    this.setState({ customizeSettingsShow: false });
   }
   // CUSTOMIZE SETTINGS callbacks end
 
-  render() {
+  render () {
     return (
       <aside className="apptoolbox">
         <ul className="apptoolbox__buttons">
@@ -157,7 +157,7 @@ class Apptoolbox extends Component {
 
         </ModalWindow>
       </aside>
-    )
+    );
   }
 }
 

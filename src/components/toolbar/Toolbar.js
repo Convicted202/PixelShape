@@ -8,20 +8,20 @@ const icons = [
   'brush', 'colorfill', 'eraser', 'dropper',
   'rect', 'circle', 'lightener', 'selectcrop'
   // , 'sizing'
-]
+];
 
 class Toolbar extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     // this.state = {selected: 0};
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.setTool('brush');
     // console.log(this.props.tool);
   }
 
-  getButtons() {
+  getButtons () {
     return icons
       .map((icon, keyValue) => (
         <ToolButton
@@ -33,14 +33,14 @@ class Toolbar extends Component {
       ));
   }
 
-  render() {
+  render () {
     return (
       <aside className="toolbar">
         <ul className="toolbar__buttonlist">
           {this.getButtons()}
         </ul>
       </aside>
-    )
+    );
   }
 }
 

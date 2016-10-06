@@ -6,6 +6,6 @@ const uniqueId = prefix => {
   idCounter++;
   prefix = prefix ? prefix : 'unique';
   return `${prefix}${id}`;
-}
+};
 
 export default uniqueId;

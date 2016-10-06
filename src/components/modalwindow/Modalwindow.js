@@ -4,11 +4,11 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 
 class ModalWindow extends Component {
-  constructor(...args) {
+  constructor (...args) {
     super(...args);
   }
 
-  render() {
+  render () {
     const classes = classNames('modalwindow', this.props.isShown ? 'shown' : '');
 
     return (
@@ -22,7 +22,7 @@ class ModalWindow extends Component {
           <button onClick={this.props.ok.action}>{this.props.ok.text}</button>
         </footer>
       </div>
-    )
+    );
   }
 }
 

@@ -8,54 +8,54 @@ import debounce from 'utils/debounce';
 
 class Framebar extends Component {
 
-  constructor(...args) {
+  constructor (...args) {
     super(...args);
     this.state = {
       fps: 2
-    }
+    };
     this.framePrefix = 'frame_';
     this.setFPS = debounce(this.props.setFPS, 300);
   }
 
-  removeCurrentFrame() {
+  removeCurrentFrame () {
     this.props.removeFrame(this.props.currentFrameUUID);
   }
 
-  moveCurrentFrameRight() {
+  moveCurrentFrameRight () {
     this.props.moveFrameRight(this.props.currentFrameUUID);
   }
 
-  moveCurrentFrameLeft() {
+  moveCurrentFrameLeft () {
     this.props.moveFrameLeft(this.props.currentFrameUUID);
   }
 
-  duplicateCurrentFrame() {
+  duplicateCurrentFrame () {
     this.props.duplicateFrame(this.props.currentFrameUUID);
   }
 
-  onChange(ev) {
+  onChange (ev) {
     // setting just state, to make slider movable
     this.setState({ fps: ev.target.value });
     // and then setting actual fps debounced to apply changes
     this.setFPS(this.state.fps);
   }
 
-  saveCurrentFrameName() {
-    this.props.updateFrameName(this.props.currentFrameUUID, this._name_input.value);
+  saveCurrentFrameName () {
+    this.props.updateFrameName(this.props.currentFrameUUID, this._nameInput.value);
   }
 
-  componentDidUpdate() {
-    this._name_input.value = this.props.currentFrameName;
+  componentDidUpdate () {
+    this._nameInput.value = this.props.currentFrameName;
   }
 
-  render() {
+  render () {
     return (
       <aside className="framebar">
         <div className="framebar__controls">
           <div className="framebar__gif-controls">
             <input
               className="framebar__gif-slider"
-              ref={s => this._fps_slider = s}
+              ref={s => this._fpsSlider = s}
               type="range" step="1" min="1" max="24"
               value={this.state.fps}
               onChange={this.onChange.bind(this)} />
@@ -81,13 +81,13 @@ class Framebar extends Component {
           <div className="framebar__framename">
             <input
               className="framebar__framename-input"
-              ref={inp => this._name_input = inp}
+              ref={inp => this._nameInput = inp}
               onBlur={this.saveCurrentFrameName.bind(this)} />
           </div>
         </div>
         <FramesContainer />
       </aside>
-    )
+    );
   }
 }
 

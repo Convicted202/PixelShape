@@ -10,6 +10,6 @@ const ToggleCheckbox = props => (
       defaultValue={props.default || 'off'} />
     <span>{props.children}</span>
   </div>
-)
+);
 
 export default ToggleCheckbox;

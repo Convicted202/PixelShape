@@ -8,7 +8,7 @@ import Framebar from 'containers/framebar/Framebar';
 import Apptoolbox from 'containers/apptoolbox/Apptoolbox';
 
 class App extends Component {
-  render() {
+  render () {
     return (
       <div className="app">
         <Toolbar />
@@ -19,7 +19,7 @@ class App extends Component {
         </div>
         <Sidebar />
       </div>
-    )
+    );
   }
 }
 

@@ -4,15 +4,15 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 
 class ToolButton extends Component {
-  constructor(...args) {
+  constructor (...args) {
     super(...args);
   }
 
-  onClick() {
+  onClick () {
     this.props.setTool();
   }
 
-  render() {
+  render () {
     const classes = classNames('toolbutton tooltip-right', this.props.isActive ? 'active' : '');
 
     return (
@@ -21,7 +21,7 @@ class ToolButton extends Component {
           <use xlinkHref={`#${this.props.icon}`}></use>
         </svg>
       </li>
-    )
+    );
   }
 }
 

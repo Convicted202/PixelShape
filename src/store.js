@@ -20,7 +20,6 @@ const reducer = combineReducers(
   reducers
 );
 
-const createAppStore = (state = {}) =>
-  createStoreWithMiddleware(reducer, state);
+const createAppStore = (state = {}) => createStoreWithMiddleware(reducer, state);
 
 export default createAppStore;

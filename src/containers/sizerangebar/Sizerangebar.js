@@ -10,10 +10,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setSize(size) {
+  setSize (size) {
     return dispatch(setSize(size));
   }
-})
+});
 
 const SizerangebarContainer = connect(
   mapStateToProps,

@@ -8,7 +8,7 @@ const initialState = {
   tool: 'brush',
   color: '#1B2631',
   size: 10
-}
+};
 
 function tools (state = initialState, action) {
   switch (action.type) {

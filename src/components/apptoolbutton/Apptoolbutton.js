@@ -8,6 +8,6 @@ const AppToolButton = props => (
       <use xlinkHref={`#${props.icon}`}></use>
     </svg>
   </li>
-)
+);
 
 export default AppToolButton;

@@ -5,39 +5,37 @@ import React, { Component } from 'react';
 import toolsMap from 'modules/toolsMap';
 
 class Surface extends Component {
-  constructor(...args) {
+  constructor (...args) {
     super(...args);
     this.tool = toolsMap.get(this.props.tool);
   }
 
-  applyAllContextInformation() {
+  applyAllContextInformation () {
     this.tool.applyState(this.props.toolSettings);
     this.tool._assignRenderingContext(this.ctx);
     this.tool._assignBufferContext(this.buffer);
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.ctx = this._canvas.getContext('2d');
     this.buffer = this._buffer.getContext('2d');
     this.applyAllContextInformation();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     // new imageData has arrived with a new currentFrame -
     // need to apply to the surface
-    if (this.props.currentFrame.imageData) {
-      this.ctx.putImageData(this.props.currentFrame.imageData, 0, 0);
-    }
+    if (this.props.currentFrame.imageData) this.ctx.putImageData(this.props.currentFrame.imageData, 0, 0);
   }
 
-  updateFrameImageData() {
+  updateFrameImageData () {
     this.props.updateFrameImageData(
       this.props.currentFrameUUID,
       this.ctx.getImageData(0, 0, this._canvas.width, this._canvas.height)
     );
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate (nextProps) {
     // this is very important, since we are tracking currentFrame object
     // which is being changed all the time when framesContainer is updated
     // do not redraw component if currentFrame doesn't change
@@ -45,12 +43,12 @@ class Surface extends Component {
     return true;
   }
 
-  normalizeEvent(ev) {
+  normalizeEvent (ev) {
     this.boundRect = this._canvas.getBoundingClientRect();
-    return [ev.clientX - this.boundRect.left, ev.clientY - this.boundRect.top]
+    return [ev.clientX - this.boundRect.left, ev.clientY - this.boundRect.top];
   }
 
-  onMouseDown(ev) {
+  onMouseDown (ev) {
     // TODO: reorganize this later (put in external module)
     this.tool = toolsMap.get(this.props.tool);
     this.applyAllContextInformation();
@@ -59,16 +57,16 @@ class Surface extends Component {
     this.tool.onMouseDown(...this.normalizeEvent(ev));
   }
 
-  onMouseMove(ev) {
+  onMouseMove (ev) {
     this.tool.onMouseMove(...this.normalizeEvent(ev));
   }
 
-  onMouseUp(ev) {
+  onMouseUp (ev) {
     this.tool.onMouseUp(...this.normalizeEvent(ev));
     this.updateFrameImageData();
   }
 
-  render() {
+  render () {
     return (
       <main className="surface">
         <section className="surface__drawer">
@@ -89,7 +87,7 @@ class Surface extends Component {
           </canvas>
         </section>
       </main>
-    )
+    );
   }
 }
 

@@ -6,7 +6,7 @@ import Frame from 'containers/frame/Frame';
 const Worker = require('worker!workers/generateGif.worker.js');
 
 class FramesContainer extends Component {
-  constructor(...args) {
+  constructor (...args) {
     super(...args);
 
     this.initializeGifWorker();
@@ -17,7 +17,7 @@ class FramesContainer extends Component {
     };
   }
 
-  initializeGifWorker() {
+  initializeGifWorker () {
     this.animationFrames = null;
     this.worker = new Worker();
     this.worker.addEventListener('message', event => {
@@ -26,21 +26,21 @@ class FramesContainer extends Component {
 
       this.animationFrames[event.data.frameIndex] = event.data.frameData;
 
-      for (j = 0; j < length; j++) {
+      for (j = 0; j < length; j++)
         if (!this.animationFrames[j]) return;
-      }
+
       gif = this.animationFrames.join('');
-      this._gif_img.src = `data:image/gif;base64,${window.btoa(gif)}`;
+      this._gifImg.src = `data:image/gif;base64,${window.btoa(gif)}`;
 
       this.props.updateGifFramesArray(this.animationFrames);
     });
   }
 
-  componentWillMount() {
+  componentWillMount () {
     this.props.addFrame();
   }
 
-  getFrames() {
+  getFrames () {
     const collection = this.props.framesCollection;
 
     return this.props.framesOrder
@@ -59,17 +59,15 @@ class FramesContainer extends Component {
   //   // this.generateGif();
   // }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     if (this.state.frameAdded) {
-      this._add_button.scrollIntoView();
+      this._addButton.scrollIntoView();
       this.setState({frameAdded: false});
     }
-    if (this.state.initialWorkerUpdate) {
-      this.generateGif();
-    }
+    if (this.state.initialWorkerUpdate) this.generateGif();
   }
 
-  generateGif() {
+  generateGif () {
     const gifLength = this.props.framesOrder.length;
 
     this.animationFrames = new Array(gifLength);
@@ -88,17 +86,17 @@ class FramesContainer extends Component {
       });
   }
 
-  addFrame() {
+  addFrame () {
     this.props.addFrame();
     this.setState({ frameAdded: true });
   }
 
-  render() {
+  render () {
     return (
       <div className="framescontainer">
         <div className="framescontainer__gif-container">
           <div className="framescontainer__gif">
-            <img src="" ref={img => this._gif_img = img} />
+            <img src="" ref={img => this._gifImg = img} />
             <span className="framescontainer__gif-fps">{this.props.fps}fps</span>
           </div>
         </div>
@@ -106,7 +104,7 @@ class FramesContainer extends Component {
           {this.getFrames()}
           <div
             className="framescontainer__frames-addframe"
-            ref={b => this._add_button = b}
+            ref={b => this._addButton = b}
             onClick={this.addFrame.bind(this)}>
             <svg className="framescontainer__frames-addframe__icon" viewBox="0 0 24 24" width="40" height="40">
               <use xlinkHref="#plus"></use>
@@ -114,7 +112,7 @@ class FramesContainer extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

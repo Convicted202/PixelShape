@@ -19,13 +19,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setTempColor(color) {
+  setTempColor (color) {
     return dispatch(setTempColor(color));
   },
-  updateFrameImageData(frameUUID, imageData) {
+  updateFrameImageData (frameUUID, imageData) {
     return dispatch(updateFrameImageData(frameUUID, imageData));
   }
-})
+});
 
 const SurfaceContainer = connect(
   mapStateToProps,

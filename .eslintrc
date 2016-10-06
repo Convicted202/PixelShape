@@ -8,6 +8,7 @@
   },
   "extends": [
     'eslint:recommended',
+    '@eleks/eleks',
     'plugin:react/recommended'
   ],
   "env": {
@@ -21,6 +22,10 @@
   "rules": {
     "quotes": [2, "single"],
     "strict": [2, "never"],
+    "indent": [2, 2, {"SwitchCase": 1}],
+    "one-var": 0,
+    "no-return-assign": 0,
+    "no-multi-spaces": 0,
     "react/prop-types": 0,
     // jsx
     "react/jsx-closing-bracket-location": [1, {

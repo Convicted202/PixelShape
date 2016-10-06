@@ -7,7 +7,7 @@ import Colorpicker from 'components/colorpicker/Colorpicker';
 import colors from 'defaults/palette';
 
 class Colorbar extends Component {
-  getPalette(colors) {
+  getPalette (colors) {
     return colors
       .map(colorObj => (
         <Coloritem
@@ -20,15 +20,15 @@ class Colorbar extends Component {
       ));
   }
 
-  getDefaultColorPalette() {
+  getDefaultColorPalette () {
     return this.getPalette(colors);
   }
 
-  getUserColorPalette() {
+  getUserColorPalette () {
     return this.getPalette(this.props.userColors);
   }
 
-  render() {
+  render () {
     return (
       <div className="colorbar">
         <div className="colorbar__default-palette">
@@ -44,7 +44,7 @@ class Colorbar extends Component {
           {this.getUserColorPalette()}
         </div>
       </div>
-    )
+    );
   }
 }
 

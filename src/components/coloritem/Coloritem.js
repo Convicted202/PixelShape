@@ -4,11 +4,11 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 
 class Coloritem extends Component {
-  onClick() {
+  onClick () {
     this.props.setColor(this.props.color);
   }
 
-  render() {
+  render () {
     const classes = classNames('color', this.props.isActive ? 'active' : '');
 
     return (
@@ -21,7 +21,7 @@ class Coloritem extends Component {
         onClick={this.onClick.bind(this)}>
         {this.props.children}
       </div>
-    )
+    );
   }
 }
 

@@ -26,25 +26,25 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  removeFrame(frameUUID) {
+  removeFrame (frameUUID) {
     return dispatch(removeFrame(frameUUID));
   },
-  moveFrameRight(uuid) {
+  moveFrameRight (uuid) {
     return dispatch(moveFrameRight(uuid));
   },
-  moveFrameLeft(uuid) {
+  moveFrameLeft (uuid) {
     return dispatch(moveFrameLeft(uuid));
   },
-  duplicateFrame(uuid) {
+  duplicateFrame (uuid) {
     return dispatch(duplicateFrame(uuid));
   },
-  updateFrameName(frameUUID, name) {
+  updateFrameName (frameUUID, name) {
     return dispatch(updateFrameName(frameUUID, name));
   },
-  setFPS(fps) {
+  setFPS (fps) {
     return dispatch(setFPS(fps));
   }
-})
+});
 
 const FramebarContainer = connect(
   mapStateToProps,

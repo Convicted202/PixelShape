@@ -5,10 +5,10 @@ import {updateFrameImageData} from 'actions/frames';
 import Frame from 'components/frame/Frame';
 
 const mapDispatchToProps = dispatch => ({
-  updateFrameImageData(frameUUID, imageData) {
+  updateFrameImageData (frameUUID, imageData) {
     return dispatch(updateFrameImageData(frameUUID, imageData));
   }
-})
+});
 
 const FrameContainer = connect(
   null,

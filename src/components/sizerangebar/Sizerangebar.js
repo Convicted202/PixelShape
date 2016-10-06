@@ -4,30 +4,30 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 
 class Sizerangebar extends Component {
-  constructor(...args) {
+  constructor (...args) {
     super(...args);
     this.state = {
       isActive: false,
-    }
+    };
   }
 
-  onChange(ev) {
-    this.props.setSize(ev.target.value)
+  onChange (ev) {
+    this.props.setSize(ev.target.value);
   }
 
-  onMouseDown() {
+  onMouseDown () {
     this.setState({
       isActive: true
-    })
+    });
   }
 
-  onMouseUp() {
+  onMouseUp () {
     this.setState({
       isActive: false
-    })
+    });
   }
 
-  render() {
+  render () {
     const classes = classNames('sizerangebar__value', this.state.isActive ? 'active' : '');
 
     return (
@@ -48,7 +48,7 @@ class Sizerangebar extends Component {
           {this.props.currentSize / 10}
         </div>
       </div>
-    )
+    );
   }
 }
 

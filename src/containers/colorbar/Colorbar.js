@@ -13,13 +13,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addColor(color) {
+  addColor (color) {
     return dispatch(addColor(color));
   },
-  setColor(color) {
+  setColor (color) {
     return dispatch(setColor(color));
   }
-})
+});
 
 const ColorbarContainer = connect(
   mapStateToProps,

@@ -30,22 +30,24 @@ const initialState = {
     }
     */
   }
-}
+};
 
 // TODO: to be moved to defaults or configs
 const frameSize = {width: 700, height: 700};
 
 function frames (state = initialState, action) {
-  const framePrefix = 'frame_',
-        frameName = 'default_';
+  const
+    framePrefix = 'frame_',
+    frameName = 'default_';
 
-  let frame,
-      framesOrder = [],
-      framesCollection = {},
-      newState,
-      currentFrame,
-      index,
-      id
+  let
+    frame,
+    framesOrder = [],
+    framesCollection = {},
+    newState,
+    currentFrame,
+    index,
+    id;
 
   switch (action.type) {
     case ADD_FRAME:
@@ -79,9 +81,8 @@ function frames (state = initialState, action) {
         state.framesOrder[index]
       ];
 
-      if (state.framesOrder.length > index + 2) {
+      if (state.framesOrder.length > index + 2)
         framesOrder = [...framesOrder, ...state.framesOrder.slice(index + 2)];
-      }
 
       return Object.assign({}, state, { framesOrder });
 
@@ -95,9 +96,8 @@ function frames (state = initialState, action) {
         state.framesOrder[index - 1]
       ];
 
-      if (state.framesOrder.length > index + 1) {
+      if (state.framesOrder.length > index + 1)
         framesOrder = [...framesOrder, ...state.framesOrder.slice(index + 1)];
-      }
 
       return Object.assign({}, state, { framesOrder });
 
@@ -105,9 +105,10 @@ function frames (state = initialState, action) {
       index = state.framesOrder.findIndex(el => el === action.uuid);
       id = uniqueId(framePrefix);
 
-      const currentImgData = state.framesCollection[action.uuid].imageData,
-            imageData = new ImageData(currentImgData.width, currentImgData.height),
-            dataCopy = new Uint8ClampedArray(currentImgData.data);
+      const
+        currentImgData = state.framesCollection[action.uuid].imageData,
+        imageData = new ImageData(currentImgData.width, currentImgData.height),
+        dataCopy = new Uint8ClampedArray(currentImgData.data);
 
       imageData.data.set(dataCopy);
 
@@ -117,9 +118,9 @@ function frames (state = initialState, action) {
       };
 
       framesOrder = [...state.framesOrder.slice(0, index + 1), id];
-      if (state.framesOrder[index + 1]) {
+
+      if (state.framesOrder[index + 1])
         framesOrder = [...framesOrder, ...state.framesOrder.splice(index + 1)];
-      }
 
       return Object.assign({}, state, {
         framesOrder,
@@ -145,12 +146,11 @@ function frames (state = initialState, action) {
       if (state.framesOrder[index + 1]) {
         framesOrder = [...framesOrder, ...state.framesOrder.slice(index + 1)];
         currentFrame = state.framesOrder[index + 1];
-      } else {
+      } else
         currentFrame = state.framesOrder[index - 1];
-      }
 
       newState = Object.assign({}, state, { currentFrame, framesOrder });
-      delete newState.framesCollection[action.uuid]
+      delete newState.framesCollection[action.uuid];
       return Object.assign(newState);
 
     case UPDATE_GIF_FRAMES_ARRAY:

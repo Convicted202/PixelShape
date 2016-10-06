@@ -11,13 +11,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  resetFramesState() {
+  resetFramesState () {
     return dispatch(resetFramesState());
   },
-  addFrame() {
+  addFrame () {
     return dispatch(addFrame());
   }
-})
+});
 
 const ApptoolboxContainer = connect(
   mapStateToProps,

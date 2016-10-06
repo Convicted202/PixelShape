@@ -5,7 +5,7 @@ import Colorbar from 'containers/colorbar/Colorbar';
 import Sizerangebar from 'containers/sizerangebar/Sizerangebar';
 
 class Sidebar extends Component {
-  render() {
+  render () {
     return (
       <aside className="sidebar">
         <Colorbar />
@@ -22,7 +22,7 @@ class Sidebar extends Component {
         </div>
 
       </aside>
-    )
+    );
   }
 }
 

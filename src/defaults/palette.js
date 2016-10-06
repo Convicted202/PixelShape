@@ -11,4 +11,4 @@ export default [
   { color: '#7B7D7D' },
   { color: '#4D5656' },
   { color: '#1B2631' }
-]
+];

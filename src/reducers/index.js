@@ -6,6 +6,6 @@ const reducers = {
   tools,
   userPalette,
   frames
-}
+};
 
 export default reducers;

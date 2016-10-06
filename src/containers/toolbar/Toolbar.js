@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setTool(tool) {
+  setTool (tool) {
     return dispatch(setTool(tool));
   }
 });

@@ -3,23 +3,23 @@ import './colorpicker.styl';
 import React, { Component } from 'react';
 
 // TODO: move this to defaults file
-const defaultColor='#b7b7b7';
+const defaultColor = '#b7b7b7';
 
 class Colorpicker extends Component {
-  constructor(...args) {
+  constructor (...args) {
     super(...args);
     this.pattern = /^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
     this.state = {
       currentColor: defaultColor,
       borderColor: defaultColor
-    }
+    };
   }
 
-  getInputColor(ev) {
+  getInputColor (ev) {
     return ev.target.value.match(this.pattern) ? ev.target.value : defaultColor;
   }
 
-  onChange(ev) {
+  onChange (ev) {
     const value = this.getInputColor(ev);
     this.setState({
       borderColor: value,
@@ -27,7 +27,7 @@ class Colorpicker extends Component {
     });
   }
 
-  onBlur(ev) {
+  onBlur (ev) {
     const value = this.getInputColor(ev);
     this.setState({
       borderColor: value,
@@ -35,25 +35,25 @@ class Colorpicker extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     this.setState({
       borderColor: nextProps.tempColor,
       currentColor: nextProps.tempColor
     });
   }
 
-  getUserColorsList() {
+  getUserColorsList () {
     return this.props.userColors.map(colorObj => colorObj.color);
   }
 
-  onClick() {
+  onClick () {
     if (!this.state.currentColor.match(this.pattern)) return;
-    if (!this.getUserColorsList().includes(this.state.currentColor)) {
-      this.props.addColor(this.state.currentColor);
-    }
+    if (this.getUserColorsList().includes(this.state.currentColor)) return;
+
+    this.props.addColor(this.state.currentColor);
   }
 
-  render() {
+  render () {
     return (
       <div className="colorpicker">
         <div className="colorbar__label">Hex</div>
@@ -71,7 +71,7 @@ class Colorpicker extends Component {
           </svg>
         </div>
       </div>
-    )
+    );
   }
 }
 

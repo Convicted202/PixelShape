@@ -6,12 +6,12 @@ import {
 } from 'utils/colorUtils';
 
 class Dropper extends AbstractTool {
-  constructor(...args) {
+  constructor (...args) {
     super(...args);
     [this.buf_x, this.buf_y] = [null, null];
   }
 
-  handleBufferBrushMove(x, y) {
+  handleBufferBrushMove (x, y) {
     // "ghost" moving
     // on each move clear previous pixel and draw current
     this._buffer.save();
@@ -22,23 +22,24 @@ class Dropper extends AbstractTool {
     [this.buf_x, this.buf_y] = [x, y];
   }
 
-  getUnderlyingColor(x, y) {
-    const rounds = this.getPixeledCoords(x, y),
-          imageData = this._ctx.getImageData(0, 0, this._ctx.canvas.width, this._ctx.canvas.height),
-          index = getPixelFromImageData(imageData, rounds.x, rounds.y),
-          rgbaColor = getColor(imageData, index);
+  getUnderlyingColor (x, y) {
+    const
+      rounds = this.getPixeledCoords(x, y),
+      imageData = this._ctx.getImageData(0, 0, this._ctx.canvas.width, this._ctx.canvas.height),
+      index = getPixelFromImageData(imageData, rounds.x, rounds.y),
+      rgbaColor = getColor(imageData, index);
 
     return rgbToHex(...rgbaColor);
   }
 
-  onMouseDown(x, y) {
+  onMouseDown (x, y) {
     const hexColor = this.getUnderlyingColor(x, y);
 
     this.mouseDown = true;
     this.processColor(hexColor);
   }
 
-  onMouseMove(x, y) {
+  onMouseMove (x, y) {
     this.handleBufferBrushMove(x, y);
     // actual picking
     if (!this.mouseDown) return;
@@ -47,13 +48,13 @@ class Dropper extends AbstractTool {
     this.processColor(hexColor);
   }
 
-  onMouseUp(x, y) {
+  onMouseUp (x, y) {
     const hexColor = this.getUnderlyingColor(x, y);
     this.mouseDown = false;
     this.processColor(hexColor);
   }
 
-  processColor(color) {
+  processColor (color) {
     this.storeCallback(color);
   }
 }

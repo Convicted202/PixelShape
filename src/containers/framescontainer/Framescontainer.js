@@ -25,16 +25,16 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addFrame(frame) {
+  addFrame (frame) {
     return dispatch(addFrame(frame));
   },
-  setCurrentFrame(frame) {
+  setCurrentFrame (frame) {
     return dispatch(setCurrentFrame(frame));
   },
-  updateGifFramesArray(framesDataArray) {
+  updateGifFramesArray (framesDataArray) {
     return dispatch(updateGifFramesArray(framesDataArray));
   }
-})
+});
 
 const FramescontainerConnected = connect(
   mapStateToProps,
