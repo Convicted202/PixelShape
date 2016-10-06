@@ -9,7 +9,10 @@
     "start": "webpack-dev-server",
     "prebuild": "npm run clean",
     "build": "cross-env NODE_ENV=production webpack -p",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint ./src",
+    "pretest": "npm run lint",
+    "test": "cross-env NODE_PATH=src babel-node node_modules/blue-tape/bin/blue-tape test/**/*.spec.js",
+    "test:dev": "npm test | faucet || true"
   },
   "keywords": [
     "pixel",
@@ -21,11 +24,13 @@
   "author": "Alexander Yanovych",
   "license": "MIT",
   "devDependencies": {
+    "babel-cli": "^6.16.0",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-2": "^6.13.0",
+    "blue-tape": "^1.0.0",
     "classnames": "^2.2.5",
     "cross-env": "^2.0.1",
     "css-loader": "^0.25.0",
@@ -33,6 +38,7 @@
     "eslint-loader": "^1.5.0",
     "eslint-plugin-react": "^6.2.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "faucet": "0.0.1",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.22.0",
     "open": "0.0.5",
