@@ -1,3 +1,3 @@
 # PixelShape
 
-Web-based pixel drawing tool
+Web-based pixel drawing tool.
