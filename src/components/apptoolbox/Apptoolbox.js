@@ -1,8 +1,9 @@
 import './apptoolbox.styl';
 
 import React, { Component } from 'react';
-import AppToolButton from 'components/apptoolbutton/AppToolButton';
-import ModalWindow from 'components/modalwindow/ModalWindow';
+import AppToolButton from 'components/apptoolbutton/Apptoolbutton';
+import ModalWindow from 'components/modalwindow/Modalwindow';
+import ToggleCheckbox from 'components/togglecheckbox/Togglecheckbox';
 
 import FileSaver from 'file-saver';
 
@@ -34,7 +35,11 @@ class Apptoolbox extends Component {
 
   // RESET PROJECT callbacks start
   resetProject() {
-    this.setState({ newProjectShow: true });
+    this.setState({
+      newProjectShow: true,
+      downloadProjectShow: false,
+      customizeSettingsShow: false
+    });
   }
 
   resetProjectConfirm() {
@@ -50,7 +55,11 @@ class Apptoolbox extends Component {
 
   // SAVE PROJECT callbacks start
   downloadProject() {
-    this.setState({ downloadProjectShow: true });
+    this.setState({
+      newProjectShow: false,
+      downloadProjectShow: true,
+      customizeSettingsShow: false
+    });
   }
 
   downloadProjectConfirm() {
@@ -65,7 +74,11 @@ class Apptoolbox extends Component {
 
   // CUSTOMIZE SETTINGS callbacks start
   customizeSettings() {
-    this.setState({ customizeSettingsShow: true })
+    this.setState({
+      newProjectShow: false,
+      downloadProjectShow: false,
+      customizeSettingsShow: true
+    })
   }
 
   customizeSettingsConfirm() {
@@ -103,14 +116,14 @@ class Apptoolbox extends Component {
             doAction={this.customizeSettings.bind(this)} />
         </ul>
 
+        <div className="modalContainer"></div>
         <ModalWindow
           title="New project"
           ok={{ text: 'Create', action: this.resetProjectConfirm.bind(this) }}
           cancel={{ text: 'Cancel', action: this.resetProjectCancel.bind(this) }}
           isShown={this.state.newProjectShow}>
 
-          <input className="switch" type="checkbox" defaultValue="off" />
-          <span>Reset palette (not working yet)</span>
+          <ToggleCheckbox>Reset palette</ToggleCheckbox>
         </ModalWindow>
 
         <ModalWindow
@@ -119,6 +132,9 @@ class Apptoolbox extends Component {
           cancel={{ text: 'Cancel', action: this.downloadProjectCancel.bind(this) }}
           isShown={this.state.downloadProjectShow}>
 
+          <ToggleCheckbox>Include spritesheet</ToggleCheckbox>
+          <ToggleCheckbox>Include custom palette</ToggleCheckbox>
+
         </ModalWindow>
 
         <ModalWindow
@@ -126,6 +142,18 @@ class Apptoolbox extends Component {
           ok={{ text: 'Save', action: this.customizeSettingsConfirm.bind(this) }}
           cancel={{ text: 'Cancel', action: this.customizeSettingsCancel.bind(this) }}
           isShown={this.state.customizeSettingsShow}>
+
+          <div className="apptoolbox__dimensions">
+            <div>
+              <span className="apptoolbox__inputlabel">Width </span>
+              <input className="apptoolbox__inputinline" defaultValue="700" />
+            </div>
+            <div>
+              <span className="apptoolbox__inputlabel">Height </span>
+              <input className="apptoolbox__inputinline" defaultValue="700" />
+            </div>
+          </div>
+          <ToggleCheckbox>Show grid</ToggleCheckbox>
 
         </ModalWindow>
       </aside>
