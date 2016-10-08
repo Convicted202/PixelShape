@@ -13,7 +13,8 @@ import {
   getCurrentFrameUUID,
   getAllFrames,
   getCurrentFrameName,
-  getFPS
+  getFPS,
+  getFramebarVisibility
 } from 'selectors';
 
 import Framebar from 'components/framebar/Framebar';
@@ -22,7 +23,8 @@ const mapStateToProps = state => ({
   currentFrameUUID: getCurrentFrameUUID(state),
   currentFrameName: getCurrentFrameName(state),
   framesCollection: getAllFrames(state),
-  fps: getFPS(state)
+  fps: getFPS(state),
+  visible: getFramebarVisibility(state)
 });
 
 const mapDispatchToProps = dispatch => ({

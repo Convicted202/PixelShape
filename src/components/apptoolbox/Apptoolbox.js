@@ -14,6 +14,7 @@ class Apptoolbox extends Component {
     this.state = {
       newProjectShow: false,
       downloadProjectShow: false,
+      customizePanelsShow: false,
       customizeSettingsShow: false
     };
   }
@@ -38,6 +39,7 @@ class Apptoolbox extends Component {
     this.setState({
       newProjectShow: true,
       downloadProjectShow: false,
+      customizePanelsShow: false,
       customizeSettingsShow: false
     });
   }
@@ -58,6 +60,7 @@ class Apptoolbox extends Component {
     this.setState({
       newProjectShow: false,
       downloadProjectShow: true,
+      customizePanelsShow: false,
       customizeSettingsShow: false
     });
   }
@@ -72,11 +75,27 @@ class Apptoolbox extends Component {
   }
   // SAVE PROJECT callbacks end
 
+  // CUSTOMIZE PANELS callbacks start
+  customizePanels () {
+    this.setState({
+      newProjectShow: false,
+      downloadProjectShow: false,
+      customizePanelsShow: true,
+      customizeSettingsShow: false
+    });
+  }
+
+  customizePanelsCancel () {
+    this.setState({ customizePanelsShow: false });
+  }
+  // CUSTOMIZE PANNELS callbacks end
+
   // CUSTOMIZE SETTINGS callbacks start
   customizeSettings () {
     this.setState({
       newProjectShow: false,
       downloadProjectShow: false,
+      customizePanelsShow: false,
       customizeSettingsShow: true
     });
   }
@@ -111,6 +130,10 @@ class Apptoolbox extends Component {
             width="30" height="30" icon="download"
             doAction={this.downloadProject.bind(this)} />
           <AppToolButton
+            btnTooltip="Panels"
+            width="30" height="30" icon="panels"
+            doAction={this.customizePanels.bind(this)} />
+          <AppToolButton
             btnTooltip="Settings"
             width="30" height="30" icon="settings"
             doAction={this.customizeSettings.bind(this)} />
@@ -134,6 +157,24 @@ class Apptoolbox extends Component {
 
           <ToggleCheckbox>Include spritesheet</ToggleCheckbox>
           <ToggleCheckbox>Include custom palette</ToggleCheckbox>
+
+        </ModalWindow>
+
+        <ModalWindow
+          title="Customize panels"
+          ok={{ text: 'Ok', action: this.customizePanelsCancel.bind(this) }}
+          cancel={{ text: 'Cancel', action: this.customizePanelsCancel.bind(this) }}
+          isShown={this.state.customizePanelsShow}>
+
+          <ToggleCheckbox
+            value={this.props.toolbarVisible}
+            onChange={this.props.toggleToolbar.bind(this)}>Show toolbar</ToggleCheckbox>
+          <ToggleCheckbox
+            value={this.props.sidebarVisible}
+            onChange={this.props.toggleSidebar.bind(this)}>Show sidebar</ToggleCheckbox>
+          <ToggleCheckbox
+            value={this.props.framebarVisible}
+            onChange={this.props.toggleFramebar.bind(this)}>Show framebar</ToggleCheckbox>
 
         </ModalWindow>
 

@@ -7,7 +7,8 @@ const ToggleCheckbox = props => (
     <input
       className="togglecheckbox__switch"
       type="checkbox"
-      defaultValue={props.default || 'off'} />
+      checked={props.value}
+      onChange={props.onChange} />
     <span>{props.children}</span>
   </div>
 );

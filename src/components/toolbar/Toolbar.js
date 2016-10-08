@@ -35,7 +35,7 @@ class Toolbar extends Component {
 
   render () {
     return (
-      <aside className="toolbar">
+      <aside className="toolbar" style={{display: this.props.visible ? 'block' : 'none'}}>
         <ul className="toolbar__buttonlist">
           {this.getButtons()}
         </ul>

@@ -50,7 +50,7 @@ class Framebar extends Component {
 
   render () {
     return (
-      <aside className="framebar">
+      <aside className="framebar" style={{display: this.props.visible ? 'block' : 'none'}}>
         <div className="framebar__controls">
           <div className="framebar__gif-controls">
             <input

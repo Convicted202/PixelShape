@@ -7,7 +7,7 @@ import Sizerangebar from 'containers/sizerangebar/Sizerangebar';
 class Sidebar extends Component {
   render () {
     return (
-      <aside className="sidebar">
+      <aside className="sidebar" style={{display: this.props.visible ? 'block' : 'none'}}>
         <Colorbar />
         <Sizerangebar />
 

@@ -1,12 +1,13 @@
 import {connect} from 'react-redux';
 
 import {setTool} from '../../actions/tools';
-import {getTool} from 'selectors';
+import {getTool, getToolbarVisibility} from 'selectors';
 
 import Toolbar from 'components/toolbar/Toolbar';
 
 const mapStateToProps = state => ({
-  tool: getTool(state)
+  tool: getTool(state),
+  visible: getToolbarVisibility(state)
 });
 
 const mapDispatchToProps = dispatch => ({
