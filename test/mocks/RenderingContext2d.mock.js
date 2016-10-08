@@ -9,7 +9,8 @@ const methods = [
   'lineTo',       'closePath',
   'stroke',       'translate',
   'scale',        'rotate',
-  'arc',          'fill'
+  'arc',          'fill',
+  'strokeRect'
 ];
 
 class RenderingContext2d {

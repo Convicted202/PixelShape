@@ -63,28 +63,24 @@ class AbstractTool {
   }
 
   drawPixelCell (ctx, x, y) {
-    const
-      coords = this.getPixeledCoords(x, y),
-      roundCoords = coords ? coords : [null, null];
+    const coords = this.getPixeledCoords(x, y);
 
     if (!coords) return;
     ctx.fillRect(
-      roundCoords.x,
-      roundCoords.y,
+      coords.x,
+      coords.y,
       this.state.size,
       this.state.size
     );
   }
 
   clearPixelCell (ctx, x, y) {
-    const
-      coords = this.getPixeledCoords(x, y),
-      roundCoords = coords ? coords : [null, null];
+    const coords = this.getPixeledCoords(x, y);
 
     if (!coords) return;
     ctx.clearRect(
-      roundCoords.x,
-      roundCoords.y,
+      coords.x,
+      coords.y,
       this.state.size,
       this.state.size
     );

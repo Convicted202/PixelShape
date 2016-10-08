@@ -20,7 +20,7 @@ test('AbstractTool =>', (expect) => {
 
     tool._assignBufferContext(context);
     expect.ok(tool._buffer, 'Should assign new buffer context');
-    expect.ok(context.clearRect.called, 'Should clear the buffer context surface when assigned');
+    expect.ok(context.clearRect.called, 'Should clear buffer context surface when assigned');
     expect.ok(tool.useStateOn.called, 'Should apply state on buffer context');
     expect.end();
   });
@@ -100,8 +100,10 @@ test('AbstractTool =>', (expect) => {
   expect.test('::drawPixelCell', (expect) => {
     before();
 
-    tool.drawPixelCell(context, 100, 100);
+    tool.getPixeledCoords = sinon.stub().returns({ x: 100, y: 100 });
+    tool.drawPixelCell(context, 104, 104);
 
+    expect.ok(tool.getPixeledCoords.called, 'Should truncate coords before drawing');
     expect.ok(context.fillRect.called, 'Should draw pixel cell with provided coordinates');
     expect.end();
   });
@@ -109,8 +111,10 @@ test('AbstractTool =>', (expect) => {
   expect.test('::clearPixelCell', (expect) => {
     before();
 
-    tool.clearPixelCell(context, 100, 100);
+    tool.getPixeledCoords = sinon.stub().returns({ x: 100, y: 100 });
+    tool.clearPixelCell(context, 104, 104);
 
+    expect.ok(tool.getPixeledCoords.called, 'Should truncate coords before clearing');
     expect.ok(context.clearRect.called, 'Should clear pixel cell with provided coordinates');
     expect.end();
   })
