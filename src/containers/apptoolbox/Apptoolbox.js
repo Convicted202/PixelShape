@@ -7,6 +7,7 @@ import {
   getFramebarVisibility
 } from 'selectors';
 
+import {resetUserColors} from 'actions/palette';
 import {resetFramesState, addFrame} from 'actions/frames';
 import {toggleToolbar, toggleSidebar, toggleFramebar} from 'actions/panels';
 
@@ -20,6 +21,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  resetUserColors () {
+    return dispatch(resetUserColors());
+  },
   resetFramesState () {
     return dispatch(resetFramesState());
   },

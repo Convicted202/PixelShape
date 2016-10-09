@@ -12,11 +12,16 @@ class Apptoolbox extends Component {
   constructor (...args) {
     super(...args);
     this.state = {
+      resetPaletteFlag: false,
       newProjectShow: false,
       downloadProjectShow: false,
       customizePanelsShow: false,
       customizeSettingsShow: false
     };
+  }
+
+  togglePaletteFlag () {
+    this.setState({ resetPaletteFlag: !this.state.resetPaletteFlag });
   }
 
   downloadGIF () {
@@ -45,6 +50,7 @@ class Apptoolbox extends Component {
   }
 
   resetProjectConfirm () {
+    if (this.state.resetPaletteFlag) this.props.resetUserColors();
     this.props.resetFramesState();
     this.props.addFrame();
     this.setState({ newProjectShow: false });
@@ -146,7 +152,9 @@ class Apptoolbox extends Component {
           cancel={{ text: 'Cancel', action: this.resetProjectCancel.bind(this) }}
           isShown={this.state.newProjectShow}>
 
-          <ToggleCheckbox>Reset palette</ToggleCheckbox>
+          <ToggleCheckbox
+            value={this.state.resetPaletteFlag}
+            onChange={this.togglePaletteFlag.bind(this)}>Reset palette</ToggleCheckbox>
         </ModalWindow>
 
         <ModalWindow

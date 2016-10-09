@@ -1,9 +1,15 @@
 import {
   ADD_COLOR,
-  SET_TEMP_COLOR
+  SET_TEMP_COLOR,
+  RESET_USER_COLORS
 } from 'actions/palette';
 
-function userPalette (state = { tempColor: '', colors: [] }, action) {
+const initialState = {
+  tempColor: '',
+  colors: []
+};
+
+function userPalette (state = initialState, action) {
   let userColors;
 
   switch (action.type) {
@@ -12,6 +18,8 @@ function userPalette (state = { tempColor: '', colors: [] }, action) {
       return Object.assign({}, state, { colors: userColors });
     case SET_TEMP_COLOR:
       return Object.assign({}, state, { tempColor: action.color });
+    case RESET_USER_COLORS:
+      return Object.assign({}, initialState);
     default:
       return state;
   }
