@@ -44,7 +44,7 @@ test('AbstractTool =>', (expect) => {
     before();
 
     const state = {
-      size: tool.state.size,
+      size: tool.size,
       color: tool.state.color,
       alpha: tool.state.alpha,
       compositeOperation: tool.state.compositeOperation
@@ -87,7 +87,7 @@ test('AbstractTool =>', (expect) => {
 
     let coords;
 
-    tool.applyState({ size: 20, gridCellSize: 10 });
+    tool.applyState({ size: 2, gridCellSize: 10 });
 
     expect.false(tool.getPixeledCoords(), 'Should return false on empty args');
 
