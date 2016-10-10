@@ -31,12 +31,16 @@ class AbstractTool {
     this.useStateOn(this._ctx);
   }
 
+  get size () {
+    return this.state.size * this.state.gridCellSize;
+  }
+
   applyState (state) {
     Object.assign(this.state, state);
   }
 
   useStateOn (ctx) {
-    ctx.lineWidth = this.state.size;
+    ctx.lineWidth = this.size;
     ctx.fillStyle = this.state.color;
     ctx.strokeStyle = this.state.color;
     ctx.globalAlpha = this.state.alpha;
@@ -53,8 +57,8 @@ class AbstractTool {
     if (!x || !y) return false;
     // shift x and y half a brush size and get how much grid pixels are in it
     const
-      timesX = Math.floor((x - this.state.size / 2) / this.state.gridCellSize),
-      timesY = Math.floor((y - this.state.size / 2) / this.state.gridCellSize);
+      timesX = Math.floor((x - this.size / 2) / this.state.gridCellSize),
+      timesY = Math.floor((y - this.size / 2) / this.state.gridCellSize);
 
     return {
       x: timesX * this.state.gridCellSize,
@@ -69,8 +73,8 @@ class AbstractTool {
     ctx.fillRect(
       coords.x,
       coords.y,
-      this.state.size,
-      this.state.size
+      this.size,
+      this.size
     );
   }
 
@@ -81,8 +85,8 @@ class AbstractTool {
     ctx.clearRect(
       coords.x,
       coords.y,
-      this.state.size,
-      this.state.size
+      this.size,
+      this.size
     );
   }
 

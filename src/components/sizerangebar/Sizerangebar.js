@@ -36,16 +36,16 @@ class Sizerangebar extends Component {
         <input
           className="sizerangebar__input"
           type="range"
-          step="10"
-          min="10"
-          max="100"
+          step="1"
+          min="1"
+          max="10"
           value={this.props.currentSize}
           onChange={this.onChange.bind(this)}
           onMouseDown={this.onMouseDown.bind(this)}
           onMouseUp={this.onMouseUp.bind(this)} />
         <div
           className={classes}>
-          {this.props.currentSize / 10}
+          {this.props.currentSize}
         </div>
       </div>
     );

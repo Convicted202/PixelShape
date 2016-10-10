@@ -7,7 +7,7 @@ import {
 const initialState = {
   tool: 'brush',
   color: '#1B2631',
-  size: 10
+  size: 1
 };
 
 function tools (state = initialState, action) {
