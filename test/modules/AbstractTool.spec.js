@@ -87,7 +87,7 @@ test('AbstractTool =>', (expect) => {
 
     let coords;
 
-    tool.applyState({ size: 2, gridCellSize: 10 });
+    tool.applyState({ size: 2, pixelSize: 10 });
 
     expect.false(tool.getPixeledCoords(), 'Should return false on empty args');
 

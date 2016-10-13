@@ -59,3 +59,15 @@ export function getSidebarVisibility (state) {
 export function getFramebarVisibility (state) {
   return state.panels.framebar;
 }
+
+export function getImageSize (state) {
+  return state.application.size;
+}
+
+export function getSurfaceWidth (state) {
+  return state.application.size.width * state.application.pixelSize;
+}
+
+export function getSurfaceHeight (state) {
+  return state.application.size.height * state.application.pixelSize;
+}

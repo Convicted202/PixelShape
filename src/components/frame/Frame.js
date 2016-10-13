@@ -20,11 +20,14 @@ class Frame extends Component {
   }
 
   componentDidUpdate () {
+    let imageData;
     if (this.props.imageData) this.context.putImageData(this.props.imageData, 0, 0);
-  }
-
-  onClick () {
-    this.props.setActive();
+    // if something influenced on image dimensions - update imageData in store
+    // TODO: reconsider this in future when scaling is to be implemented
+    if (this.props.imageData.width !== this._frcanvas.width || this.props.imageData.height !== this._frcanvas.height) {
+      imageData = this.context.getImageData(0, 0, this._frcanvas.width, this._frcanvas.height);
+      this.props.updateFrameImageData(this.props.uuid, imageData);
+    }
   }
 
   render () {
@@ -33,9 +36,12 @@ class Frame extends Component {
     return (
       <div
         className={classes}
-        onClick={this.onClick.bind(this)} >
+        onClick={this.props.setActive} >
         <span className="frame__index">{this.props.index}</span>
-        <canvas height="700" width="700" ref={c => this._frcanvas = c}></canvas>
+        <canvas
+          height={this.props.height}
+          width={this.props.width}
+          ref={c => this._frcanvas = c}></canvas>
       </div>
     );
   }

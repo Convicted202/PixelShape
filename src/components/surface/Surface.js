@@ -39,6 +39,8 @@ class Surface extends Component {
     // this is very important, since we are tracking currentFrame object
     // which is being changed all the time when framesContainer is updated
     // do not redraw component if currentFrame doesn't change
+    if (this.props.surfaceWidth !== nextProps.surfaceWidth
+      || this.props.surfaceHeight !== nextProps.surfaceHeight) return true;
     if (this.props.currentFrameUUID === nextProps.currentFrameUUID) return false;
     return true;
   }
@@ -69,18 +71,18 @@ class Surface extends Component {
   render () {
     return (
       <main className="surface">
-        <section className="surface__drawer">
+        <section className="surface__drawer" style={{width: this.props.surfaceWidth, height: this.props.surfaceHeight}}>
           <canvas
             className="main-rendering-canvas"
             ref={c => this._canvas = c}
-            height="700"
-            width="700">
+            height={this.props.surfaceHeight}
+            width={this.props.surfaceWidth}>
           </canvas>
           <canvas
             className="buffer-canvas"
             ref={c => this._buffer = c}
-            height="700"
-            width="700"
+            height={this.props.surfaceHeight}
+            width={this.props.surfaceWidth}
             onMouseDown={this.onMouseDown.bind(this)}
             onMouseMove={this.onMouseMove.bind(this)}
             onMouseUp={this.onMouseUp.bind(this)} >

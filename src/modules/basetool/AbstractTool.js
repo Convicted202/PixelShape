@@ -2,8 +2,8 @@ class AbstractTool {
   constructor () {
     // TODO: take default settings from defaults
     this.state = {
-      size: 10,
-      gridCellSize: 10,
+      size: 1,
+      pixelSize: 20,
       color: '#000000',
       alpha: 1,
       compositeOperation: 'source-over',
@@ -32,7 +32,7 @@ class AbstractTool {
   }
 
   get size () {
-    return this.state.size * this.state.gridCellSize;
+    return this.state.size * this.state.pixelSize;
   }
 
   applyState (state) {
@@ -57,12 +57,12 @@ class AbstractTool {
     if (!x || !y) return false;
     // shift x and y half a brush size and get how much grid pixels are in it
     const
-      timesX = Math.floor((x - this.size / 2) / this.state.gridCellSize),
-      timesY = Math.floor((y - this.size / 2) / this.state.gridCellSize);
+      timesX = Math.floor((x - this.size / 2) / this.state.pixelSize),
+      timesY = Math.floor((y - this.size / 2) / this.state.pixelSize);
 
     return {
-      x: timesX * this.state.gridCellSize,
-      y: timesY * this.state.gridCellSize
+      x: timesX * this.state.pixelSize,
+      y: timesY * this.state.pixelSize
     };
   }
 

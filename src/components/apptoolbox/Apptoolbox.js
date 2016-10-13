@@ -107,6 +107,7 @@ class Apptoolbox extends Component {
   }
 
   customizeSettingsConfirm () {
+    this.props.setImageSize(this._widthInput.value, this._heightInput.value);
     this.setState({ customizeSettingsShow: false });
   }
 
@@ -195,11 +196,17 @@ class Apptoolbox extends Component {
           <div className="apptoolbox__dimensions">
             <div>
               <span className="apptoolbox__inputlabel">Width </span>
-              <input className="apptoolbox__inputinline" defaultValue="700" />
+              <input
+                className="apptoolbox__inputinline"
+                ref={w => this._widthInput = w}
+                defaultValue={this.props.imageSize.width} />
             </div>
             <div>
               <span className="apptoolbox__inputlabel">Height </span>
-              <input className="apptoolbox__inputinline" defaultValue="700" />
+              <input
+                className="apptoolbox__inputinline"
+                ref={h => this._heightInput = h}
+                defaultValue={this.props.imageSize.width} />
             </div>
           </div>
           <ToggleCheckbox>Show grid</ToggleCheckbox>

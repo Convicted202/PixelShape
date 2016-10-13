@@ -12,7 +12,6 @@ class FramesContainer extends Component {
     this.initializeGifWorker();
     this.state = {
       frameAdded: false,
-      initialWorkerUpdate: true,
       fps: 2
     };
   }
@@ -48,6 +47,8 @@ class FramesContainer extends Component {
         <Frame
           key={uuid}
           uuid={uuid}
+          height={this.props.surfaceHeight}
+          width={this.props.surfaceWidth}
           isActive={uuid === this.props.currentUUID}
           index={index + 1}
           setActive={this.props.setCurrentFrame.bind(this, uuid)}
@@ -64,7 +65,7 @@ class FramesContainer extends Component {
       this._addButton.scrollIntoView();
       this.setState({frameAdded: false});
     }
-    if (this.state.initialWorkerUpdate) this.generateGif();
+    this.generateGif();
   }
 
   generateGif () {
@@ -78,8 +79,8 @@ class FramesContainer extends Component {
         this.worker.postMessage({
           frameNum: key,
           framesLength: gifLength,
-          height: 700,
-          width: 700,
+          height: this.props.surfaceHeight,
+          width: this.props.surfaceWidth,
           fps: this.props.fps,
           imageData: this.props.framesCollection[uuid].imageData.data
         });

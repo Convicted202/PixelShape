@@ -4,7 +4,9 @@ import {
   getTool,
   getToolSettings,
   getCurrentFrameUUID,
-  getCurrentFrame
+  getCurrentFrame,
+  getSurfaceWidth,
+  getSurfaceHeight
 } from 'selectors';
 import {setTempColor} from 'actions/palette';
 import {updateFrameImageData} from 'actions/frames';
@@ -15,7 +17,9 @@ const mapStateToProps = state => ({
   tool: getTool(state),
   toolSettings: getToolSettings(state),
   currentFrameUUID: getCurrentFrameUUID(state),
-  currentFrame: getCurrentFrame(state)
+  currentFrame: getCurrentFrame(state),
+  surfaceWidth: getSurfaceWidth(state),
+  surfaceHeight: getSurfaceHeight(state)
 });
 
 const mapDispatchToProps = dispatch => ({
