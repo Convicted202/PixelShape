@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 
 import createStore from 'store';
 
-import App from 'components/app/App';
+import App from 'containers/app/App';
 
 import 'styles/main.styl';
 

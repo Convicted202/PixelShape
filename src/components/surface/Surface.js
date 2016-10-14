@@ -11,7 +11,7 @@ class Surface extends Component {
   }
 
   applyAllContextInformation () {
-    this.tool.applyState(this.props.toolSettings);
+    this.tool.applyState(Object.assign({}, this.props.toolSettings, { pixelSize: this.props.pixelSize }));
     this.tool._assignRenderingContext(this.ctx);
     this.tool._assignBufferContext(this.buffer);
   }
@@ -51,15 +51,14 @@ class Surface extends Component {
   }
 
   onMouseDown (ev) {
-    // TODO: reorganize this later (put in external module)
-    this.tool = toolsMap.get(this.props.tool);
-    this.applyAllContextInformation();
     this.tool.storeCallback = this.props.setTempColor.bind(this);
-
     this.tool.onMouseDown(...this.normalizeEvent(ev));
   }
 
   onMouseMove (ev) {
+    // TODO: reorganize this later (put in external module)
+    this.tool = toolsMap.get(this.props.tool);
+    this.applyAllContextInformation();
     this.tool.onMouseMove(...this.normalizeEvent(ev));
   }
 
@@ -70,7 +69,7 @@ class Surface extends Component {
 
   render () {
     return (
-      <main className="surface">
+      <main className="surface" ref={s => this._surface = s}>
         <section className="surface__drawer" style={{width: this.props.surfaceWidth, height: this.props.surfaceHeight}}>
           <canvas
             className="main-rendering-canvas"

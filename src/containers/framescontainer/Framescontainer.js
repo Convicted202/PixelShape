@@ -6,8 +6,8 @@ import {
   getCurrentFrameUUID,
   getFramesOrder,
   getFPS,
-  getSurfaceWidth,
-  getSurfaceHeight
+  getUnscaledSurfaceWidth,
+  getUnscaledSurfaceHeight
 } from 'selectors';
 
 import {
@@ -24,8 +24,8 @@ const mapStateToProps = state => ({
   framesCollection: getAllFrames(state),
   framesOrder: getFramesOrder(state),
   fps: getFPS(state),
-  surfaceHeight: getSurfaceHeight(state),
-  surfaceWidth: getSurfaceWidth(state)
+  surfaceHeight: getUnscaledSurfaceHeight(state),
+  surfaceWidth: getUnscaledSurfaceWidth(state)
 });
 
 const mapDispatchToProps = dispatch => ({
