@@ -11,7 +11,6 @@ import {
 } from 'selectors';
 import {setTempColor} from 'actions/palette';
 import {updateFrameImageData} from 'actions/frames';
-import {setSurfaceConstraints} from 'actions/application';
 
 import Surface from 'components/surface/Surface';
 
@@ -31,9 +30,6 @@ const mapDispatchToProps = dispatch => ({
   },
   updateFrameImageData (frameUUID, imageData) {
     return dispatch(updateFrameImageData(frameUUID, imageData));
-  },
-  setSurfaceConstraints (width, height) {
-    return dispatch(setSurfaceConstraints(width, height));
   }
 });
 

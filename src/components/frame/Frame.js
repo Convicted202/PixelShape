@@ -20,14 +20,7 @@ class Frame extends Component {
   }
 
   componentDidUpdate () {
-    let imageData;
     if (this.props.imageData) this.context.putImageData(this.props.imageData, 0, 0);
-    // if something influenced on image dimensions - update imageData in store
-    // TODO: reconsider this in future when scaling is to be implemented
-    if (this.props.imageData.width !== this._frcanvas.width || this.props.imageData.height !== this._frcanvas.height) {
-      imageData = this.context.getImageData(0, 0, this._frcanvas.width, this._frcanvas.height);
-      this.props.updateFrameImageData(this.props.uuid, imageData);
-    }
   }
 
   render () {

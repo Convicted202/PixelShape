@@ -7,12 +7,9 @@ import Sidebar from 'containers/sidebar/Sidebar';
 import Framebar from 'containers/framebar/Framebar';
 import Apptoolbox from 'containers/apptoolbox/Apptoolbox';
 
-import debounce from 'utils/debounce';
-
 class App extends Component {
   constructor (...args) {
     super(...args);
-    this.applyConstraintsDebounced = debounce(this.applyConstraints.bind(this), 50);
   }
 
   applyConstraints () {
@@ -21,13 +18,6 @@ class App extends Component {
 
   componentDidMount () {
     this.applyConstraints();
-    window.addEventListener('resize', () => {
-      this.applyConstraintsDebounced();
-    });
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('resize');
   }
 
   render () {

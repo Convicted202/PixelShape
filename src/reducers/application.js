@@ -47,9 +47,6 @@ function application (state = initialState, action) {
       if (action.height * pixelSize > constraints.height) pixelSize = constraints.height / action.height;
 
       return Object.assign({}, state, { pixelSize, size: { width: action.width, height: action.height } });
-    // TODO: this might be useful one day, when scaling is implemented
-    // case SET_PIXEL_SIZE:
-    //   return Object.assign({}, state, { pixelSize: action.size });
     case SET_SURFACE_CONSTRAINTS:
       pixelSize = state.optimalPixelSize;
       constraints = getActualConstraints(action.width, action.height);

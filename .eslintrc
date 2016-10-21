@@ -75,7 +75,7 @@
 
 
 
-
+    no-magic-numbers: [1, { ignore: [0] }],
     "no-useless-constructor": 0,
     // 'no-unused-vars': 0,
     'no-case-declarations': 0,
