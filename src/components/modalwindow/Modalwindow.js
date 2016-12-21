@@ -1,29 +1,27 @@
 import './modalwindow.styl';
 
-import React, { Component } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
-class ModalWindow extends Component {
-  constructor (...args) {
-    super(...args);
-  }
+const ModalWindow = props => {
+  const classes = classNames(
+    'modalwindow',
+    {
+      'shown': props.isShown
+    });
 
-  render () {
-    const classes = classNames('modalwindow', this.props.isShown ? 'shown' : '');
-
-    return (
-      <div className={classes}>
-        <header>{this.props.title}</header>
-        <section>
-          {this.props.children}
-        </section>
-        <footer>
-          <button onClick={this.props.cancel.action}>{this.props.cancel.text}</button>
-          <button onClick={this.props.ok.action}>{this.props.ok.text}</button>
-        </footer>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={classes}>
+      <header>{props.title}</header>
+      <section>
+        {props.children}
+      </section>
+      <footer>
+        <button onClick={props.cancel.action}>{props.cancel.text}</button>
+        <button onClick={props.ok.action}>{props.ok.text}</button>
+      </footer>
+    </div>
+  );
+};
 
 export default ModalWindow;

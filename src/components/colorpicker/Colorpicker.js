@@ -8,7 +8,7 @@ const defaultColor = '#b7b7b7';
 class Colorpicker extends Component {
   constructor (...args) {
     super(...args);
-    this.pattern = /^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
+    this.pattern = /^#([a-f0-9]{3}){1,2}$/i;
     this.state = {
       currentColor: defaultColor,
       borderColor: defaultColor

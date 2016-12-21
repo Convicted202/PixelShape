@@ -1,28 +1,26 @@
 import './coloritem.styl';
 
-import React, { Component } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
-class Coloritem extends Component {
-  onClick () {
-    this.props.setColor(this.props.color);
-  }
+const Coloritem = props => {
+  const classes = classNames(
+    'color',
+    {
+      'active': props.isActive
+    });
 
-  render () {
-    const classes = classNames('color', this.props.isActive ? 'active' : '');
-
-    return (
-      <div
-        className={classes}
-        style={{
-          backgroundColor: this.props.color,
-          color: this.props.color
-        }}
-        onClick={this.onClick.bind(this)}>
-        {this.props.children}
-      </div>
-    );
-  }
-}
+  return (
+    <div
+      className={classes}
+      style={{
+        backgroundColor: props.color,
+        color: props.color
+      }}
+      onClick={props.setColor}>
+      {props.children}
+    </div>
+  );
+};
 
 export default Coloritem;

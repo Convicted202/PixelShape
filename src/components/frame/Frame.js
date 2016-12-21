@@ -24,7 +24,11 @@ class Frame extends Component {
   }
 
   render () {
-    const classes = classNames('frame', this.props.isActive ? 'active' : '');
+    const classes = classNames(
+      'frame',
+      {
+        'active': this.props.isActive
+      });
 
     return (
       <div

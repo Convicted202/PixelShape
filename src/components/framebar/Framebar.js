@@ -13,7 +13,6 @@ class Framebar extends Component {
     this.state = {
       fps: 2
     };
-    this.framePrefix = 'frame_';
     this.setFPS = debounce(this.props.setFPS, 300);
   }
 

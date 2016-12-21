@@ -11,13 +11,20 @@ class Apptoolbox extends Component {
 
   constructor (...args) {
     super(...args);
-    this.state = {
-      resetPaletteFlag: false,
+    this.initialModalState = {
       newProjectShow: false,
       downloadProjectShow: false,
       customizePanelsShow: false,
       customizeSettingsShow: false
     };
+    this.state = Object.assign({ resetPaletteFlag: false }, this.initialModalState);
+  }
+
+  setStateFlag (flag) {
+    const newState = Object.assign({}, this.initialModalState);
+
+    newState[flag] = true;
+    this.setState(newState);
   }
 
   togglePaletteFlag () {
@@ -41,12 +48,7 @@ class Apptoolbox extends Component {
 
   // RESET PROJECT callbacks start
   resetProject () {
-    this.setState({
-      newProjectShow: true,
-      downloadProjectShow: false,
-      customizePanelsShow: false,
-      customizeSettingsShow: false
-    });
+    this.setStateFlag('newProjectShow');
   }
 
   resetProjectConfirm () {
@@ -63,12 +65,7 @@ class Apptoolbox extends Component {
 
   // SAVE PROJECT callbacks start
   downloadProject () {
-    this.setState({
-      newProjectShow: false,
-      downloadProjectShow: true,
-      customizePanelsShow: false,
-      customizeSettingsShow: false
-    });
+    this.setStateFlag('downloadProjectShow');
   }
 
   downloadProjectConfirm () {
@@ -83,12 +80,7 @@ class Apptoolbox extends Component {
 
   // CUSTOMIZE PANELS callbacks start
   customizePanels () {
-    this.setState({
-      newProjectShow: false,
-      downloadProjectShow: false,
-      customizePanelsShow: true,
-      customizeSettingsShow: false
-    });
+    this.setStateFlag('customizePanelsShow');
   }
 
   customizePanelsCancel () {
@@ -98,12 +90,7 @@ class Apptoolbox extends Component {
 
   // CUSTOMIZE SETTINGS callbacks start
   customizeSettings () {
-    this.setState({
-      newProjectShow: false,
-      downloadProjectShow: false,
-      customizePanelsShow: false,
-      customizeSettingsShow: true
-    });
+    this.setStateFlag('customizeSettingsShow');
   }
 
   customizeSettingsConfirm () {

@@ -1,28 +1,23 @@
 import './toolbutton.styl';
 
-import React, { Component } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
-class ToolButton extends Component {
-  constructor (...args) {
-    super(...args);
-  }
+const ToolButton = props => {
+  const classes = classNames(
+    'toolbutton',
+    'tooltip-right',
+    {
+      'active': props.isActive
+    });
 
-  onClick () {
-    this.props.setTool();
-  }
-
-  render () {
-    const classes = classNames('toolbutton tooltip-right', this.props.isActive ? 'active' : '');
-
-    return (
-      <li className={classes} onClick={this.onClick.bind(this)} data-tooltip={this.props.btnTooltip}>
-        <svg className="toolbutton__icon" viewBox="0 0 24 24" width="40" height="40">
-          <use xlinkHref={`#${this.props.icon}`}></use>
-        </svg>
-      </li>
-    );
-  }
-}
+  return (
+    <li className={classes} onClick={props.setTool} data-tooltip={props.btnTooltip}>
+      <svg className="toolbutton__icon" viewBox="0 0 24 24" width="40" height="40">
+        <use xlinkHref={`#${props.icon}`}></use>
+      </svg>
+    </li>
+  );
+};
 
 export default ToolButton;

@@ -28,7 +28,11 @@ class Sizerangebar extends Component {
   }
 
   render () {
-    const classes = classNames('sizerangebar__value', this.state.isActive ? 'active' : '');
+    const classes = classNames(
+      'sizerangebar__value',
+      {
+        'active': this.state.isActive
+      });
 
     return (
       <div className="sizerangebar">

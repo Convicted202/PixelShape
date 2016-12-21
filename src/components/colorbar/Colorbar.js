@@ -14,7 +14,7 @@ class Colorbar extends Component {
           key={colorObj.color}
           color={colorObj.color}
           isActive={colorObj.color === this.props.currentColor}
-          setColor={this.props.setColor.bind(this)}>
+          setColor={this.props.setColor.bind(this, colorObj.color)}>
           {colorObj.color}
         </Coloritem>
       ));
