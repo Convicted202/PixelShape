@@ -36,15 +36,11 @@ class Framebar extends Component {
     // setting just state, to make slider movable
     this.setState({ fps: ev.target.value });
     // and then setting actual fps debounced to apply changes
-    this.setFPS(this.state.fps);
+    this.setFPS(ev.target.value);
   }
 
   saveCurrentFrameName () {
     this.props.updateFrameName(this.props.currentFrameUUID, this._nameInput.value);
-  }
-
-  componentDidUpdate () {
-    this._nameInput.value = this.props.currentFrameName;
   }
 
   render () {
@@ -81,6 +77,8 @@ class Framebar extends Component {
             <input
               className="framebar__framename-input"
               ref={inp => this._nameInput = inp}
+              key={this.props.currentFrameName}
+              defaultValue={this.props.currentFrameName}
               onBlur={this.saveCurrentFrameName.bind(this)} />
           </div>
         </div>

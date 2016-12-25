@@ -24,6 +24,8 @@ const config = {
     // Poll using interval (in ms, accepts boolean too)
     poll: 1000
   },
+  cache: true,
+  debug: true,
   devtool: 'eval-source-map',
   module: {
     preLoaders: [

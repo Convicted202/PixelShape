@@ -31,17 +31,18 @@ class FramesContainer extends Component {
       gif = this.animationFrames.join('');
       this._gifImg.src = `data:image/gif;base64,${window.btoa(gif)}`;
 
+      // console.log('updating here with ' + event);
       this.props.updateGifFramesArray(this.animationFrames);
     });
   }
 
   componentWillMount () {
-    this.props.addFrame();
+    // this.props.addFrame();
   }
 
   getFrames () {
     const collection = this.props.framesCollection;
-
+    // debugger;
     return this.props.framesOrder
       .map((uuid, index) => (
         <Frame
@@ -56,9 +57,9 @@ class FramesContainer extends Component {
       ));
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   // this.generateGif();
-  // }
+  componentWillReceiveProps (nextProps) {
+    console.log(nextProps);
+  }
 
   componentDidUpdate () {
     if (this.state.frameAdded) {

@@ -9,18 +9,16 @@ class Frame extends Component {
   }
 
   componentDidMount () {
-    let imageData;
-    this.context = this._frcanvas.getContext('2d');
-    // if statement most likely will only be used when user duplicates current frame
-    if (this.props.imageData) this.forceUpdate();
-    else {
-      imageData = this.context.getImageData(0, 0, this._frcanvas.width, this._frcanvas.height);
-      this.props.updateFrameImageData(this.props.uuid, imageData);
-    }
+    this.context = this._frameCanvas.getContext('2d');
+    this.updateFrameCanvas();
   }
 
   componentDidUpdate () {
-    if (this.props.imageData) this.context.putImageData(this.props.imageData, 0, 0);
+    this.updateFrameCanvas();
+  }
+
+  updateFrameCanvas () {
+    this.context.putImageData(this.props.imageData, 0, 0);
   }
 
   render () {
@@ -38,7 +36,7 @@ class Frame extends Component {
         <canvas
           height={this.props.height}
           width={this.props.width}
-          ref={c => this._frcanvas = c}></canvas>
+          ref={c => this._frameCanvas = c}></canvas>
       </div>
     );
   }

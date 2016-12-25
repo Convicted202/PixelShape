@@ -19,7 +19,7 @@ export function getTempColor (state) {
 }
 
 export function getGifFramesArray (state) {
-  return state.frames.framesDataArray;
+  return state.frames.framesGifDataArray;
 }
 
 export function getFPS (state) {
@@ -27,25 +27,25 @@ export function getFPS (state) {
 }
 
 export function getCurrentFrameUUID (state) {
-  return state.frames.currentFrame;
+  return state.frames.activeFrame;
 }
 
 export function getCurrentFrame (state) {
   const frames = state.frames;
-  return frames.framesCollection[frames.currentFrame];
+  return frames.framesCollectionObject[frames.activeFrame];
 }
 
 export function getAllFrames (state) {
-  return state.frames.framesCollection;
+  return state.frames.framesCollectionObject;
 }
 
 export function getFramesOrder (state) {
-  return state.frames.framesOrder;
+  return state.frames.framesOrderArray;
 }
 
 export function getCurrentFrameName (state) {
   const frames = state.frames;
-  return frames.currentFrame && frames.framesCollection[frames.currentFrame].name;
+  return frames.activeFrame && frames.framesCollectionObject[frames.activeFrame].name;
 }
 
 export function getToolbarVisibility (state) {

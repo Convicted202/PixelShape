@@ -7,12 +7,12 @@ import Ellipse from './ellipse/Ellipse';
 
 const toolsMap = new Map();
 
-toolsMap.set('brush', new Brush());
-toolsMap.set('colorfill', new Bucket());
-toolsMap.set('eraser', new Eraser());
-toolsMap.set('dropper', new Dropper());
-toolsMap.set('rect', new Rectangle());
-toolsMap.set('circle', new Ellipse());
+toolsMap.set('Brush', new Brush());
+toolsMap.set('Bucket', new Bucket());
+toolsMap.set('Eraser', new Eraser());
+toolsMap.set('Dropper', new Dropper());
+toolsMap.set('Rectangle', new Rectangle());
+toolsMap.set('Ellipse', new Ellipse());
 
 
 export default toolsMap;

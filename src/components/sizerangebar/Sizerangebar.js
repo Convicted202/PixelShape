@@ -16,15 +16,11 @@ class Sizerangebar extends Component {
   }
 
   onMouseDown () {
-    this.setState({
-      isActive: true
-    });
+    this.setState({ isActive: true });
   }
 
   onMouseUp () {
-    this.setState({
-      isActive: false
-    });
+    this.setState({ isActive: false });
   }
 
   render () {

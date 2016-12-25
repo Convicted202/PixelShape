@@ -5,7 +5,7 @@ import {
 } from 'actions/tools';
 
 const initialState = {
-  tool: 'brush',
+  tool: 'Brush',
   color: '#1B2631',
   size: 1
 };

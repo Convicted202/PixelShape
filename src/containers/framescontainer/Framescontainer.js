@@ -20,7 +20,7 @@ import Framescontainer from 'components/framescontainer/Framescontainer';
 
 const mapStateToProps = state => ({
   currentUUID: getCurrentFrameUUID(state),
-  currentFrame: getCurrentFrame(state),
+  // currentFrame: getCurrentFrame(state),
   framesCollection: getAllFrames(state),
   framesOrder: getFramesOrder(state),
   fps: getFPS(state),

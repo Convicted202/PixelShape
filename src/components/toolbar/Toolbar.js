@@ -2,34 +2,22 @@ import './toolbar.styl';
 
 import React, { Component } from 'react';
 import ToolButton from 'components/toolbutton/ToolButton';
-
-// TODO: move these to defaults file
-const icons = [
-  'brush', 'colorfill', 'eraser', 'dropper',
-  'rect', 'circle', 'lightener', 'selectcrop'
-  // , 'sizing'
-];
+import tools from 'defaults/tools';
 
 class Toolbar extends Component {
   constructor (props) {
     super(props);
-    // this.state = {selected: 0};
-  }
-
-  componentDidMount () {
-    this.props.setTool('brush');
-    // console.log(this.props.tool);
   }
 
   getButtons () {
-    return icons
-      .map((icon, keyValue) => (
+    return tools
+      .map((toolObj, keyValue) => (
         <ToolButton
           key={keyValue}
-          btnTooltip={icon}
-          icon={icon}
-          isActive={this.props.tool === icon}
-          setTool={this.props.setTool.bind(this, icon)} />
+          btnTooltip={toolObj.tool}
+          icon={toolObj.icon}
+          isActive={this.props.tool === toolObj.tool}
+          setTool={this.props.setTool.bind(this, toolObj.tool)} />
       ));
   }
 
