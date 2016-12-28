@@ -1,7 +1,7 @@
 import './framescontainer.styl';
 
 import React, { Component } from 'react';
-import Frame from 'containers/frame/Frame';
+import Frame from 'components/frame/Frame';
 
 const Worker = require('worker!workers/generateGif.worker.js');
 
@@ -20,29 +20,20 @@ class FramesContainer extends Component {
     this.animationFrames = null;
     this.worker = new Worker();
     this.worker.addEventListener('message', event => {
-      let gif = '', j;
-      const length = this.animationFrames.length;
+      let gif = '';
 
-      this.animationFrames[event.data.frameIndex] = event.data.frameData;
-
-      for (j = 0; j < length; j++)
-        if (!this.animationFrames[j]) return;
-
-      gif = this.animationFrames.join('');
+      this.props.updateFrameGIFData(event.data.frameUUID, event.data.frameData);
+      gif = this.getOrderedGif();
       this._gifImg.src = `data:image/gif;base64,${window.btoa(gif)}`;
-
-      // console.log('updating here with ' + event);
-      this.props.updateGifFramesArray(this.animationFrames);
     });
   }
 
-  componentWillMount () {
-    // this.props.addFrame();
+  getOrderedGif () {
+    return this.props.framesOrder.map(el => this.props.gifFramesData[el]).join('');
   }
 
   getFrames () {
     const collection = this.props.framesCollection;
-    // debugger;
     return this.props.framesOrder
       .map((uuid, index) => (
         <Frame
@@ -58,7 +49,12 @@ class FramesContainer extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log(nextProps);
+    if (this.props.modifiedFrames !== nextProps.modifiedFrames)
+      this.generateGif(
+        nextProps.modifiedFrames,
+        nextProps.framesCollection,
+        nextProps.framesOrder
+      );
   }
 
   componentDidUpdate () {
@@ -66,24 +62,23 @@ class FramesContainer extends Component {
       this._addButton.scrollIntoView();
       this.setState({frameAdded: false});
     }
-    this.generateGif();
   }
 
-  generateGif () {
-    const gifLength = this.props.framesOrder.length;
+  generateGif (modified = this.props.modifiedFrames, collection = this.props.framesCollection, order = this.props.framesOrder) {
+    const gifLength = order.length;
 
-    this.animationFrames = new Array(gifLength);
+    modified
+      .forEach(frameObj => {
+        const id = Object.keys(frameObj)[0];
 
-    this.props.framesOrder
-      .forEach((uuid, key) => {
-        if (!this.props.framesCollection[uuid].imageData) return;
         this.worker.postMessage({
-          frameNum: key,
+          frameUUID: id,
+          frameNum: frameObj[id],
           framesLength: gifLength,
           height: this.props.surfaceHeight,
           width: this.props.surfaceWidth,
-          fps: this.props.fps,
-          imageData: this.props.framesCollection[uuid].imageData.data
+          imageData: collection[id].imageData.data,
+          fps: this.props.fps
         });
       });
   }

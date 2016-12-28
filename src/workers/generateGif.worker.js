@@ -25,6 +25,7 @@ self.onmessage = event => {
   };
 
   const {
+      frameUUID,
       frameNum,
       framesLength,
       height,
@@ -60,6 +61,7 @@ self.onmessage = event => {
   if (framesLength === frameNum + 1) encoder.finish();
 
   self.postMessage({
+    frameUUID,
     frameIndex: frameNum,
     frameData : encoder.stream().getData()
   });

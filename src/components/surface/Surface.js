@@ -25,7 +25,7 @@ class Surface extends Component {
   componentDidUpdate () {
     // new imageData has arrived with a new currentFrame -
     // need to apply to the surface
-    if (this.props.currentFrame.imageData) this.ctx.putImageData(this.props.currentFrame.imageData, 0, 0);
+    this.ctx.putImageData(this.props.currentFrame.imageData, 0, 0);
   }
 
   updateFrameImageData () {
@@ -51,12 +51,14 @@ class Surface extends Component {
   }
 
   onMouseDown (ev) {
+    this.tool = toolsMap.get(this.props.tool);
     this.tool.storeCallback = this.props.setTempColor.bind(this);
     this.tool.onMouseDown(...this.normalizeEvent(ev));
   }
 
   onMouseMove (ev) {
     // TODO: reorganize this later (put in external module)
+    // this could be moved to componentWillReceiveProps
     this.tool = toolsMap.get(this.props.tool);
     this.applyAllContextInformation();
     this.tool.onMouseMove(...this.normalizeEvent(ev));

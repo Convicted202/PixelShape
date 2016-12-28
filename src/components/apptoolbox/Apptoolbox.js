@@ -33,7 +33,7 @@ class Apptoolbox extends Component {
 
   downloadGIF () {
     const
-      byteChars = this.props.gifFramesArray.join(''),
+      byteChars = this.props.framesOrder.map(el => this.props.gifFramesData[el]).join(''),
       len = byteChars.length,
       bytes = new Array(len);
 
@@ -54,7 +54,6 @@ class Apptoolbox extends Component {
   resetProjectConfirm () {
     if (this.state.resetPaletteFlag) this.props.resetUserColors();
     this.props.resetFramesState();
-    this.props.addFrame();
     this.setState({ newProjectShow: false });
   }
 
