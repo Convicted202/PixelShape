@@ -68,16 +68,21 @@ class AbstractTool {
   getPixeledCoords (x, y) {
     if (typeof x === 'undefined' || typeof y === 'undefined') return false;
     // shift x and y half a brush size and get how much grid pixels are in it
-    const timesX = Math.floor((x - this.size / 2) / this.state.pixelSize),
-          timesY = Math.floor((y - this.size / 2) / this.state.pixelSize);
+    const timesX = x / this.state.pixelSize | 0,
+          timesY = y / this.state.pixelSize | 0,
+          pixelShift = this.state.size / 2 | 0,
+          roundedVals = {
+            x: timesX - pixelShift,
+            y: timesY - pixelShift
+          };
     // const timesX = Math.floor((x) / this.state.pixelSize),
     //       timesY = Math.floor((y) / this.state.pixelSize);
 
     return {
-      x: timesX * this.state.pixelSize,
-      y: timesY * this.state.pixelSize,
-      naturalX: timesX,
-      naturalY: timesY
+      x: roundedVals.x * this.state.pixelSize,
+      y: roundedVals.y * this.state.pixelSize,
+      naturalX: roundedVals.x,
+      naturalY: roundedVals.y
     };
   }
 
