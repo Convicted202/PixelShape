@@ -3,6 +3,8 @@ import './frame.styl';
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
+import {disableImageSmoothing} from 'utils/canvasUtils';
+
 class Frame extends Component {
   constructor (...args) {
     super(...args);
@@ -10,10 +12,7 @@ class Frame extends Component {
 
   componentDidMount () {
     this.context = this._frameCanvas.getContext('2d');
-    this.context.mozImageSmoothingEnabled = false;
-    this.context.webkitImageSmoothingEnabled = false;
-    this.context.msImageSmoothingEnabled = false;
-    this.context.imageSmoothingEnabled = false;
+    disableImageSmoothing(this.context);
     this.updateFrameCanvas();
   }
 
