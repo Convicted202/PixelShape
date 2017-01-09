@@ -20,7 +20,7 @@ class Bucket extends AbstractTool {
   }
 
   draw (ctx, x, y) {
-    floodFill(ctx, this.state.color, x, y);
+    floodFill(ctx, this._naturalImageData, this.state.color, x, y, this.state.pixelSize);
   }
 }
 

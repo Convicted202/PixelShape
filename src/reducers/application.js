@@ -34,9 +34,8 @@ function getActualConstraints (width, height) {
 }
 
 function application (state = initialState, action) {
-  let
-    constraints = {},
-    pixelSize = 0;
+  let constraints = {},
+      pixelSize = 0;
 
   switch (action.type) {
     case SET_IMAGE_SIZE:

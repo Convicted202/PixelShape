@@ -8,7 +8,8 @@ import {
   getUnscaledSurfaceWidth,
   getUnscaledSurfaceHeight,
   getModifiedFramesArray,
-  getGifFramesData
+  getGifFramesData,
+  getImageSize
 } from 'selectors';
 
 import {
@@ -26,6 +27,7 @@ const mapStateToProps = state => ({
   framesCollection: getAllFrames(state),
   framesOrder: getFramesOrder(state),
   fps: getFPS(state),
+  imageSize: getImageSize(state),
   surfaceHeight: getUnscaledSurfaceHeight(state),
   surfaceWidth: getUnscaledSurfaceWidth(state)
 });

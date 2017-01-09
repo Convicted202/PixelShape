@@ -14,12 +14,11 @@ import {
 
 import uniqueId from 'utils/uuid';
 
-const
-  framePrefix = 'frame_',
-  frameName = 'default_';
+const framePrefix = 'frame_',
+      frameName = 'default_';
 
 // TODO: to be moved to defaults or configs
-const frameSize = {width: 700, height: 700};
+const frameSize = {width: 700, height: 700, naturalWidth: 32, naturalHeight: 32};
 
 const id = uniqueId(framePrefix);
 
@@ -37,7 +36,8 @@ const initialState = {
   framesCollectionObject: {
     // uuid: {
     //   name: '',
-    //   imageData: []
+    //   imageData: [],
+    //   naturalImageData: []
     // }
   }
 };
@@ -47,24 +47,23 @@ initialState.activeFrame = id;
 initialState.framesOrderArray.push(id);
 initialState.framesCollectionObject[id] = {
   name: `${frameName}0`,
-  imageData: new ImageData(frameSize.width, frameSize.height)
+  imageData: new ImageData(frameSize.width, frameSize.height),
+  naturalImageData: new ImageData(frameSize.naturalWidth, frameSize.naturalHeight)
 };
 initialState.modifiedFramesArray.push({
   [id]: 0
 });
 
-
 function frames (state = initialState, action) {
-  let
-    frame,
-    framesOrderArray = [],
-    framesCollectionObject = {},
-    modifiedFramesArray = [],
-    modifiedFrame = {},
-    newState,
-    activeFrame,
-    index,
-    id;
+  let frame,
+      framesOrderArray = [],
+      framesCollectionObject = {},
+      modifiedFramesArray = [],
+      modifiedFrame = {},
+      newState,
+      activeFrame,
+      index,
+      id;
 
   switch (action.type) {
     case ADD_FRAME:
@@ -72,7 +71,8 @@ function frames (state = initialState, action) {
       framesOrderArray = [...state.framesOrderArray, id];
       framesCollectionObject[id] = {
         name: `${frameName}${state.framesOrderArray.length}`,
-        imageData: new ImageData(frameSize.width, frameSize.height)
+        imageData: new ImageData(frameSize.width, frameSize.height),
+        naturalImageData: new ImageData(frameSize.naturalWidth, frameSize.naturalHeight)
       };
 
       // take last two from framesOrderArray stored as {el: key}
@@ -90,7 +90,7 @@ function frames (state = initialState, action) {
     case UPDATE_FRAME_IMAGE_DATA:
       activeFrame = state.framesCollectionObject[action.frameUUID];
       frame = {};
-      frame[action.frameUUID] = Object.assign({}, activeFrame, { imageData: action.imageData });
+      frame[action.frameUUID] = Object.assign({}, activeFrame, { imageData: action.imageData, naturalImageData: action.naturalImageData });
       framesCollectionObject = Object.assign({}, state.framesCollectionObject, frame);
       modifiedFramesArray = [{ [action.frameUUID]: state.framesOrderArray.indexOf(action.frameUUID) }];
       return Object.assign({}, state, { framesCollectionObject, modifiedFramesArray });
@@ -139,16 +139,21 @@ function frames (state = initialState, action) {
       index = state.framesOrderArray.findIndex(el => el === action.uuid);
       id = uniqueId(framePrefix);
 
-      const
-        currentImgData = state.framesCollectionObject[action.uuid].imageData,
-        imageData = new ImageData(currentImgData.width, currentImgData.height),
-        dataCopy = new Uint8ClampedArray(currentImgData.data);
+      const currentImgData = state.framesCollectionObject[action.uuid].imageData,
+            imageData = new ImageData(currentImgData.width, currentImgData.height),
+            dataCopy = new Uint8ClampedArray(currentImgData.data),
+
+            currentNaturalImgData = state.framesCollectionObject[action.uuid].naturalImageData,
+            naturalImageData = new ImageData(currentNaturalImgData.width, currentNaturalImgData.height),
+            naturalDataCopy = new Uint8ClampedArray(currentNaturalImgData.data);
 
       imageData.data.set(dataCopy);
+      naturalImageData.data.set(naturalDataCopy);
 
       framesCollectionObject[id] = {
         name: `${state.framesCollectionObject[action.uuid].name}_copy`,
-        imageData
+        imageData,
+        naturalImageData
       };
 
       framesOrderArray = [...state.framesOrderArray.slice(0, index + 1), id];

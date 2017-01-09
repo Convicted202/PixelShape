@@ -20,6 +20,8 @@ export const hexToRGBA = hex => {
   return [r, g, b, 255];
 };
 
+export const stringToRGBA = str => hexToRGBA(stringToHex(str));
+
 export const getPixelFromImageData = (imageData, x, y) => (y * imageData.width + x) * RGBA;
 
 export const putColor = (imageData, pixelIndex, color) => {
@@ -36,6 +38,17 @@ export const getColor = (imageData, pixelIndex) => {
     color.push(imageData.data[pixelIndex + i]);
 
   return color;
+};
+
+export const fillRectImageData = (imageData, x0, y0, width, height, color = [0, 0, 0, 0]) => {
+  let i, j, x1 = x0 + width, y1 = y0 + height, pixel;
+
+  for (i = x0; i < x1; i++) {
+    for (j = y0; j < y1; j++) {
+      pixel = getPixelFromImageData(imageData, i, j);
+      putColor(imageData, pixel, color);
+    }
+  }
 };
 
 export const equallyColored = (imageData, pixelIndex, color) => {

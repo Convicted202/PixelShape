@@ -10,6 +10,10 @@ class Frame extends Component {
 
   componentDidMount () {
     this.context = this._frameCanvas.getContext('2d');
+    this.context.mozImageSmoothingEnabled = false;
+    this.context.webkitImageSmoothingEnabled = false;
+    this.context.msImageSmoothingEnabled = false;
+    this.context.imageSmoothingEnabled = false;
     this.updateFrameCanvas();
   }
 
@@ -19,6 +23,8 @@ class Frame extends Component {
 
   updateFrameCanvas () {
     this.context.putImageData(this.props.imageData, 0, 0);
+    // window.createImageBitmap(this.props.imageData)
+    //   .then(data => this.context.drawImage(data, 0, 0));
   }
 
   render () {
