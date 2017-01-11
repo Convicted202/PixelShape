@@ -1,3 +1,5 @@
+import {clamp} from 'utils/mathUtils';
+
 export const RGBA = 4;
 
 export const stringToHex = str => {
@@ -43,9 +45,10 @@ export const getColor = (imageData, pixelIndex) => {
 export const fillRectImageData = (imageData, x0, y0, width, height, color = [0, 0, 0, 0]) => {
   let i, j, x1 = x0 + width, y1 = y0 + height, pixel;
 
-  // get rid of negative values
-  x0 = Math.max(x0, 0);
-  y0 = Math.max(y0, 0);
+  x0 = clamp(x0, 0, imageData.width);
+  y0 = clamp(y0, 0, imageData.height);
+  x1 = clamp(x1, 0, imageData.width);
+  y1 = clamp(y1, 0, imageData.height);
 
   for (i = x0; i < x1; i++) {
     for (j = y0; j < y1; j++) {
