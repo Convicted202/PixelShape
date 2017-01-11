@@ -19,10 +19,11 @@ export const removeFrame = uuid => ({
   uuid
 });
 
-export const updateFrameImageData = (frameUUID, imageData) => ({
+export const updateFrameImageData = (frameUUID, imageData, naturalImageData) => ({
   type: UPDATE_FRAME_IMAGE_DATA,
   frameUUID,
-  imageData
+  imageData,
+  naturalImageData
 });
 
 export const moveFrameRight = uuid => ({

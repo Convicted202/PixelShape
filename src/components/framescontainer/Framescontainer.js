@@ -39,22 +39,24 @@ class FramesContainer extends Component {
         <Frame
           key={uuid}
           uuid={uuid}
-          height={this.props.surfaceHeight}
-          width={this.props.surfaceWidth}
+          height={this.props.imageSize.height}
+          width={this.props.imageSize.width}
           isActive={uuid === this.props.currentUUID}
           index={index + 1}
           setActive={this.props.setCurrentFrame.bind(this, uuid)}
-          imageData={collection[uuid].imageData} />
+          imageData={collection[uuid].naturalImageData} />
       ));
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.modifiedFrames !== nextProps.modifiedFrames)
+    if (this.props.modifiedFrames !== nextProps.modifiedFrames) {
       this.generateGif(
         nextProps.modifiedFrames,
         nextProps.framesCollection,
-        nextProps.framesOrder
+        nextProps.framesOrder,
+        nextProps.fps
       );
+    }
   }
 
   componentDidUpdate () {
@@ -64,7 +66,7 @@ class FramesContainer extends Component {
     }
   }
 
-  generateGif (modified = this.props.modifiedFrames, collection = this.props.framesCollection, order = this.props.framesOrder) {
+  generateGif (modified = this.props.modifiedFrames, collection = this.props.framesCollection, order = this.props.framesOrder, fps = this.props.fps) {
     const gifLength = order.length;
 
     modified
@@ -75,10 +77,10 @@ class FramesContainer extends Component {
           frameUUID: id,
           frameNum: frameObj[id],
           framesLength: gifLength,
-          height: this.props.surfaceHeight,
-          width: this.props.surfaceWidth,
-          imageData: collection[id].imageData.data,
-          fps: this.props.fps
+          height: this.props.imageSize.height,
+          width: this.props.imageSize.width,
+          imageData: collection[id].naturalImageData.data,
+          fps
         });
       });
   }

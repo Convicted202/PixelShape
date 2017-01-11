@@ -1,7 +1,6 @@
 const getSlope = (x1, x2, y1, y2) => {
-  const
-    dx = x2 - x1,
-    dy = Math.abs(y2 - y1);
+  const dx = x2 - x1,
+        dy = Math.abs(y2 - y1);
 
   return dy / dx;
 };

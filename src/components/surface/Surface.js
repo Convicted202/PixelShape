@@ -3,6 +3,7 @@ import './surface.styl';
 import React, { Component } from 'react';
 
 import toolsMap from 'modules/toolsMap';
+import {disableImageSmoothing} from 'utils/canvasUtils';
 
 class Surface extends Component {
   constructor (...args) {
@@ -11,27 +12,35 @@ class Surface extends Component {
   }
 
   applyAllContextInformation () {
-    this.tool.applyState(Object.assign({}, this.props.toolSettings, { pixelSize: this.props.pixelSize }));
+    this.tool.applyState(Object.assign({}, this.props.toolSettings, { pixelSize: this.props.pixelSize | 0 }));
     this.tool._assignRenderingContext(this.ctx);
     this.tool._assignBufferContext(this.buffer);
+    this.tool._applyNaturalImageData(this.props.currentFrame.naturalImageData);
   }
 
   componentDidMount () {
     this.ctx = this._canvas.getContext('2d');
     this.buffer = this._buffer.getContext('2d');
     this.applyAllContextInformation();
+    disableImageSmoothing(this.ctx);
+    disableImageSmoothing(this.buffer);
   }
 
   componentDidUpdate () {
     // new imageData has arrived with a new currentFrame -
     // need to apply to the surface
     this.ctx.putImageData(this.props.currentFrame.imageData, 0, 0);
+    this.tool._applyNaturalImageData(this.props.currentFrame.naturalImageData);
+    // disable smoothing once again, in case we faced canvas resizing and smoothing is reset
+    disableImageSmoothing(this.ctx);
+    disableImageSmoothing(this.buffer);
   }
 
   updateFrameImageData () {
     this.props.updateFrameImageData(
       this.props.currentFrameUUID,
-      this.ctx.getImageData(0, 0, this._canvas.width, this._canvas.height)
+      this.ctx.getImageData(0, 0, this._canvas.width, this._canvas.height),
+      this.tool._naturalImageData
     );
   }
 
@@ -51,7 +60,7 @@ class Surface extends Component {
   }
 
   onMouseDown (ev) {
-    this.tool = toolsMap.get(this.props.tool);
+    // this.tool = toolsMap.get(this.props.tool);
     this.tool.storeCallback = this.props.setTempColor.bind(this);
     this.tool.onMouseDown(...this.normalizeEvent(ev));
   }

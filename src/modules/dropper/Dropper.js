@@ -23,11 +23,10 @@ class Dropper extends AbstractTool {
   }
 
   getUnderlyingColor (x, y) {
-    const
-      rounds = this.getPixeledCoords(x, y),
-      imageData = this._ctx.getImageData(0, 0, this._ctx.canvas.width, this._ctx.canvas.height),
-      index = getPixelFromImageData(imageData, rounds.x, rounds.y),
-      rgbaColor = getColor(imageData, index);
+    const rounds = this.getPixeledCoords(x, y),
+          imageData = this._ctx.getImageData(0, 0, this._ctx.canvas.width, this._ctx.canvas.height),
+          index = getPixelFromImageData(imageData, rounds.x, rounds.y),
+          rgbaColor = getColor(imageData, index);
 
     return rgbToHex(...rgbaColor);
   }

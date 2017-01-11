@@ -2,11 +2,10 @@
 * Bresenham's ellipse algorithm
 */
 const ellipse = (drawPointCallback, renderingContext, x0, y0, x1, y1) => {
-  const
-    [width, height] = [Math.abs(x1 - x0), Math.abs(y1 - y0)],
-    [xc, yc]        = [Math.min(x0, x1) + width / 2, Math.min(y0, y1) + height / 2],
-    [a2, b2]        = [width * width, height * height],
-    [fa2, fb2]      = [4 * a2, 4 * b2];
+  const [width, height] = [Math.abs(x1 - x0), Math.abs(y1 - y0)],
+        [xc, yc]        = [Math.min(x0, x1) + width / 2, Math.min(y0, y1) + height / 2],
+        [a2, b2]        = [width * width, height * height],
+        [fa2, fb2]      = [4 * a2, 4 * b2];
 
   let x, y, sigma;
 

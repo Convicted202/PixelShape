@@ -1,3 +1,10 @@
+import { fillRectImageData, stringToRGBA } from 'utils/colorUtils';
+
+const ACTION = {
+  DRAW: 0,
+  CLEAR: 1
+};
+
 class AbstractTool {
   constructor () {
     // TODO: take default settings from defaults
@@ -15,6 +22,7 @@ class AbstractTool {
     };
     this._ctx = null;
     this._buffer = null;
+    this._naturalImageData = null;
   }
 
   _assignBufferContext (ctx) {
@@ -29,6 +37,10 @@ class AbstractTool {
     this._ctx = ctx;
     // this implies that new state was already set up
     this.useStateOn(this._ctx);
+  }
+
+  _applyNaturalImageData (imageData) {
+    this._naturalImageData = imageData;
   }
 
   get size () {
@@ -54,40 +66,56 @@ class AbstractTool {
   }
 
   getPixeledCoords (x, y) {
-    if (!x || !y) return false;
+    if (typeof x === 'undefined' || typeof y === 'undefined') return false;
     // shift x and y half a brush size and get how much grid pixels are in it
-    const
-      timesX = Math.floor((x - this.size / 2) / this.state.pixelSize),
-      timesY = Math.floor((y - this.size / 2) / this.state.pixelSize);
+    const timesX = x / this.state.pixelSize | 0,
+          timesY = y / this.state.pixelSize | 0,
+          pixelShift = this.state.size / 2 | 0,
+          roundedVals = {
+            x: timesX - pixelShift,
+            y: timesY - pixelShift
+          };
+    // const timesX = Math.floor((x) / this.state.pixelSize),
+    //       timesY = Math.floor((y) / this.state.pixelSize);
 
     return {
-      x: timesX * this.state.pixelSize,
-      y: timesY * this.state.pixelSize
+      x: roundedVals.x * this.state.pixelSize,
+      y: roundedVals.y * this.state.pixelSize,
+      naturalX: roundedVals.x,
+      naturalY: roundedVals.y
     };
   }
 
-  drawPixelCell (ctx, x, y) {
+  modifyPixelCell (ctx, x, y, action = ACTION.DRAW) {
     const coords = this.getPixeledCoords(x, y);
+    let color;
 
     if (!coords) return;
-    ctx.fillRect(
-      coords.x,
-      coords.y,
-      this.size,
-      this.size
-    );
+
+    if (action === ACTION.DRAW) {
+      ctx.fillRect(coords.x, coords.y, this.size, this.size);
+      color = stringToRGBA(this.state.color);
+    } else
+      ctx.clearRect(coords.x, coords.y, this.size, this.size);
+
+    if (ctx === this._ctx) {
+      fillRectImageData(
+        this._naturalImageData,
+        coords.naturalX,
+        coords.naturalY,
+        +this.state.size,
+        +this.state.size,
+        color
+      );
+    }
+  }
+
+  drawPixelCell (ctx, x, y) {
+    this.modifyPixelCell(ctx, x, y, ACTION.DRAW);
   }
 
   clearPixelCell (ctx, x, y) {
-    const coords = this.getPixeledCoords(x, y);
-
-    if (!coords) return;
-    ctx.clearRect(
-      coords.x,
-      coords.y,
-      this.size,
-      this.size
-    );
+    this.modifyPixelCell(ctx, x, y, ACTION.CLEAR);
   }
 
   draw (ctx /*, x0, y0, x1, y1 */) {

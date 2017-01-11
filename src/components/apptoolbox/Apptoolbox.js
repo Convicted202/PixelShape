@@ -32,10 +32,9 @@ class Apptoolbox extends Component {
   }
 
   downloadGIF () {
-    const
-      byteChars = this.props.framesOrder.map(el => this.props.gifFramesData[el]).join(''),
-      len = byteChars.length,
-      bytes = new Array(len);
+    const byteChars = this.props.framesOrder.map(el => this.props.gifFramesData[el]).join(''),
+          len = byteChars.length,
+          bytes = new Array(len);
 
     let i = 0, blob = null;
 

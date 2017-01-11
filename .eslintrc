@@ -22,7 +22,10 @@
   "rules": {
     "quotes": [2, "single"],
     "strict": [2, "never"],
-    "indent": [2, 2, {"SwitchCase": 1}],
+    "indent": [2, 2, {
+      "SwitchCase": 1,
+      "VariableDeclarator": { "var": 2, "let": 2, "const": 3 }
+    }],
     "one-var": 0,
     "no-return-assign": 0,
     "no-multi-spaces": 0,
@@ -74,11 +77,11 @@
     "yield-star-spacing": [2, {"before": true, "after": true}], //enforce spacing around the * in yield* expressions (fixable)
 
 
-
+    curly: [2, "multi-or-nest"],
     no-magic-numbers: [1, { ignore: [0] }],
     "no-useless-constructor": 0,
     // 'no-unused-vars': 0,
-    'no-case-declarations': 0,
+    'no-case-declarations': 0
 
   },
   "plugins": [
