@@ -64,6 +64,10 @@ export function getFramebarVisibility (state) {
   return state.panels.framebar;
 }
 
+export function getGridState (state) {
+  return state.application.grid;
+}
+
 export function getImageSize (state) {
   return state.application.size;
 }

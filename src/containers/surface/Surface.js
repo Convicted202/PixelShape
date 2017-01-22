@@ -8,7 +8,8 @@ import {
   getPixelSize,
   getSurfaceWidth,
   getSurfaceHeight,
-  getImageSize
+  getImageSize,
+  getGridState
 } from 'selectors';
 import {setTempColor} from 'actions/palette';
 import {updateFrameImageData} from 'actions/frames';
@@ -23,7 +24,8 @@ const mapStateToProps = state => ({
   currentFrame: getCurrentFrame(state),
   pixelSize: getPixelSize(state),
   surfaceWidth: getSurfaceWidth(state),
-  surfaceHeight: getSurfaceHeight(state)
+  surfaceHeight: getSurfaceHeight(state),
+  gridShown: getGridState(state)
 });
 
 const mapDispatchToProps = dispatch => ({

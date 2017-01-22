@@ -194,7 +194,9 @@ class Apptoolbox extends Component {
                 defaultValue={this.props.imageSize.width} />
             </div>
           </div>
-          <ToggleCheckbox>Show grid</ToggleCheckbox>
+          <ToggleCheckbox
+            value={this.props.gridShown}
+            onChange={this.props.toggleGrid.bind(this)}>Show grid</ToggleCheckbox>
 
         </ModalWindow>
       </aside>

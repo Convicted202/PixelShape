@@ -6,10 +6,11 @@ import {
   getSidebarVisibility,
   getFramebarVisibility,
   getImageSize,
-  getFramesOrder
+  getFramesOrder,
+  getGridState
 } from 'selectors';
 
-import {setImageSize} from 'actions/application';
+import {setImageSize, toggleGrid} from 'actions/application';
 import {resetUserColors} from 'actions/palette';
 import {resetFramesState} from 'actions/frames';
 import {toggleToolbar, toggleSidebar, toggleFramebar} from 'actions/panels';
@@ -17,6 +18,7 @@ import {toggleToolbar, toggleSidebar, toggleFramebar} from 'actions/panels';
 import Apptoolbox from 'components/apptoolbox/Apptoolbox';
 
 const mapStateToProps = state => ({
+  gridShown: getGridState(state),
   gifFramesData: getGifFramesData(state),
   framesOrder: getFramesOrder(state),
   toolbarVisible: getToolbarVisibility(state),
@@ -26,6 +28,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  toggleGrid () {
+    return dispatch(toggleGrid());
+  },
   resetUserColors () {
     return dispatch(resetUserColors());
   },

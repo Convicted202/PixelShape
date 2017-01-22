@@ -3,7 +3,7 @@ import './surface.styl';
 import React, { Component } from 'react';
 
 import toolsMap from 'modules/toolsMap';
-import {disableImageSmoothing} from 'utils/canvasUtils';
+import { disableImageSmoothing, drawGrid } from 'utils/canvasUtils';
 
 class Surface extends Component {
   constructor (...args) {
@@ -21,9 +21,11 @@ class Surface extends Component {
   componentDidMount () {
     this.ctx = this._canvas.getContext('2d');
     this.buffer = this._buffer.getContext('2d');
+    this.grid = this._grid.getContext('2d');
     this.applyAllContextInformation();
     disableImageSmoothing(this.ctx);
     disableImageSmoothing(this.buffer);
+    drawGrid(this.grid, 20, 0.5);
   }
 
   componentDidUpdate () {
@@ -50,6 +52,7 @@ class Surface extends Component {
     // do not redraw component if currentFrame doesn't change
     if (this.props.surfaceWidth !== nextProps.surfaceWidth
       || this.props.surfaceHeight !== nextProps.surfaceHeight) return true;
+    if (this.props.gridShown !== nextProps.gridShown) return true;
     if (this.props.currentFrameUUID === nextProps.currentFrameUUID) return false;
     return true;
   }
@@ -82,6 +85,13 @@ class Surface extends Component {
     return (
       <main className="surface" ref={s => this._surface = s}>
         <section className="surface__drawer" style={{width: this.props.surfaceWidth, height: this.props.surfaceHeight}}>
+          <canvas
+            className="grid-canvas"
+            ref={c => this._grid = c}
+            style={{display: this.props.gridShown ? 'block' : 'none'}}
+            height={this.props.surfaceHeight}
+            width={this.props.surfaceWidth}>
+          </canvas>
           <canvas
             className="main-rendering-canvas"
             ref={c => this._canvas = c}
