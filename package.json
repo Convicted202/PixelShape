@@ -1,6 +1,6 @@
 {
   "name": "pixelshape",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Pixel editor that comes in handy when creating pixel art images and animations",
   "main": "index.js",
   "scripts": {
@@ -13,8 +13,17 @@
     "test-runner": "cross-env NODE_PATH=src babel-node node_modules/blue-tape/bin/blue-tape test/**/*.spec.js",
     "pretest": "npm run lint",
     "test": "npm run test-runner",
-    "test:dev": "npm run test-runner | tap-spec || true"
+    "test:dev": "npm run test-runner | tap-spec || true",
+    "gh-pages": "git subtree push --prefix dist origin gh-pages"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Convicted202/PixelShape.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Convicted202/PixelShape/issues"
+  },
+  "homepage": "https://github.com/Convicted202/PixelShape#readme",
   "keywords": [
     "pixel",
     "artwork",
