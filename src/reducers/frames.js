@@ -9,10 +9,12 @@ import {
   REMOVE_FRAME,
   UPDATE_FRAME_GIF_DATA,
   RESET_FRAMES_STATE,
-  SET_FPS
+  SET_FPS,
+  UPDATE_FRAMES_SIZE
 } from 'actions/frames';
 
 import uniqueId from 'utils/uuid';
+import { extendImageData, nearestNeigbor } from 'utils/canvasUtils';
 
 const framePrefix = 'frame_',
       frameName = 'default_';
@@ -31,7 +33,7 @@ const generateInitialState = () => {
     // store order of frames presented in gif; stored by unique id
     framesOrderArray: [],
     // keep track of all changed frames on each iteration, to generate just a part of new gif data array
-    // NOTE: this will contain at most TWO elements on one iteration; this should be cleared eventually after iteration
+    // NOTE: this will contain at most TWO elements on one draw iteration; this should be cleared eventually after iteration
     // all elements are sorted by position in framesOrderArray; stored as {el: <index in framesOrderArray>}
     modifiedFramesArray: [],
     framesCollectionObject: {
@@ -78,7 +80,7 @@ function frames (state = initialState, action) {
       framesCollectionObject[id] = {
         name: `${frameName}${state.framesOrderArray.length}`,
         imageData: new ImageData(frameSize.width, frameSize.height),
-        naturalImageData: new ImageData(frameSize.naturalWidth, frameSize.naturalHeight)
+        naturalImageData: new ImageData(action.width, action.height)
       };
 
       // take last two from framesOrderArray stored as {el: key}
@@ -229,6 +231,33 @@ function frames (state = initialState, action) {
 
     case RESET_FRAMES_STATE:
       return Object.assign({}, generateInitialState());
+
+    case UPDATE_FRAMES_SIZE:
+      Object.keys(state.framesCollectionObject).forEach((id) => {
+        framesCollectionObject[id] = {
+          name: state.framesCollectionObject[id].name,
+          imageData: extendImageData(
+            state.framesCollectionObject[id].imageData,
+            action.width * action.optimalPixelSize,
+            action.height * action.optimalPixelSize
+          ),
+          naturalImageData: extendImageData(
+            state.framesCollectionObject[id].naturalImageData,
+            action.width,
+            action.height
+          )
+        };
+      });
+
+      // update all frames since imageSize changed
+      modifiedFramesArray = state.framesOrderArray.map(
+        (el, key) => ({ [el]: key })
+      );
+
+      return Object.assign({}, state, {
+        modifiedFramesArray,
+        framesCollectionObject: Object.assign({}, state.framesCollectionObject, framesCollectionObject)
+      });
 
     default:
       return state;

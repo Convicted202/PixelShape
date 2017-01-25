@@ -1,3 +1,5 @@
+import { getPixelFromImageData, getColor, putColor } from './colorUtils';
+
 export const enableImageSmoothing = context => {
   context.imageSmoothingEnabled = true;
   context.mozImageSmoothingEnabled = true;
@@ -35,3 +37,104 @@ export const drawGrid = (context, space, gutter) => {
   context.strokeStyle = '#000';
   context.stroke();
 };
+
+const createCanvas = (width, height) => {
+  const canvas = document.createElement('canvas');
+
+  canvas.width = width;
+  canvas.height = height;
+  return canvas;
+}
+
+export const resizeImageData = (imageData, targetWidth, targetHeight) => {
+  const originalCanvas = createCanvas(imageData.width, imageData.height),
+        originalContext = originalCanvas.getContext('2d'),
+        targetCanvas = createCanvas(targetWidth, targetHeight),
+        targetContext = targetCanvas.getContext('2d');
+
+  disableImageSmoothing(originalContext);
+  disableImageSmoothing(targetContext);
+  originalContext.putImageData(imageData, 0, 0);
+
+  targetContext.drawImage(
+    originalCanvas,
+    0, 0, imageData.width, imageData.height,
+    0, 0, targetWidth, targetHeight
+  );
+
+  return targetContext.getImageData(0, 0, targetWidth, targetHeight);
+};
+
+// http://tech-algorithm.com/articles/nearest-neighbor-image-scaling/
+export const nearestNeigbor = (imageData, oldWidth, oldHeight, width, height) => {
+  const iData = new ImageData(width, height),
+        xRatio = ((oldWidth << 16) / width | 0) + 1,
+        yRatio = ((oldHeight << 16) / height | 0) + 1;
+
+  let i = 0, j = 0, x, y, pxl, tpxl, color;
+
+  for (i; i < height; i++) {
+    for (j; j < width; j++) {
+      x = (j * xRatio) >> 16;
+      y = (i * yRatio) >> 16;
+
+      pxl = getPixelFromImageData(imageData, y, x);
+      color = getColor(imageData, pxl);
+
+      tpxl = getPixelFromImageData(iData, j, i);
+      putColor(iData, tpxl, color);
+      // iData.data[(i * width) + j] = imageData.data[(y * oldWidth) + x];
+    }
+  }
+
+  return iData;
+}
+
+const ANCHORS = {
+  TopLeft:      [0, 0],
+  TopCenter:    [0, 1],
+  TopRight:     [0, 2],
+  CenterLeft:   [1, 0],
+  CenterCenter: [1, 1],
+  CenterRight:  [1, 2],
+  BottomLeft:   [2, 0],
+  BottomCenter: [2, 1],
+  BottomRight:  [2, 2]
+};
+
+export const extendImageData = (imageData, width, height, extrapolate, anchor = 'CenterCenter') => {
+  const target = new ImageData(width, height),
+        oldWidth = imageData.width,
+        oldHeight = imageData.height,
+        offset = ANCHORS[anchor],
+        halfWidth = (width - oldWidth) / 2 | 0,
+        halfHeight = (height - oldHeight) / 2 | 0,
+        shiftW = Math.abs(halfWidth),
+        shiftH = Math.abs(halfHeight);
+
+  let row = 0, col = 0, x, y, cols, rows, shiftedX, shiftedY, tx, ty,
+      pxl, tpxl, color;
+
+  cols = halfWidth > 0 ? oldWidth : width;
+  rows = halfHeight > 0 ? oldHeight : height;
+
+  for (x = 0; x < cols; x++) {
+    for (y = 0; y < rows; y++) {
+      shiftedX = shiftW * offset[0] + x;
+      shiftedY = shiftH * offset[1] + y;
+      tx = halfWidth > 0 ? x : shiftedX;
+      ty = halfHeight > 0 ? y : shiftedY;
+
+      pxl = getPixelFromImageData(imageData, tx, ty);
+      color = getColor(imageData, pxl);
+
+      tx = halfWidth > 0 ? shiftedX : x;
+      ty = halfHeight > 0 ? shiftedY : y;
+
+      tpxl = getPixelFromImageData(target, tx, ty);
+      putColor(target, tpxl, color);
+    }
+  }
+
+  return target;
+}

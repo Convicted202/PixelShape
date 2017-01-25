@@ -3,7 +3,7 @@ import './surface.styl';
 import React, { Component } from 'react';
 
 import toolsMap from 'modules/toolsMap';
-import { disableImageSmoothing, drawGrid } from 'utils/canvasUtils';
+import { disableImageSmoothing, drawGrid, resizeImageData } from 'utils/canvasUtils';
 
 class Surface extends Component {
   constructor (...args) {
@@ -31,7 +31,9 @@ class Surface extends Component {
   componentDidUpdate () {
     // new imageData has arrived with a new currentFrame -
     // need to apply to the surface
-    this.ctx.putImageData(this.props.currentFrame.imageData, 0, 0);
+    const iData = resizeImageData(this.props.currentFrame.naturalImageData, this._canvas.width, this._canvas.height);
+    // this.ctx.putImageData(this.props.currentFrame.imageData, 0, 0);
+    this.ctx.putImageData(iData, 0, 0);
     this.tool._applyNaturalImageData(this.props.currentFrame.naturalImageData);
     // disable smoothing once again, in case we faced canvas resizing and smoothing is reset
     disableImageSmoothing(this.ctx);

@@ -33,8 +33,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addFrame (frame) {
-    return dispatch(addFrame(frame));
+  addFrame (width, height) {
+    return dispatch(addFrame(width, height));
   },
   setCurrentFrame (frame) {
     return dispatch(setCurrentFrame(frame));

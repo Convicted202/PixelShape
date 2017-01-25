@@ -92,7 +92,7 @@ class Apptoolbox extends Component {
   }
 
   customizeSettingsConfirm () {
-    // this.props.setImageSize(this._widthInput.value, this._heightInput.value);
+    this.props.setImageSize(this._widthInput.value, this._heightInput.value);
     this.setState({ customizeSettingsShow: false });
   }
 

@@ -10,7 +10,7 @@ import {
   getGridState
 } from 'selectors';
 
-import {setImageSize, toggleGrid} from 'actions/application';
+import {processSizeChange, toggleGrid} from 'actions/application';
 import {resetUserColors} from 'actions/palette';
 import {resetFramesState} from 'actions/frames';
 import {toggleToolbar, toggleSidebar, toggleFramebar} from 'actions/panels';
@@ -47,7 +47,7 @@ const mapDispatchToProps = dispatch => ({
     return dispatch(toggleToolbar());
   },
   setImageSize (width, height) {
-    return dispatch(setImageSize(width, height));
+    return dispatch(processSizeChange(+width, +height));
   }
 });
 
