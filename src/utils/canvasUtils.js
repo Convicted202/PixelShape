@@ -44,7 +44,7 @@ const createCanvas = (width, height) => {
   canvas.width = width;
   canvas.height = height;
   return canvas;
-}
+};
 
 export const resizeImageData = (imageData, targetWidth, targetHeight) => {
   const originalCanvas = createCanvas(imageData.width, imageData.height),
@@ -64,31 +64,6 @@ export const resizeImageData = (imageData, targetWidth, targetHeight) => {
 
   return targetContext.getImageData(0, 0, targetWidth, targetHeight);
 };
-
-// http://tech-algorithm.com/articles/nearest-neighbor-image-scaling/
-export const nearestNeigbor = (imageData, oldWidth, oldHeight, width, height) => {
-  const iData = new ImageData(width, height),
-        xRatio = ((oldWidth << 16) / width | 0) + 1,
-        yRatio = ((oldHeight << 16) / height | 0) + 1;
-
-  let i = 0, j = 0, x, y, pxl, tpxl, color;
-
-  for (i; i < height; i++) {
-    for (j; j < width; j++) {
-      x = (j * xRatio) >> 16;
-      y = (i * yRatio) >> 16;
-
-      pxl = getPixelFromImageData(imageData, y, x);
-      color = getColor(imageData, pxl);
-
-      tpxl = getPixelFromImageData(iData, j, i);
-      putColor(iData, tpxl, color);
-      // iData.data[(i * width) + j] = imageData.data[(y * oldWidth) + x];
-    }
-  }
-
-  return iData;
-}
 
 const ANCHORS = {
   TopLeft:      [0, 0],
@@ -112,7 +87,7 @@ export const extendImageData = (imageData, width, height, extrapolate, anchor = 
         shiftW = Math.abs(halfWidth),
         shiftH = Math.abs(halfHeight);
 
-  let row = 0, col = 0, x, y, cols, rows, shiftedX, shiftedY, tx, ty,
+  let x, y, cols, rows, shiftedX, shiftedY, tx, ty,
       pxl, tpxl, color;
 
   cols = halfWidth > 0 ? oldWidth : width;
@@ -137,4 +112,4 @@ export const extendImageData = (imageData, width, height, extrapolate, anchor = 
   }
 
   return target;
-}
+};

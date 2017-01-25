@@ -32,8 +32,8 @@ const mapDispatchToProps = dispatch => ({
   setTempColor (color) {
     return dispatch(setTempColor(color));
   },
-  updateFrameImageData (frameUUID, imageData, naturalImageData) {
-    return dispatch(updateFrameImageData(frameUUID, imageData, naturalImageData));
+  updateFrameImageData (frameUUID, naturalImageData) {
+    return dispatch(updateFrameImageData(frameUUID, naturalImageData));
   }
 });
 

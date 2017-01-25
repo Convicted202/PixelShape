@@ -20,7 +20,7 @@ export const toggleGrid = () => ({
   type: TOGGLE_GRID
 });
 
-export const processSizeChange = (width, height) => (dispatch, getState) => {
+export const processSizeChange = (width, height) => dispatch => {
   dispatch(setImageSize(width, height));
-  dispatch(updateFramesSize(width, height, getState().application.optimalPixelSize));
+  dispatch(updateFramesSize(width, height));
 };

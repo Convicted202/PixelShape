@@ -22,17 +22,15 @@ export const removeFrame = uuid => ({
   uuid
 });
 
-export const updateFramesSize = (width, height, optimalPixelSize) => ({
+export const updateFramesSize = (width, height) => ({
   type: UPDATE_FRAMES_SIZE,
   width,
-  height,
-  optimalPixelSize
+  height
 });
 
-export const updateFrameImageData = (frameUUID, imageData, naturalImageData) => ({
+export const updateFrameImageData = (frameUUID, naturalImageData) => ({
   type: UPDATE_FRAME_IMAGE_DATA,
   frameUUID,
-  imageData,
   naturalImageData
 });
 

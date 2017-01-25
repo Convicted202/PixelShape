@@ -43,7 +43,6 @@ class Surface extends Component {
   updateFrameImageData () {
     this.props.updateFrameImageData(
       this.props.currentFrameUUID,
-      this.ctx.getImageData(0, 0, this._canvas.width, this._canvas.height),
       this.tool._naturalImageData
     );
   }

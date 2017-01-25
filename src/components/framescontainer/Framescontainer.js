@@ -74,8 +74,8 @@ class FramesContainer extends Component {
     order = this.props.framesOrder,
     width = this.props.imageSize.width,
     height = this.props.imageSize.height,
-    fps = this.props.fps) {
-
+    fps = this.props.fps
+  ) {
     const gifLength = order.length;
 
     modified
@@ -86,9 +86,9 @@ class FramesContainer extends Component {
           frameUUID: id,
           frameNum: frameObj[id],
           framesLength: gifLength,
-          height: height,
-          width: width,
           imageData: collection[id].naturalImageData.data,
+          height,
+          width,
           fps
         });
       });

@@ -14,7 +14,7 @@ import {
 } from 'actions/frames';
 
 import uniqueId from 'utils/uuid';
-import { extendImageData, nearestNeigbor } from 'utils/canvasUtils';
+import { extendImageData } from 'utils/canvasUtils';
 
 const framePrefix = 'frame_',
       frameName = 'default_';
@@ -22,6 +22,7 @@ const framePrefix = 'frame_',
 // TODO: to be moved to defaults or configs
 const frameSize = {width: 700, height: 700, naturalWidth: 32, naturalHeight: 32};
 
+// need to provide initial image size here, since this is also called on project reset
 const generateInitialState = () => {
   const id = uniqueId(framePrefix);
 
@@ -39,7 +40,6 @@ const generateInitialState = () => {
     framesCollectionObject: {
       // uuid: {
       //   name: '',
-      //   imageData: [],
       //   naturalImageData: []
       // }
     }
@@ -50,7 +50,6 @@ const generateInitialState = () => {
   initialState.framesOrderArray.push(id);
   initialState.framesCollectionObject[id] = {
     name: `${frameName}0`,
-    imageData: new ImageData(frameSize.width, frameSize.height),
     naturalImageData: new ImageData(frameSize.naturalWidth, frameSize.naturalHeight)
   };
   initialState.modifiedFramesArray.push({
@@ -79,7 +78,6 @@ function frames (state = initialState, action) {
       framesOrderArray = [...state.framesOrderArray, id];
       framesCollectionObject[id] = {
         name: `${frameName}${state.framesOrderArray.length}`,
-        imageData: new ImageData(frameSize.width, frameSize.height),
         naturalImageData: new ImageData(action.width, action.height)
       };
 
@@ -89,7 +87,6 @@ function frames (state = initialState, action) {
       ).slice(-2);
 
       return Object.assign({}, state, {
-        activeFrame: state.activeFrame,
         modifiedFramesArray,
         framesOrderArray,
         framesCollectionObject: Object.assign({}, state.framesCollectionObject, framesCollectionObject)
@@ -98,7 +95,7 @@ function frames (state = initialState, action) {
     case UPDATE_FRAME_IMAGE_DATA:
       activeFrame = state.framesCollectionObject[action.frameUUID];
       frame = {};
-      frame[action.frameUUID] = Object.assign({}, activeFrame, { imageData: action.imageData, naturalImageData: action.naturalImageData });
+      frame[action.frameUUID] = Object.assign({}, activeFrame, { naturalImageData: action.naturalImageData });
       framesCollectionObject = Object.assign({}, state.framesCollectionObject, frame);
       modifiedFramesArray = [{ [action.frameUUID]: state.framesOrderArray.indexOf(action.frameUUID) }];
       return Object.assign({}, state, { framesCollectionObject, modifiedFramesArray });
@@ -147,20 +144,14 @@ function frames (state = initialState, action) {
       index = state.framesOrderArray.findIndex(el => el === action.uuid);
       id = uniqueId(framePrefix);
 
-      const currentImgData = state.framesCollectionObject[action.uuid].imageData,
-            imageData = new ImageData(currentImgData.width, currentImgData.height),
-            dataCopy = new Uint8ClampedArray(currentImgData.data),
-
-            currentNaturalImgData = state.framesCollectionObject[action.uuid].naturalImageData,
+      const currentNaturalImgData = state.framesCollectionObject[action.uuid].naturalImageData,
             naturalImageData = new ImageData(currentNaturalImgData.width, currentNaturalImgData.height),
             naturalDataCopy = new Uint8ClampedArray(currentNaturalImgData.data);
 
-      imageData.data.set(dataCopy);
       naturalImageData.data.set(naturalDataCopy);
 
       framesCollectionObject[id] = {
         name: `${state.framesCollectionObject[action.uuid].name}_copy`,
-        imageData,
         naturalImageData
       };
 
@@ -233,14 +224,9 @@ function frames (state = initialState, action) {
       return Object.assign({}, generateInitialState());
 
     case UPDATE_FRAMES_SIZE:
-      Object.keys(state.framesCollectionObject).forEach((id) => {
+      Object.keys(state.framesCollectionObject).forEach(id => {
         framesCollectionObject[id] = {
           name: state.framesCollectionObject[id].name,
-          imageData: extendImageData(
-            state.framesCollectionObject[id].imageData,
-            action.width * action.optimalPixelSize,
-            action.height * action.optimalPixelSize
-          ),
           naturalImageData: extendImageData(
             state.framesCollectionObject[id].naturalImageData,
             action.width,
