@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import AppToolButton from 'components/apptoolbutton/Apptoolbutton';
 import ModalWindow from 'components/modalwindow/Modalwindow';
 import ToggleCheckbox from 'components/togglecheckbox/Togglecheckbox';
+import CanvasAnchors from 'containers/canvasanchors/Canvasanchors';
 
 import FileSaver from 'file-saver';
 
@@ -179,20 +180,23 @@ class Apptoolbox extends Component {
           isShown={this.state.customizeSettingsShow}>
 
           <div className="apptoolbox__dimensions">
-            <div>
-              <span className="apptoolbox__inputlabel">Width </span>
-              <input
-                className="apptoolbox__inputinline"
-                ref={w => this._widthInput = w}
-                defaultValue={this.props.imageSize.width} />
+            <div className="apptoolbox__dimensions-inputs">
+              <div>
+                <span className="apptoolbox__inputlabel">Width </span>
+                <input
+                  className="apptoolbox__inputinline"
+                  ref={w => this._widthInput = w}
+                  defaultValue={this.props.imageSize.width} />
+              </div>
+              <div>
+                <span className="apptoolbox__inputlabel">Height </span>
+                <input
+                  className="apptoolbox__inputinline"
+                  ref={h => this._heightInput = h}
+                  defaultValue={this.props.imageSize.width} />
+              </div>
             </div>
-            <div>
-              <span className="apptoolbox__inputlabel">Height </span>
-              <input
-                className="apptoolbox__inputinline"
-                ref={h => this._heightInput = h}
-                defaultValue={this.props.imageSize.width} />
-            </div>
+            <CanvasAnchors className="apptoolbox__dimensions-anchors" />
           </div>
           <ToggleCheckbox
             value={this.props.gridShown}

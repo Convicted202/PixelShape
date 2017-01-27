@@ -230,7 +230,8 @@ function frames (state = initialState, action) {
           naturalImageData: extendImageData(
             state.framesCollectionObject[id].naturalImageData,
             action.width,
-            action.height
+            action.height,
+            action.anchor
           )
         };
       });

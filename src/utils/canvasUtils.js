@@ -1,4 +1,5 @@
 import { getPixelFromImageData, getColor, putColor } from './colorUtils';
+import { ANCHORS } from 'defaults/defaults';
 
 export const enableImageSmoothing = context => {
   context.imageSmoothingEnabled = true;
@@ -18,6 +19,8 @@ export const drawGrid = (context, space, gutter) => {
   let i = 0;
   const width = context.canvas.width,
         height = context.canvas.height;
+
+  context.clearRect(0, 0, width, height);
 
   context.beginPath();
   while (i < width) {
@@ -65,19 +68,7 @@ export const resizeImageData = (imageData, targetWidth, targetHeight) => {
   return targetContext.getImageData(0, 0, targetWidth, targetHeight);
 };
 
-const ANCHORS = {
-  TopLeft:      [0, 0],
-  TopCenter:    [0, 1],
-  TopRight:     [0, 2],
-  CenterLeft:   [1, 0],
-  CenterCenter: [1, 1],
-  CenterRight:  [1, 2],
-  BottomLeft:   [2, 0],
-  BottomCenter: [2, 1],
-  BottomRight:  [2, 2]
-};
-
-export const extendImageData = (imageData, width, height, extrapolate, anchor = 'CenterCenter') => {
+export const extendImageData = (imageData, width, height, anchor = 'oo') => {
   const target = new ImageData(width, height),
         oldWidth = imageData.width,
         oldHeight = imageData.height,
@@ -95,8 +86,8 @@ export const extendImageData = (imageData, width, height, extrapolate, anchor = 
 
   for (x = 0; x < cols; x++) {
     for (y = 0; y < rows; y++) {
-      shiftedX = shiftW * offset[0] + x;
-      shiftedY = shiftH * offset[1] + y;
+      shiftedX = shiftW * offset[1] + x;
+      shiftedY = shiftH * offset[0] + y;
       tx = halfWidth > 0 ? x : shiftedX;
       ty = halfHeight > 0 ? y : shiftedY;
 

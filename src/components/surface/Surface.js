@@ -5,6 +5,8 @@ import React, { Component } from 'react';
 import toolsMap from 'modules/toolsMap';
 import { disableImageSmoothing, drawGrid, resizeImageData } from 'utils/canvasUtils';
 
+const minPixelGridSize = 9;
+
 class Surface extends Component {
   constructor (...args) {
     super(...args);
@@ -18,6 +20,11 @@ class Surface extends Component {
     this.tool._applyNaturalImageData(this.props.currentFrame.naturalImageData);
   }
 
+  detectImageSizeChanged (props, changedProps) {
+    return (props.imageSize.width !== changedProps.imageSize.width
+      || props.imageSize.height !== changedProps.imageSize.height);
+  }
+
   componentDidMount () {
     this.ctx = this._canvas.getContext('2d');
     this.buffer = this._buffer.getContext('2d');
@@ -25,10 +32,10 @@ class Surface extends Component {
     this.applyAllContextInformation();
     disableImageSmoothing(this.ctx);
     disableImageSmoothing(this.buffer);
-    drawGrid(this.grid, 20, 0.5);
+    drawGrid(this.grid, this.props.pixelSize | 0, 0.5);
   }
 
-  componentDidUpdate () {
+  componentDidUpdate (prevProps) {
     // new imageData has arrived with a new currentFrame -
     // need to apply to the surface
     const iData = resizeImageData(this.props.currentFrame.naturalImageData, this._canvas.width, this._canvas.height);
@@ -38,6 +45,12 @@ class Surface extends Component {
     // disable smoothing once again, in case we faced canvas resizing and smoothing is reset
     disableImageSmoothing(this.ctx);
     disableImageSmoothing(this.buffer);
+    // redraw grid if imageSize changed
+    if (this.detectImageSizeChanged(this.props, prevProps)) drawGrid(this.grid, this.props.pixelSize | 0, 0.5);
+  }
+
+  shouldShowGrid () {
+    return this.props.gridShown && (this.props.pixelSize > minPixelGridSize);
   }
 
   updateFrameImageData () {
@@ -51,8 +64,7 @@ class Surface extends Component {
     // this is very important, since we are tracking currentFrame object
     // which is being changed all the time when framesContainer is updated
     // do not redraw component if currentFrame doesn't change
-    if (this.props.surfaceWidth !== nextProps.surfaceWidth
-      || this.props.surfaceHeight !== nextProps.surfaceHeight) return true;
+    if (this.detectImageSizeChanged(this.props, nextProps)) return true;
     if (this.props.gridShown !== nextProps.gridShown) return true;
     if (this.props.currentFrameUUID === nextProps.currentFrameUUID) return false;
     return true;
@@ -89,7 +101,7 @@ class Surface extends Component {
           <canvas
             className="grid-canvas"
             ref={c => this._grid = c}
-            style={{display: this.props.gridShown ? 'block' : 'none'}}
+            style={{display: this.shouldShowGrid() ? 'block' : 'none'}}
             height={this.props.surfaceHeight}
             width={this.props.surfaceWidth}>
           </canvas>
