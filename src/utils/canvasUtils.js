@@ -110,8 +110,7 @@ export const extendImageData = (imageData, width, height, anchor) => {
 };
 
 // extends or stretches image depending on params passed
-export const expandImageData = (imageData, width, height, anchor = 'oo', stretch) => {
-  return stretch
+export const expandImageData = (imageData, width, height, anchor = 'oo', stretch) =>
+  stretch
     ? resizeImageData(imageData, width, height)
     : extendImageData(imageData, width, height, anchor);
-}

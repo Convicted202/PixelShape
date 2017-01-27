@@ -205,7 +205,7 @@ class Apptoolbox extends Component {
             <div className="apptoolbox__dimensions-modifiers">
               <CanvasAnchors
                 className="apptoolbox__dimensions-modifiers__anchors"
-                disabled={this.props.stretchOn}/>
+                disabled={this.props.stretchOn} />
               <ToggleCheckbox
                 className="apptoolbox__dimensions-modifiers__stretch"
                 value={this.props.stretchOn}
