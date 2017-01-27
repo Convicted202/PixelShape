@@ -1,6 +1,8 @@
 import { getPixelFromImageData, getColor, putColor } from './colorUtils';
 import { ANCHORS } from 'defaults/defaults';
 
+// TODO: write tests for all of these
+
 export const enableImageSmoothing = context => {
   context.imageSmoothingEnabled = true;
   context.mozImageSmoothingEnabled = true;
@@ -49,6 +51,7 @@ const createCanvas = (width, height) => {
   return canvas;
 };
 
+// resizes/stretches imageData to new width and height
 export const resizeImageData = (imageData, targetWidth, targetHeight) => {
   const originalCanvas = createCanvas(imageData.width, imageData.height),
         originalContext = originalCanvas.getContext('2d'),
@@ -68,7 +71,8 @@ export const resizeImageData = (imageData, targetWidth, targetHeight) => {
   return targetContext.getImageData(0, 0, targetWidth, targetHeight);
 };
 
-export const extendImageData = (imageData, width, height, anchor = 'oo') => {
+// extends imageData to new width and height based on anchor point
+export const extendImageData = (imageData, width, height, anchor) => {
   const target = new ImageData(width, height),
         oldWidth = imageData.width,
         oldHeight = imageData.height,
@@ -104,3 +108,10 @@ export const extendImageData = (imageData, width, height, anchor = 'oo') => {
 
   return target;
 };
+
+// extends or stretches image depending on params passed
+export const expandImageData = (imageData, width, height, anchor = 'oo', stretch) => {
+  return stretch
+    ? resizeImageData(imageData, width, height)
+    : extendImageData(imageData, width, height, anchor);
+}

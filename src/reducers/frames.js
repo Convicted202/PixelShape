@@ -14,7 +14,7 @@ import {
 } from 'actions/frames';
 
 import uniqueId from 'utils/uuid';
-import { extendImageData } from 'utils/canvasUtils';
+import { expandImageData } from 'utils/canvasUtils';
 
 const framePrefix = 'frame_',
       frameName = 'default_';
@@ -227,11 +227,12 @@ function frames (state = initialState, action) {
       Object.keys(state.framesCollectionObject).forEach(id => {
         framesCollectionObject[id] = {
           name: state.framesCollectionObject[id].name,
-          naturalImageData: extendImageData(
+          naturalImageData: expandImageData(
             state.framesCollectionObject[id].naturalImageData,
             action.width,
             action.height,
-            action.anchor
+            action.anchor,
+            action.stretch
           )
         };
       });

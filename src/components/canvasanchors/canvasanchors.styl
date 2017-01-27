@@ -1,8 +1,13 @@
+$btn-width = 34px
+
 .canvas-anchors
+  &.disabled
+    pointer-events: none
+    opacity: 0.3
 
   &-group
     list-style: none
-    height: 32px
+    height: $btn-width
     padding: 0
     margin: 0
     border-bottom: 1px solid #e0e0e0
@@ -12,8 +17,8 @@
 
     .canvas-anchor
       display: inline-block
-      width: 32px
-      height: 32px
+      width: $btn-width
+      height: $btn-width
       padding: 3px
       cursor: pointer
       border-right: 1px solid #e0e0e0

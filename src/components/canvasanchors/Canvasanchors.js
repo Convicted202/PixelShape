@@ -1,6 +1,8 @@
 import './canvasanchors.styl';
 
 import React, { Component } from 'react';
+import classNames from 'classnames';
+
 import { ANCHORS } from 'defaults/defaults';
 
 const vert = ['N', 'o', 'S'],
@@ -78,8 +80,16 @@ class CanvasAnchors extends Component {
   }
 
   render () {
+    const classes = classNames(
+      'canvas-anchors',
+      this.props.className,
+      {
+        'disabled': this.props.disabled
+      }
+    );
+
     return (
-      <div className={`canvas-anchors ${this.props.className}`}>
+      <div className={classes}>
         { this.getArrowGroupRow(0, 'top') }
         { this.getArrowGroupRow(1, 'center') }
         { this.getArrowGroupRow(2, 'bottom') }

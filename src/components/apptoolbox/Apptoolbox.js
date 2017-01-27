@@ -93,7 +93,7 @@ class Apptoolbox extends Component {
   }
 
   customizeSettingsConfirm () {
-    this.props.setImageSize(this._widthInput.value, this._heightInput.value);
+    this.props.setImageSize(this._widthInput.value, this._heightInput.value, this.props.stretchOn);
     this.setState({ customizeSettingsShow: false });
   }
 
@@ -180,23 +180,37 @@ class Apptoolbox extends Component {
           isShown={this.state.customizeSettingsShow}>
 
           <div className="apptoolbox__dimensions">
-            <div className="apptoolbox__dimensions-inputs">
-              <div>
-                <span className="apptoolbox__inputlabel">Width </span>
-                <input
-                  className="apptoolbox__inputinline"
-                  ref={w => this._widthInput = w}
-                  defaultValue={this.props.imageSize.width} />
+            <div className="apptoolbox__dimensions-edit">
+              <div className="apptoolbox__dimensions-inputs">
+                <div>
+                  <span className="apptoolbox__inputlabel">Width </span>
+                  <input
+                    className="apptoolbox__inputinline"
+                    ref={w => this._widthInput = w}
+                    defaultValue={this.props.imageSize.width} />
+                </div>
+                <div>
+                  <span className="apptoolbox__inputlabel">Height </span>
+                  <input
+                    className="apptoolbox__inputinline"
+                    ref={h => this._heightInput = h}
+                    defaultValue={this.props.imageSize.width} />
+                </div>
               </div>
-              <div>
-                <span className="apptoolbox__inputlabel">Height </span>
-                <input
-                  className="apptoolbox__inputinline"
-                  ref={h => this._heightInput = h}
-                  defaultValue={this.props.imageSize.width} />
-              </div>
+              <ToggleCheckbox
+                className="apptoolbox__dimensions-edit__ratio"
+                value={false}
+                onChange={() => {}}>Keep ratio</ToggleCheckbox>
             </div>
-            <CanvasAnchors className="apptoolbox__dimensions-anchors" />
+            <div className="apptoolbox__dimensions-modifiers">
+              <CanvasAnchors
+                className="apptoolbox__dimensions-modifiers__anchors"
+                disabled={this.props.stretchOn}/>
+              <ToggleCheckbox
+                className="apptoolbox__dimensions-modifiers__stretch"
+                value={this.props.stretchOn}
+                onChange={this.props.toggleStretch.bind(this)}>Stretch</ToggleCheckbox>
+            </div>
           </div>
           <ToggleCheckbox
             value={this.props.gridShown}
