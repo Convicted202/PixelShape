@@ -1,8 +1,9 @@
 import {
   SET_IMAGE_SIZE,
-  // SET_PIXEL_SIZE,
   SET_SURFACE_CONSTRAINTS,
-  TOGGLE_GRID
+  TOGGLE_GRID,
+  TOGGLE_STRETCH,
+  SET_EXPAND_ANCHOR
 } from 'actions/application';
 
 // TODO: move this to defaults
@@ -24,7 +25,9 @@ const initialState = {
     width: 2000,
     height: 2000
   },
-  grid: false
+  grid: false,
+  stretch: false,
+  anchor: 'oo'
 };
 
 function getActualConstraints (width, height) {
@@ -63,6 +66,10 @@ function application (state = initialState, action) {
       });
     case TOGGLE_GRID:
       return Object.assign({}, state, { grid: !state.grid });
+    case TOGGLE_STRETCH:
+      return Object.assign({}, state, { stretch: !state.stretch });
+    case SET_EXPAND_ANCHOR:
+      return Object.assign({}, state, { anchor: action.anchor });
     default:
       return state;
   }

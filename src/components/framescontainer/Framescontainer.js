@@ -54,6 +54,8 @@ class FramesContainer extends Component {
         nextProps.modifiedFrames,
         nextProps.framesCollection,
         nextProps.framesOrder,
+        nextProps.imageSize.width,
+        nextProps.imageSize.height,
         nextProps.fps
       );
     }
@@ -66,7 +68,14 @@ class FramesContainer extends Component {
     }
   }
 
-  generateGif (modified = this.props.modifiedFrames, collection = this.props.framesCollection, order = this.props.framesOrder, fps = this.props.fps) {
+  generateGif (
+    modified = this.props.modifiedFrames,
+    collection = this.props.framesCollection,
+    order = this.props.framesOrder,
+    width = this.props.imageSize.width,
+    height = this.props.imageSize.height,
+    fps = this.props.fps
+  ) {
     const gifLength = order.length;
 
     modified
@@ -77,16 +86,16 @@ class FramesContainer extends Component {
           frameUUID: id,
           frameNum: frameObj[id],
           framesLength: gifLength,
-          height: this.props.imageSize.height,
-          width: this.props.imageSize.width,
           imageData: collection[id].naturalImageData.data,
+          height,
+          width,
           fps
         });
       });
   }
 
   addFrame () {
-    this.props.addFrame();
+    this.props.addFrame(this.props.imageSize.width, this.props.imageSize.height);
     this.setState({ frameAdded: true });
   }
 

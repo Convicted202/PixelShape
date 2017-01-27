@@ -24,22 +24,10 @@ const getPixelPosition = (imageData, direction, pixelIndex) => {
   return pixelIndex + directionShifts[direction] * RGBA;
 };
 
-// TODO: this functionality should be called only when pixel is not mapped yet
-const mapColorToNaturalImageData = (imgData, originalIndex, originalImgData, color, pixelSize) => {
-  const RGBAIndex = originalIndex / 4,
-        x = (RGBAIndex % originalImgData.width) / pixelSize,
-        y = (RGBAIndex / originalImgData.width) / pixelSize;
-
-  let naturalPixelIndex;
-
-  naturalPixelIndex = getPixelFromImageData(imgData, x | 0, y | 0);
-  putColor(imgData, naturalPixelIndex, color);
-};
-
 /**
 * https://en.wikipedia.org/wiki/Flood_fill
 */
-export default (context, naturalImageData, fillColor, x, y, pixelSize) => {
+export default (context, fillColor, x, y) => {
   const queue = [],
         baseCanvas = context.canvas,
         imageData = context.getImageData(0, 0, baseCanvas.width, baseCanvas.height),
@@ -60,9 +48,6 @@ export default (context, naturalImageData, fillColor, x, y, pixelSize) => {
 
     if (equallyColored(imageData, pixelIndex, initialColor)) {
       putColor(imageData, pixelIndex, rgbaColor);
-
-      // map surface imagedata to natural frame imagedata
-      mapColorToNaturalImageData(naturalImageData, pixelIndex, imageData, rgbaColor, pixelSize);
 
       queue.push(
         getPixelPosition(imageData, WEST, pixelIndex),

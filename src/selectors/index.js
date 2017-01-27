@@ -68,6 +68,14 @@ export function getGridState (state) {
   return state.application.grid;
 }
 
+export function getStretchState (state) {
+  return state.application.stretch;
+}
+
+export function getCurrentAnchor (state) {
+  return state.application.anchor;
+}
+
 export function getImageSize (state) {
   return state.application.size;
 }

@@ -1,0 +1,34 @@
+$btn-width = 34px
+
+.canvas-anchors
+  &.disabled
+    pointer-events: none
+    opacity: 0.3
+
+  &-group
+    list-style: none
+    height: $btn-width
+    padding: 0
+    margin: 0
+    border-bottom: 1px solid #e0e0e0
+
+    &:last-child
+      border-bottom: none
+
+    .canvas-anchor
+      display: inline-block
+      width: $btn-width
+      height: $btn-width
+      padding: 3px
+      cursor: pointer
+      border-right: 1px solid #e0e0e0
+
+      &:last-child
+        border-right: none
+
+      &:hover
+        background-color: lightgray
+
+      &__icon
+        padding: 7px
+        fill: #264653

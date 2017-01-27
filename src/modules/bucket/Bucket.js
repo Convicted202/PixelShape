@@ -1,5 +1,6 @@
 import AbstractTool from '../basetool/AbstractTool';
 import floodFill from 'utils/floodFill';
+import { resizeImageData } from 'utils/canvasUtils';
 
 class Bucket extends AbstractTool {
   constructor (...args) {
@@ -20,7 +21,14 @@ class Bucket extends AbstractTool {
   }
 
   draw (ctx, x, y) {
-    floodFill(ctx, this._naturalImageData, this.state.color, x, y, this.state.pixelSize);
+    // fill surface context imageData
+    floodFill(ctx, this.state.color, x, y);
+    // and update naturalImageData for the active frame by resizing surface context to natural dimension
+    this._naturalImageData = resizeImageData(
+      ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height),
+      this._naturalImageData.width,
+      this._naturalImageData.height
+    );
   }
 }
 

@@ -9,9 +9,12 @@ export const SET_CURRENT_FRAME = 'SET_CURRENT_FRAME';
 export const UPDATE_FRAME_GIF_DATA = 'UPDATE_FRAME_GIF_DATA';
 export const RESET_FRAMES_STATE = 'RESET_FRAMES_STATE';
 export const SET_FPS = 'SET_FPS';
+export const UPDATE_FRAMES_SIZE = 'UPDATE_FRAMES_SIZE';
 
-export const addFrame = () => ({
-  type: ADD_FRAME
+export const addFrame = (width, height) => ({
+  type: ADD_FRAME,
+  width,
+  height
 });
 
 export const removeFrame = uuid => ({
@@ -19,10 +22,17 @@ export const removeFrame = uuid => ({
   uuid
 });
 
-export const updateFrameImageData = (frameUUID, imageData, naturalImageData) => ({
+export const updateFramesSize = (width, height, anchor, stretch) => ({
+  type: UPDATE_FRAMES_SIZE,
+  width,
+  height,
+  anchor,
+  stretch
+});
+
+export const updateFrameImageData = (frameUUID, naturalImageData) => ({
   type: UPDATE_FRAME_IMAGE_DATA,
   frameUUID,
-  imageData,
   naturalImageData
 });
 
