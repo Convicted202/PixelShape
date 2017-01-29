@@ -1,6 +1,7 @@
 import {
   SET_IMAGE_SIZE,
   SET_SURFACE_CONSTRAINTS,
+  TOGGLE_RESET_PALETTE,
   TOGGLE_GRID,
   TOGGLE_STRETCH,
   SET_EXPAND_ANCHOR
@@ -25,6 +26,7 @@ const initialState = {
     width: 2000,
     height: 2000
   },
+  resetPalette: false,
   grid: false,
   stretch: false,
   anchor: 'oo'
@@ -64,6 +66,8 @@ function application (state = initialState, action) {
           height: action.height
         }
       });
+    case TOGGLE_RESET_PALETTE:
+      return Object.assign({}, state, { resetPalette: !state.resetPalette });
     case TOGGLE_GRID:
       return Object.assign({}, state, { grid: !state.grid });
     case TOGGLE_STRETCH:
