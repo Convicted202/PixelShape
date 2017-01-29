@@ -2,6 +2,7 @@ import { updateFramesSize } from './frames';
 
 export const SET_IMAGE_SIZE = 'APP:SET_SIZE';
 export const SET_SURFACE_CONSTRAINTS = 'APP:SET_SURFACE_CONSTRAINTS';
+export const TOGGLE_RESET_PALETTE = 'APP:TOGGLE_RESET_PALETTE';
 export const TOGGLE_GRID = 'APP:TOGGLE_GRID';
 export const TOGGLE_STRETCH = 'APP:TOGGLE_STRETCH';
 export const SET_EXPAND_ANCHOR = 'APP:SET_EXPAND_ANCHOR';
@@ -21,6 +22,10 @@ export const setSurfaceConstraints = (width, height) => ({
 export const setExpandAnchor = anchor => ({
   type: SET_EXPAND_ANCHOR,
   anchor
+});
+
+export const toggleResetPalette = () => ({
+  type: TOGGLE_RESET_PALETTE
 });
 
 export const toggleGrid = () => ({

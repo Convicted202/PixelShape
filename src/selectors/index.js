@@ -64,6 +64,10 @@ export function getFramebarVisibility (state) {
   return state.panels.framebar;
 }
 
+export function getResetPaletteState (state) {
+  return state.application.resetPalette;
+}
+
 export function getGridState (state) {
   return state.application.grid;
 }
