@@ -1,8 +1,8 @@
 import { fillRectImageData, stringToRGBA } from 'utils/colorUtils';
 
 const ACTION = {
-  DRAW: 0,
-  CLEAR: 1
+  DRAW: 'fillRect',
+  CLEAR: 'clearRect'
 };
 
 class AbstractTool {
@@ -12,6 +12,7 @@ class AbstractTool {
       size: 1,
       pixelSize: 20,
       color: '#000000',
+      transparent: '#000000',
       alpha: 1,
       compositeOperation: 'source-over',
       tool: 'abstract',
@@ -92,11 +93,10 @@ class AbstractTool {
 
     if (!coords) return;
 
-    if (action === ACTION.DRAW) {
-      ctx.fillRect(coords.x, coords.y, this.size, this.size);
-      color = stringToRGBA(this.state.color);
-    } else
-      ctx.clearRect(coords.x, coords.y, this.size, this.size);
+    color = action === ACTION.DRAW ? this.state.color : this.state.transparent;
+
+    ctx[action](coords.x, coords.y, this.size, this.size);
+    color = stringToRGBA(color);
 
     if (ctx === this._ctx) {
       fillRectImageData(
@@ -118,7 +118,8 @@ class AbstractTool {
     this.modifyPixelCell(ctx, x, y, ACTION.CLEAR);
   }
 
-  draw (ctx /*, x0, y0, x1, y1 */) {
+  /* eslint-disable no-unused-vars */
+  draw (ctx, x0, y0, x1, y1) {
     this.useStateOn(ctx);
   }
 

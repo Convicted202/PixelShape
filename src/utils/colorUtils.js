@@ -42,6 +42,26 @@ export const getColor = (imageData, pixelIndex) => {
   return color;
 };
 
+export const getContextColor = (context, x, y) => context.getImageData(x | 0, y | 0, 1, 1).data;
+
+// http://stackoverflow.com/a/13542669
+// darken - negative percent
+// lighten - positive percent
+export const darkenLightenColor = (RGB, percentage) => {
+  const t = percentage < 0 ? 0 : 255,
+        p = percentage < 0 ? -percentage : percentage,
+        [R, G, B] = RGB;
+
+  return `#${
+    (
+      0x1000000
+      + (Math.round((t - R) * p) + R) * 0x10000
+      + (Math.round((t - G) * p) + G) * 0x100
+      + (Math.round((t - B) * p) + B)
+    ).toString(16).slice(1)
+  }`;
+};
+
 export const fillRectImageData = (imageData, x0, y0, width, height, color = [0, 0, 0, 0]) => {
   let i, j, x1 = x0 + width, y1 = y0 + height, pixel;
 

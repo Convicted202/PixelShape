@@ -4,6 +4,7 @@ import Eraser from './eraser/Eraser';
 import Dropper from './dropper/Dropper';
 import Rectangle from './rectangle/Rectangle';
 import Ellipse from './ellipse/Ellipse';
+import ColorAdjust from './coloradjust/ColorAdjust';
 
 const toolsMap = new Map();
 
@@ -13,6 +14,7 @@ toolsMap.set('Eraser', new Eraser());
 toolsMap.set('Dropper', new Dropper());
 toolsMap.set('Rectangle', new Rectangle());
 toolsMap.set('Ellipse', new Ellipse());
+toolsMap.set('ColorAdjust', new ColorAdjust());
 
 
 export default toolsMap;
