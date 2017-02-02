@@ -77,6 +77,7 @@ class SettingsModal extends Component {
         <input
           className="apptoolbox__inputinline"
           ref={w => this._widthInput = w}
+          key={this.props.imageSize.width}
           style={{ borderColor: this.state.widthError ? errorColor : regularColor }}
           defaultValue={this.props.imageSize.width} />
       </div>,
@@ -86,6 +87,7 @@ class SettingsModal extends Component {
         <input
           className="apptoolbox__inputinline"
           ref={h => this._heightInput = h}
+          key={this.props.imageSize.height}
           style={{ borderColor: this.state.heightError ? errorColor : regularColor }}
           defaultValue={this.props.imageSize.width} />
       </div>

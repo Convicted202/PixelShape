@@ -1,3 +1,7 @@
+export function getProjectGuid (state) {
+  return state.application.projectGuid;
+}
+
 export function getTool (state) {
   return state.tools.tool;
 }

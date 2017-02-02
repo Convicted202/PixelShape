@@ -1,6 +1,8 @@
 import Downloader from './Downloader';
 import Uploader from './Uploader';
 
+import { uuid } from 'utils/uuid';
+
 class StateManager {
   // initial implementation
   // TODO: iData should be converted to Array containing ONLY HEX values
@@ -33,11 +35,26 @@ class StateManager {
   }
 
   prepareAfterUploadAsync (data) {
-    let state = data.json;
+    let stateObj = data.json;
 
     // do something to make state applicable to current store shape
 
-    return Promise.resolve({ file: data.file, json: state });
+    Object.keys(stateObj.frames.framesCollectionObject)
+      .forEach(frameId => {
+        let width = stateObj.application.size.width,
+            height = stateObj.application.size.height,
+            iDataObj = stateObj.frames.framesCollectionObject[frameId].naturalImageData,
+            iData;
+
+        iDataObj.length = width * height * 4;
+        iData = new ImageData(new Uint8ClampedArray(iDataObj), width, height);
+
+        stateObj.frames.framesCollectionObject[frameId].naturalImageData = iData;
+      });
+
+    stateObj.application.projectGuid = uuid();
+
+    return Promise.resolve({ file: data.file, json: stateObj });
   }
 
   // calls calback with { file, json }

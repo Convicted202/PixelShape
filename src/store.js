@@ -1,8 +1,8 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 
-import reducers from 'reducers/index';
+import rootReducer from 'reducers/index';
 
 const logger = createLogger({
   duration: true,
@@ -19,10 +19,6 @@ const createStoreWithMiddleware = applyMiddleware(
   ...middleware
 )(createStore);
 
-const reducer = combineReducers(
-  reducers
-);
-
-const createAppStore = (state = {}) => createStoreWithMiddleware(reducer, state);
+const createAppStore = (state = {}) => createStoreWithMiddleware(rootReducer, state);
 
 export default createAppStore;

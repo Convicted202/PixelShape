@@ -10,12 +10,16 @@ class NewProjectModal extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      importedFileName: null
+      importedFileName: null,
+      importedData: null
     };
   }
 
   onFileLoaded (data) {
-    this.setState({ importedFileName: data.file.name });
+    this.setState({
+      importedFileName: data.file.name,
+      importedData: data.json
+    });
   }
 
   handleUpload () {
@@ -37,15 +41,27 @@ class NewProjectModal extends Component {
     ];
   }
 
+  dropImportedFile () {
+    this.setState({
+      importedFileName: null,
+      importedData: null
+    });
+    this._input.value = '';
+  }
+
   confirm () {
-    if (this.props.resetPaletteOn) this.props.resetUserColors();
-    this.props.resetFramesState();
+    if (this.state.importedData)
+      this.props.uploadProject(this.state.importedData);
+    else {
+      if (this.props.resetPaletteOn) this.props.resetUserColors();
+      this.props.resetFramesState();
+    }
+    this.dropImportedFile();
     this.props.closeModal();
   }
 
   cancel () {
-    this.setState({ importedFileName: null });
-    this._input.value = '';
+    this.dropImportedFile();
     this.props.closeModal();
   }
 

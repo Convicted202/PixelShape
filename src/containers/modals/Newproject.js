@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { getResetPaletteState } from 'selectors';
 
-import { toggleResetPalette } from 'actions/application';
+import { toggleResetPalette, uploadStore } from 'actions/application';
 import { resetUserColors } from 'actions/palette';
 import { resetFramesState } from 'actions/frames';
 
@@ -21,6 +21,9 @@ const mapDispatchToProps = dispatch => ({
   },
   resetFramesState () {
     return dispatch(resetFramesState());
+  },
+  uploadProject (data) {
+    return dispatch(uploadStore(data));
   }
 });
 

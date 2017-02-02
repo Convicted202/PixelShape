@@ -7,6 +7,8 @@ import {
   SET_EXPAND_ANCHOR
 } from 'actions/application';
 
+import { uuid } from 'utils/uuid';
+
 // TODO: move this to defaults
 const defaultConsts = {
   margins: {
@@ -16,6 +18,7 @@ const defaultConsts = {
 };
 
 const initialState = {
+  projectGuid: uuid(),
   size: {
     width: 32,
     height: 32

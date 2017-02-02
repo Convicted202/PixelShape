@@ -7,6 +7,7 @@ export const TOGGLE_RESET_PALETTE = 'APP:TOGGLE_RESET_PALETTE';
 export const TOGGLE_GRID = 'APP:TOGGLE_GRID';
 export const TOGGLE_STRETCH = 'APP:TOGGLE_STRETCH';
 export const SET_EXPAND_ANCHOR = 'APP:SET_EXPAND_ANCHOR';
+export const UPLOAD_STORE = 'APP:UPLOAD_STORE';
 
 export const setImageSize = (width, height) => ({
   type: SET_IMAGE_SIZE,
@@ -46,3 +47,8 @@ export const downloadStore = fileName => (dispatch, getState) => {
   const state = getState();
   StateManager.prepareAndDownload(state, fileName);
 };
+
+export const uploadStore = data => ({
+  type: UPLOAD_STORE,
+  data
+});
