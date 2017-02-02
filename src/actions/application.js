@@ -1,4 +1,5 @@
 import { updateFramesSize } from './frames';
+import StateManager from 'fileloaders/StateManager';
 
 export const SET_IMAGE_SIZE = 'APP:SET_SIZE';
 export const SET_SURFACE_CONSTRAINTS = 'APP:SET_SURFACE_CONSTRAINTS';
@@ -39,4 +40,9 @@ export const toggleStretch = () => ({
 export const processSizeChange = (width, height, stretch) => (dispatch, getState) => {
   dispatch(setImageSize(width, height));
   dispatch(updateFramesSize(width, height, getState().application.anchor, stretch));
+};
+
+export const downloadStore = fileName => (dispatch, getState) => {
+  const state = getState();
+  StateManager.prepareAndDownload(state, fileName);
 };
