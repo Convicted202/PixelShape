@@ -22,7 +22,8 @@ class Surface extends Component {
 
   detectImageSizeChanged (props, changedProps) {
     return (props.imageSize.width !== changedProps.imageSize.width
-      || props.imageSize.height !== changedProps.imageSize.height);
+      || props.imageSize.height !== changedProps.imageSize.height
+      || props.pixelSize !== changedProps.pixelSize);
   }
 
   componentDidMount () {
@@ -65,6 +66,7 @@ class Surface extends Component {
     // which is being changed all the time when framesContainer is updated
     // do not redraw component if currentFrame doesn't change
     if (this.detectImageSizeChanged(this.props, nextProps)) return true;
+    if (this.props.projectGuid !== nextProps.projectGuid) return true;
     if (this.props.gridShown !== nextProps.gridShown) return true;
     if (this.props.currentFrameUUID === nextProps.currentFrameUUID) return false;
     return true;

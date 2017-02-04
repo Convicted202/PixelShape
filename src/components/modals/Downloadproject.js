@@ -2,29 +2,32 @@ import React, { Component } from 'react';
 import ModalWindow from 'components/modalwindow/Modalwindow';
 import ToggleCheckbox from 'components/togglecheckbox/Togglecheckbox';
 
-import FileSaver from 'file-saver';
+import Downloader from 'fileloaders/Downloader';
 
 class DownloadProjectModal extends Component {
   constructor (props) {
     super(props);
+    this.state = {
+      includeProject: true
+    };
   }
 
-  downloadGIF () {
-    const byteChars = this.props.framesOrder.map(el => this.props.gifFramesData[el]).join(''),
-          len = byteChars.length,
-          bytes = new Array(len);
+  includeProjectToggle () {
+    this.setState({
+      includeProject: !this.state.includeProject
+    });
+  }
 
-    let i = 0, blob = null;
-
-    for (; i < len; i++)
-      bytes[i] = byteChars.charCodeAt(i);
-
-    blob = new Blob([new Uint8Array(bytes)], { type: 'image/gif' });
-    FileSaver.saveAs(blob, 'myGif.gif');
+  combineGifData () {
+    return this.props.framesOrder.map(
+      el => this.props.gifFramesData[el]
+    ).join('');
   }
 
   confirm () {
-    this.downloadGIF();
+    const combinedData = this.combineGifData();
+    Downloader.asGIF(combinedData);
+    if (this.state.includeProject) this.props.downloadProject('project.pxlsh');
     this.props.closeModal();
   }
 
@@ -42,6 +45,9 @@ class DownloadProjectModal extends Component {
 
         <ToggleCheckbox>Include spritesheet</ToggleCheckbox>
         <ToggleCheckbox>Include custom palette</ToggleCheckbox>
+        <ToggleCheckbox
+          value={this.state.includeProject}
+          onChange={this.includeProjectToggle.bind(this)}>Include project</ToggleCheckbox>
 
       </ModalWindow>
     );
