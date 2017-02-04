@@ -2,7 +2,7 @@ export const getType = val => {
   const typeRegExp = /^\[.*\s(.*)\]$/;
 
   return Object.prototype.toString.call(val).replace(typeRegExp, '$1');
-}
+};
 
 export const isObject = val => getType(val) === 'Object';
 
@@ -19,4 +19,4 @@ export const copyObj = obj => {
     clone[key] = isObject(value) ? copyObj(value) : value;
   }
   return clone;
-}
+};

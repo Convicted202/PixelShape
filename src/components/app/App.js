@@ -26,7 +26,7 @@ class App extends Component {
 
   render () {
     return (
-      <div className="app" guid={this.props.guid}>
+      <div className="app" data-guid={this.props.guid}>
         <Toolbar />
         <div className="app__content">
           <Apptoolbox />
