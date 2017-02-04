@@ -1,5 +1,5 @@
 import { updateFramesSize } from './frames';
-import StateManager from 'fileloaders/StateManager';
+import StateLoader from 'statemanager/StateLoader';
 
 export const SET_IMAGE_SIZE = 'APP:SET_SIZE';
 export const SET_SURFACE_CONSTRAINTS = 'APP:SET_SURFACE_CONSTRAINTS';
@@ -45,10 +45,10 @@ export const processSizeChange = (width, height, stretch) => (dispatch, getState
 
 export const downloadStore = fileName => (dispatch, getState) => {
   const state = getState();
-  StateManager.prepareAndDownload(state, fileName);
+  StateLoader.prepareAndDownload(state, fileName);
 };
 
-export const uploadStore = data => ({
+export const uploadStore = state => ({
   type: UPLOAD_STORE,
-  data
+  state
 });

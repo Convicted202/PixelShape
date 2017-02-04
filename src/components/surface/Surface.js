@@ -22,7 +22,8 @@ class Surface extends Component {
 
   detectImageSizeChanged (props, changedProps) {
     return (props.imageSize.width !== changedProps.imageSize.width
-      || props.imageSize.height !== changedProps.imageSize.height);
+      || props.imageSize.height !== changedProps.imageSize.height
+      || props.pixelSize !== changedProps.pixelSize);
   }
 
   componentDidMount () {

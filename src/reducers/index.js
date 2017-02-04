@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 import { UPLOAD_STORE } from 'actions/application';
+import { StateConverter } from 'statemanager/StateConverter';
 
 import tools from './tools';
 import userPalette from './palette';
@@ -18,7 +19,7 @@ const appReducer = combineReducers({
 
 const rootReducer = (state, action) => {
   if (action.type === UPLOAD_STORE)
-    state = action.data;
+    state = StateConverter.mergeImportedState(state, action.state);
 
   return appReducer(state, action);
 };

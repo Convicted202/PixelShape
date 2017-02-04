@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ModalWindow from 'components/modalwindow/Modalwindow';
 import ToggleCheckbox from 'components/togglecheckbox/Togglecheckbox';
 
-import StateManager from 'fileloaders/StateManager';
+import StateLoader from 'statemanager/StateLoader';
 
 import './newproject.styl';
 
@@ -25,7 +25,7 @@ class NewProjectModal extends Component {
   handleUpload () {
     const files = this._input.files;
 
-    StateManager.upload(files[0], this.onFileLoaded.bind(this));
+    StateLoader.upload(files[0], this.onFileLoaded.bind(this));
   }
 
   getFileNotification () {

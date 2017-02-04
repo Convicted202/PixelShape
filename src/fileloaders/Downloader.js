@@ -1,8 +1,8 @@
 import FileSaver from 'file-saver';
 
 const Type = {
-  JSON: 'image/gif',
-  GIF: 'application/json'
+  JSON: 'application/json',
+  GIF: 'image/gif'
 };
 
 export default class Downloader {
