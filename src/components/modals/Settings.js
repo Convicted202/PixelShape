@@ -89,7 +89,7 @@ class SettingsModal extends Component {
           ref={h => this._heightInput = h}
           key={this.props.imageSize.height}
           style={{ borderColor: this.state.heightError ? errorColor : regularColor }}
-          defaultValue={this.props.imageSize.width} />
+          defaultValue={this.props.imageSize.height} />
       </div>
     ];
   }
