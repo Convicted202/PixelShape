@@ -52,7 +52,7 @@ test('Boundshape =>', (expect) => {
     before();
 
     boundshape.update = sinon.spy();
-
+    boundshape.mouseDown = true;
     boundshape.onMouseUp(100, 100);
     expect.notOk(boundshape.drawing, 'Should toggle drawing mode off');
     expect.ok(boundshape.update.calledWith(boundshape._ctx) && boundshape._buffer.clearRect.called, 'Should do final draw on rendering context and reset buffer context');

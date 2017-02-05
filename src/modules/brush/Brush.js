@@ -34,6 +34,7 @@ class Brush extends AbstractTool {
   }
 
   onMouseUp (x, y) {
+    if (!this.mouseDown) return;
     this.mouseDown = false;
     this.draw(this._ctx, x, y, this.x, this.y);
     [this.x, this.y] = [null, null];

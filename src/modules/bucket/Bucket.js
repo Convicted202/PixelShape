@@ -17,6 +17,7 @@ class Bucket extends AbstractTool {
   }
 
   onMouseUp (/* x, y */) {
+    if (!this.mouseDown) return;
     this.filling = false;
   }
 

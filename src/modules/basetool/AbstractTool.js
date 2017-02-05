@@ -138,6 +138,10 @@ class AbstractTool {
   onMouseUp () {
     throw Error('Tool mouseUp event not implemented');
   }
+
+  cancelMouseDown () {
+    this.mouseDown = false;
+  }
 }
 
 export default AbstractTool;

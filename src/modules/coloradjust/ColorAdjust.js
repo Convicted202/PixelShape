@@ -41,6 +41,7 @@ class ColorAdjust extends AbstractTool {
 
   /* eslint-disable no-unused-vars */
   onMouseUp (x, y) {
+    if (!this.mouseDown) return;
     this.mouseDown = false;
     [this.x, this.y] = [null, null];
   }

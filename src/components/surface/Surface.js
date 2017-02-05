@@ -5,7 +5,8 @@ import React, { Component } from 'react';
 import toolsMap from 'modules/toolsMap';
 import { disableImageSmoothing, drawGrid, resizeImageData } from 'utils/canvasUtils';
 
-const minPixelGridSize = 9;
+const minPixelGridSize = 9,
+      LEFT_CLICK = 0;
 
 class Surface extends Component {
   constructor (...args) {
@@ -78,28 +79,56 @@ class Surface extends Component {
   }
 
   onMouseDown (ev) {
-    // this.tool = toolsMap.get(this.props.tool);
+    if (!this.isMouseLeftBtn(ev)) return;
     this.tool.storeCallback = this.props.setTempColor.bind(this);
     this.tool.onMouseDown(...this.normalizeEvent(ev));
   }
 
+  mouseMoveOffBounds (ev) {
+    if (this.isToolDrawing() && !this.isInBounds(ev)) {
+      this.cancelMouseDown();
+      this.updateFrameImageData();
+    }
+  }
+
   onMouseMove (ev) {
-    // TODO: reorganize this later (put in external module)
-    // this could be moved to componentWillReceiveProps
+    this.mouseMoveOffBounds(ev);
     this.tool = toolsMap.get(this.props.tool);
     this.applyAllContextInformation();
     this.tool.onMouseMove(...this.normalizeEvent(ev));
   }
 
   onMouseUp (ev) {
+    if (!this.isMouseLeftBtn(ev)) return;
     this.tool.onMouseUp(...this.normalizeEvent(ev));
     this.updateFrameImageData();
   }
 
+  cancelMouseDown () {
+    this.tool.cancelMouseDown();
+  }
+
+  isMouseLeftBtn (ev) {
+    return ev.button === LEFT_CLICK;
+  }
+
+  isToolDrawing () {
+    return this.tool.mouseDown;
+  }
+
+  isInBounds (ev) {
+    return ev.target === this._buffer;
+  }
+
   render () {
     return (
-      <main className="surface" ref={s => this._surface = s}>
-        <section className="surface__drawer" style={{width: this.props.surfaceWidth, height: this.props.surfaceHeight}}>
+      <main
+        className="surface"
+        ref={s => this._surface = s}
+        onMouseMove={this.onMouseMove.bind(this)}>
+        <section
+          className="surface__drawer"
+          style={{width: this.props.surfaceWidth, height: this.props.surfaceHeight}}>
           <canvas
             className="grid-canvas"
             ref={c => this._grid = c}
@@ -119,7 +148,6 @@ class Surface extends Component {
             height={this.props.surfaceHeight}
             width={this.props.surfaceWidth}
             onMouseDown={this.onMouseDown.bind(this)}
-            onMouseMove={this.onMouseMove.bind(this)}
             onMouseUp={this.onMouseUp.bind(this)} >
           </canvas>
         </section>

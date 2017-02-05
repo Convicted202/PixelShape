@@ -66,7 +66,7 @@ test('Brush =>', (expect) => {
     before();
 
     brush.draw = sinon.spy();
-
+    brush.mouseDown = true;
     brush.onMouseUp(100, 100);
     expect.notOk(brush.mouseDown, 'Should set mouseDown flag to false');
     expect.ok(brush.draw.calledWith(brush._ctx), 'Should finish drawing on rendering context');

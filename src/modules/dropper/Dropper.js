@@ -49,6 +49,7 @@ class Dropper extends AbstractTool {
 
   onMouseUp (x, y) {
     const hexColor = this.getUnderlyingColor(x, y);
+    if (!this.mouseDown) return;
     this.mouseDown = false;
     this.processColor(hexColor);
   }
