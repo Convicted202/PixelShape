@@ -79,7 +79,12 @@ class Apptoolbox extends Component {
             doAction={this.openModal.bind(this, MODALS.Settings)} />
         </ul>
 
-        <div className="modalContainer"></div>
+        <div
+          className="modalLayer"
+          style={{
+            display: this.state.newProjectShow || this.state.downloadProjectShow || this.state.customizePanelsShow || this.state.settingsShow ? 'block' : 'none'
+          }}></div>
+
         <NewProjectModal
           isShown={this.state.newProjectShow}
           closeModal={this.closeModal.bind(this)} />
