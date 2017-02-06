@@ -5,12 +5,15 @@ const ACTION = {
   CLEAR: 'clearRect'
 };
 
+const getCellCount = (val, cellSize) => val / cellSize | 0;
+
 class AbstractTool {
   constructor () {
     // TODO: take default settings from defaults
     this.state = {
       size: 1,
       pixelSize: 20,
+      floatPixelSize: 20,
       color: '#000000',
       transparent: '#000000',
       alpha: 1,
@@ -52,6 +55,11 @@ class AbstractTool {
     Object.assign(this.state, state);
   }
 
+  applyPixelSize (pixelSize) {
+    this.state.floatPixelSize = pixelSize;
+    this.state.pixelSize = pixelSize | 0;
+  }
+
   useStateOn (ctx) {
     ctx.lineWidth = this.size;
     ctx.fillStyle = this.state.color;
@@ -69,21 +77,16 @@ class AbstractTool {
   getPixeledCoords (x, y) {
     if (typeof x === 'undefined' || typeof y === 'undefined') return false;
     // shift x and y half a brush size and get how much grid pixels are in it
-    const timesX = x / this.state.pixelSize | 0,
-          timesY = y / this.state.pixelSize | 0,
-          pixelShift = this.state.size / 2 | 0,
-          roundedVals = {
-            x: timesX - pixelShift,
-            y: timesY - pixelShift
-          };
-    // const timesX = Math.floor((x) / this.state.pixelSize),
-    //       timesY = Math.floor((y) / this.state.pixelSize);
+    const pixelShift = this.state.size / 2 | 0,
+          xCell = getCellCount(x, this.state.pixelSize) - pixelShift,
+          yCell = getCellCount(y, this.state.pixelSize) - pixelShift;
 
     return {
-      x: roundedVals.x * this.state.pixelSize,
-      y: roundedVals.y * this.state.pixelSize,
-      naturalX: roundedVals.x,
-      naturalY: roundedVals.y
+      x: xCell * this.state.pixelSize,
+      y: yCell * this.state.pixelSize,
+      // these should be perfect mappings from surface coords to natural image data coords
+      naturalX: getCellCount(x, this.state.floatPixelSize),
+      naturalY: getCellCount(y, this.state.floatPixelSize)
     };
   }
 

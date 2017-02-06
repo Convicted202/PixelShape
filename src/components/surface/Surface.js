@@ -15,7 +15,8 @@ class Surface extends Component {
   }
 
   applyAllContextInformation () {
-    this.tool.applyState(Object.assign({}, this.props.toolSettings, { pixelSize: this.props.pixelSize | 0 }));
+    this.tool.applyState(Object.assign({}, this.props.toolSettings));
+    this.tool.applyPixelSize(this.props.pixelSize);
     this.tool._assignRenderingContext(this.ctx);
     this.tool._assignBufferContext(this.buffer);
     this.tool._applyNaturalImageData(this.props.currentFrame.naturalImageData);
