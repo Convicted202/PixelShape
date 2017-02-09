@@ -54,7 +54,14 @@ function application (state = initialState, action) {
       if (action.width * pixelSize > constraints.width) pixelSize = constraints.width / action.width;
       if (action.height * pixelSize > constraints.height) pixelSize = constraints.height / action.height;
 
-      return Object.assign({}, state, { pixelSize, size: { width: action.width, height: action.height } });
+      return {
+        ...state,
+        pixelSize,
+        size: {
+          width: action.width,
+          height: action.height
+        }
+      };
     case SET_SURFACE_CONSTRAINTS:
       pixelSize = state.optimalPixelSize;
       constraints = getActualConstraints(action.width, action.height);
@@ -62,21 +69,22 @@ function application (state = initialState, action) {
       if (state.size.width * pixelSize > constraints.width) pixelSize = constraints.width / state.size.width;
       if (state.size.height * pixelSize > constraints.height) pixelSize = constraints.height / state.size.height;
 
-      return Object.assign({}, state, {
+      return {
+        ...state,
         pixelSize,
         surfaceConstraints: {
           width: action.width,
           height: action.height
         }
-      });
+      };
     case TOGGLE_RESET_PALETTE:
-      return Object.assign({}, state, { resetPalette: !state.resetPalette });
+      return { ...state, resetPalette: !state.resetPalette };
     case TOGGLE_GRID:
-      return Object.assign({}, state, { grid: !state.grid });
+      return { ...state, grid: !state.grid };
     case TOGGLE_STRETCH:
-      return Object.assign({}, state, { stretch: !state.stretch });
+      return { ...state, stretch: !state.stretch };
     case SET_EXPAND_ANCHOR:
-      return Object.assign({}, state, { anchor: action.anchor });
+      return { ...state, anchor: action.anchor };
     default:
       return state;
   }

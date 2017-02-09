@@ -15,11 +15,11 @@ function userPalette (state = initialState, action) {
   switch (action.type) {
     case ADD_COLOR:
       userColors = [...state.colors, { color: action.color }];
-      return Object.assign({}, state, { colors: userColors });
+      return { ...state, colors: userColors };
     case SET_TEMP_COLOR:
-      return Object.assign({}, state, { tempColor: action.color });
+      return { ...state, tempColor: action.color };
     case RESET_USER_COLORS:
-      return Object.assign({}, initialState);
+      return { ...initialState };
     default:
       return state;
   }
