@@ -14,7 +14,7 @@ import {
 
 import Immutable from 'utils/immutableArray';
 
-function framesOrder (state = framesOrderInitialState, action) {
+function framesOrder (state = framesOrderInitialState(), action) {
   let framesOrderArray,
       modifiedFramesArray,
       activeFrame,
@@ -125,7 +125,7 @@ function framesOrder (state = framesOrderInitialState, action) {
 
     case RESET_FRAMES_STATE:
       return {
-        ...framesOrderInitialState
+        ...framesOrderInitialState()
       };
 
     default:

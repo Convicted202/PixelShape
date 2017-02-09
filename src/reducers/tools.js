@@ -19,7 +19,7 @@ function tools (state = initialState, action) {
     case SET_SIZE:
       return { ...state, size: action.size };
     default:
-      return { ...state };
+      return state;
   }
 }
 

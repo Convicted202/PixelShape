@@ -58,7 +58,7 @@ test('Color Utils =>', (expect) => {
 
     let areEquallyColored = equallyColored(imageData, -1, [0, 0, 0, 0]);
     expect.notOk(areEquallyColored, 'Should return if pixelIndex is out of image data bounds');
-    areEquallyColored = equallyColored(imageData, 16, [0, 0, 0, 255]);
+    areEquallyColored = equallyColored(imageData, 16, [0, 0, 0, 0]);
     expect.ok(areEquallyColored, 'Should tell if pixel with index provided is of color as provided');
     expect.end();
   });

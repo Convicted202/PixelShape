@@ -12,7 +12,7 @@ import {
 
 import { expandImageData } from 'utils/canvasUtils';
 
-function framesCollection (state = framesCollectionInitialState, action) {
+function framesCollection (state = framesCollectionInitialState(), action) {
   let framesCollectionObject = {},
       chosenFrame,
       newState;
@@ -97,7 +97,7 @@ function framesCollection (state = framesCollectionInitialState, action) {
     case RESET_FRAMES_STATE:
       let id;
 
-      newState = { ...framesCollectionInitialState };
+      newState = { ...framesCollectionInitialState() };
       id = Object.keys(newState)[0];
 
       newState[id].naturalImageData = new ImageData(defaults.frameSize.naturalWidth, defaults.frameSize.naturalHeight);

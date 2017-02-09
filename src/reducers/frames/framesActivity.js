@@ -8,7 +8,7 @@ import {
   RESET_FRAMES_STATE
 } from 'actions/frames';
 
-function framesActivity (state = framesActivityInitialState, action) {
+function framesActivity (state = framesActivityInitialState(), action) {
   let framesGifData;
 
   switch (action.type) {
@@ -31,7 +31,7 @@ function framesActivity (state = framesActivityInitialState, action) {
       return { ...state, fps: action.fps };
 
     case RESET_FRAMES_STATE:
-      return { ...framesActivityInitialState };
+      return { ...framesActivityInitialState() };
 
     default:
       return state;
