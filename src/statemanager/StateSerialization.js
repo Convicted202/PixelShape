@@ -30,13 +30,12 @@ export const SerializationSchema = {
     [Hash.ORDER]: 'framesOrder',
     [Hash.FRAMES]: 'framesCollection'
   },
-  // should contain TWO props of a state
   _import: {
     'application.projectGuid': Hash.GUID,
     'application.size': Hash.SIZE,
-    'frames.activeFrame': Hash.ACTIVE,
-    'frames.fps': Hash.FPS,
-    'frames.framesOrderArray': Hash.ORDER,
-    'frames.framesCollectionObject': Hash.FRAMES
+    'frames.activity.activeFrame': Hash.ACTIVE,
+    'frames.activity.fps': Hash.FPS,
+    'frames.order.framesOrderArray': Hash.ORDER,
+    'frames.collection': Hash.FRAMES
   }
 };

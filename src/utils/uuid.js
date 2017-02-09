@@ -1,5 +1,10 @@
 let idCounter = 0;
 
+// needed only when importing course with frames present
+export const setInitialCounter = val => {
+  idCounter = val;
+};
+
 // modified underscore's uniqueId
 export const uniqueId = prefix => {
   const id = `${idCounter}`;

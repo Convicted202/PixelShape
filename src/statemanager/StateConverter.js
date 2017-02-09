@@ -1,5 +1,5 @@
 import { StateSelector, SerializationSchema } from './StateSerialization';
-import { uuid } from 'utils/uuid';
+import { uuid, setInitialCounter } from 'utils/uuid';
 
 export class StateConverter {
   // TODO: iData should be converted to Array containing ONLY HEX values
@@ -44,20 +44,27 @@ export class StateConverter {
   static convertToImport (stateObj) {
     let converted = {}, width, height, frames;
 
-    // do something to make state applicable to current store shape
     Object.keys(SerializationSchema._import)
       .forEach(path => {
-        let [top, inner] = path.split('.');
+        let hashes = path.split('.'),
+            subObj = converted;
 
-        converted[top] = converted[top] || {};
-        converted[top][inner] = stateObj.app[SerializationSchema._import[path]];
+        // go deep through all path to the last hash
+        hashes.forEach((hash, i) => {
+          subObj[hash] = subObj[hash] || {};
+          if (i !== hashes.length - 1)
+            subObj = subObj[hash];
+        });
+
+        // assign value to a key, equal to the last hash
+        subObj[hashes[hashes.length - 1]] = stateObj.app[SerializationSchema._import[path]];
       });
 
     width = converted.application.size.width;
     height = converted.application.size.height;
-    frames = converted.frames.framesCollectionObject;
+    frames = converted.frames.collection;
     // create modifiedArray from all frames
-    converted.frames.modifiedFramesArray = converted.frames.framesOrderArray.map(
+    converted.frames.order.modifiedFramesArray = converted.frames.order.framesOrderArray.map(
       (el, key) => ({ [el]: key })
     );
 
@@ -75,6 +82,8 @@ export class StateConverter {
 
     // to make sure if user loads this same project second time, it will have initial changes
     converted.application.projectGuid = uuid();
+    // this is to make new ids start with a distinct proper value
+    setInitialCounter(converted.frames.order.framesOrderArray.length);
 
     return converted;
   }

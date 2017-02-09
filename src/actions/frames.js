@@ -1,3 +1,8 @@
+import { uniqueId } from 'utils/uuid';
+const framePrefix = 'frame_';
+
+import { getFramesOrder } from 'selectors';
+
 export const ADD_FRAME = 'ADD_FRAME';
 export const REMOVE_FRAME = 'REMOVE_FRAME';
 export const UPDATE_FRAME_IMAGE_DATA = 'UPDATE_FRAME_IMAGE_DATA';
@@ -14,10 +19,11 @@ export const UPDATE_FRAMES_SIZE = 'UPDATE_FRAMES_SIZE';
 export const addFrame = (width, height) => ({
   type: ADD_FRAME,
   width,
-  height
+  height,
+  id: uniqueId(framePrefix)
 });
 
-export const removeFrame = uuid => ({
+export const removeFrameData = uuid => ({
   type: REMOVE_FRAME,
   uuid
 });
@@ -48,7 +54,8 @@ export const moveFrameLeft = uuid => ({
 
 export const duplicateFrame = uuid => ({
   type: DUPLICATE_FRAME,
-  uuid
+  uuid,
+  id: uniqueId(framePrefix)
 });
 
 export const updateFrameName = (frameUUID, name) => ({
@@ -76,3 +83,12 @@ export const setFPS = fps => ({
 export const resetFramesState = () => ({
   type: RESET_FRAMES_STATE
 });
+
+export const removeFrame = uuid => (dispatch, getState) => {
+  let frameOrder = getFramesOrder(getState()),
+      index = frameOrder.findIndex(el => el === uuid),
+      nextIndex = frameOrder[index + 1] ? index + 1 : index - 1;
+
+  dispatch(setCurrentFrame(frameOrder[nextIndex]));
+  dispatch(removeFrameData(uuid));
+};
