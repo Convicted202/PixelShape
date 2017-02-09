@@ -13,7 +13,7 @@ import {
   UPDATE_FRAMES_SIZE
 } from 'actions/frames';
 
-import uniqueId from 'utils/uuid';
+import { uniqueId } from 'utils/uuid';
 import { expandImageData } from 'utils/canvasUtils';
 
 const framePrefix = 'frame_',

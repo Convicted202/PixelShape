@@ -9,7 +9,8 @@ import {
   putColor,
   getColor,
   equallyColored,
-  colorsEqual
+  colorsEqual,
+  darkenLightenColor
 } from 'utils/colorUtils';
 
 test('Color Utils =>', (expect) => {
@@ -31,6 +32,15 @@ test('Color Utils =>', (expect) => {
     const hexColor = hexToRGBA(0xffffff);
 
     expect.deepEqual(hexColor, [255, 255, 255, 255], 'Should convert hex color to rgba color')
+    expect.end();
+  });
+
+  expect.test('::darkenLightenColor', (expect) => {
+    const hex1 = darkenLightenColor([128, 128, 128], 0.5),
+          hex2 = darkenLightenColor([128, 128, 128], -0.5);
+
+    expect.equal(hex1, '#c0c0c0', 'Should lighten color by half');
+    expect.equal(hex2, '#404040', 'Should darken color by half');
     expect.end();
   });
 

@@ -20,9 +20,13 @@ class App extends Component {
     this.applyConstraints();
   }
 
+  componentDidUpdate () {
+    this.applyConstraints();
+  }
+
   render () {
     return (
-      <div className="app">
+      <div className="app" data-guid={this.props.guid}>
         <Toolbar />
         <div className="app__content">
           <Apptoolbox />

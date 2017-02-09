@@ -87,13 +87,14 @@ test('AbstractTool =>', (expect) => {
 
     let coords;
 
-    tool.applyState({ size: 2, pixelSize: 10 });
+    tool.applyState({ size: 2 });
+    tool.applyPixelSize(10);
 
     expect.false(tool.getPixeledCoords(), 'Should return false on empty args');
 
     coords = tool.getPixeledCoords(311, 207);
 
-    expect.deepEqual(coords, { x: 300, y: 190, naturalX: 30, naturalY: 19 }, 'Should truncate input coords to grid cell size')
+    expect.deepEqual(coords, { x: 300, y: 190, naturalX: 31, naturalY: 20 }, 'Should truncate input coords to grid cell size')
     expect.end();
   });
 

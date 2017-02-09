@@ -24,7 +24,7 @@ export default [
     icon: 'circle'
   },
   {
-    tool: 'Lightener',
+    tool: 'ColorAdjust',
     icon: 'lightener'
   },
   {

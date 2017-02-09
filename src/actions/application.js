@@ -1,4 +1,5 @@
 import { updateFramesSize } from './frames';
+import StateLoader from 'statemanager/StateLoader';
 
 export const SET_IMAGE_SIZE = 'APP:SET_SIZE';
 export const SET_SURFACE_CONSTRAINTS = 'APP:SET_SURFACE_CONSTRAINTS';
@@ -6,6 +7,7 @@ export const TOGGLE_RESET_PALETTE = 'APP:TOGGLE_RESET_PALETTE';
 export const TOGGLE_GRID = 'APP:TOGGLE_GRID';
 export const TOGGLE_STRETCH = 'APP:TOGGLE_STRETCH';
 export const SET_EXPAND_ANCHOR = 'APP:SET_EXPAND_ANCHOR';
+export const UPLOAD_STORE = 'APP:UPLOAD_STORE';
 
 export const setImageSize = (width, height) => ({
   type: SET_IMAGE_SIZE,
@@ -40,3 +42,13 @@ export const processSizeChange = (width, height, stretch) => (dispatch, getState
   dispatch(setImageSize(width, height));
   dispatch(updateFramesSize(width, height, getState().application.anchor, stretch));
 };
+
+export const downloadStore = fileName => (dispatch, getState) => {
+  const state = getState();
+  StateLoader.prepareAndDownload(state, fileName);
+};
+
+export const uploadStore = state => ({
+  type: UPLOAD_STORE,
+  state
+});

@@ -38,10 +38,15 @@ class Frame extends Component {
         className={classes}
         onClick={this.props.setActive} >
         <span className="frame__index">{this.props.index}</span>
-        <canvas
-          height={this.props.height}
-          width={this.props.width}
-          ref={c => this._frameCanvas = c}></canvas>
+        <div
+          className="frame__image"
+          style={this.props.stylesToCenter()}>
+          <canvas
+            className="frame__image-canvas"
+            height={this.props.height}
+            width={this.props.width}
+            ref={c => this._frameCanvas = c}></canvas>
+        </div>
       </div>
     );
   }

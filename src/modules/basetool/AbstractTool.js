@@ -1,9 +1,11 @@
 import { fillRectImageData, stringToRGBA } from 'utils/colorUtils';
 
 const ACTION = {
-  DRAW: 0,
-  CLEAR: 1
+  DRAW: 'fillRect',
+  CLEAR: 'clearRect'
 };
+
+const getCellCount = (val, cellSize) => val / cellSize | 0;
 
 class AbstractTool {
   constructor () {
@@ -11,7 +13,9 @@ class AbstractTool {
     this.state = {
       size: 1,
       pixelSize: 20,
+      floatPixelSize: 20,
       color: '#000000',
+      transparent: '#000000',
       alpha: 1,
       compositeOperation: 'source-over',
       tool: 'abstract',
@@ -51,6 +55,11 @@ class AbstractTool {
     Object.assign(this.state, state);
   }
 
+  applyPixelSize (pixelSize) {
+    this.state.floatPixelSize = pixelSize;
+    this.state.pixelSize = pixelSize | 0;
+  }
+
   useStateOn (ctx) {
     ctx.lineWidth = this.size;
     ctx.fillStyle = this.state.color;
@@ -68,21 +77,16 @@ class AbstractTool {
   getPixeledCoords (x, y) {
     if (typeof x === 'undefined' || typeof y === 'undefined') return false;
     // shift x and y half a brush size and get how much grid pixels are in it
-    const timesX = x / this.state.pixelSize | 0,
-          timesY = y / this.state.pixelSize | 0,
-          pixelShift = this.state.size / 2 | 0,
-          roundedVals = {
-            x: timesX - pixelShift,
-            y: timesY - pixelShift
-          };
-    // const timesX = Math.floor((x) / this.state.pixelSize),
-    //       timesY = Math.floor((y) / this.state.pixelSize);
+    const pixelShift = this.state.size / 2 | 0,
+          xCell = getCellCount(x, this.state.pixelSize) - pixelShift,
+          yCell = getCellCount(y, this.state.pixelSize) - pixelShift;
 
     return {
-      x: roundedVals.x * this.state.pixelSize,
-      y: roundedVals.y * this.state.pixelSize,
-      naturalX: roundedVals.x,
-      naturalY: roundedVals.y
+      x: xCell * this.state.pixelSize,
+      y: yCell * this.state.pixelSize,
+      // these should be perfect mappings from surface coords to natural image data coords
+      naturalX: getCellCount(x, this.state.floatPixelSize),
+      naturalY: getCellCount(y, this.state.floatPixelSize)
     };
   }
 
@@ -92,11 +96,10 @@ class AbstractTool {
 
     if (!coords) return;
 
-    if (action === ACTION.DRAW) {
-      ctx.fillRect(coords.x, coords.y, this.size, this.size);
-      color = stringToRGBA(this.state.color);
-    } else
-      ctx.clearRect(coords.x, coords.y, this.size, this.size);
+    color = action === ACTION.DRAW ? this.state.color : this.state.transparent;
+
+    ctx[action](coords.x, coords.y, this.size, this.size);
+    color = stringToRGBA(color);
 
     if (ctx === this._ctx) {
       fillRectImageData(
@@ -118,7 +121,8 @@ class AbstractTool {
     this.modifyPixelCell(ctx, x, y, ACTION.CLEAR);
   }
 
-  draw (ctx /*, x0, y0, x1, y1 */) {
+  /* eslint-disable no-unused-vars */
+  draw (ctx, x0, y0, x1, y1) {
     this.useStateOn(ctx);
   }
 
@@ -136,6 +140,10 @@ class AbstractTool {
 
   onMouseUp () {
     throw Error('Tool mouseUp event not implemented');
+  }
+
+  cancelMouseDown () {
+    this.mouseDown = false;
   }
 }
 

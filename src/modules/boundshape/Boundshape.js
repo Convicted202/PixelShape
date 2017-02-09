@@ -32,6 +32,7 @@ class Boundshape extends AbstractTool {
   }
 
   onMouseUp (x, y) {
+    if (!this.mouseDown) return;
     this.drawing = false;
     this.update(this._ctx, x, y);
     // TODO: implenet cleaning of only needed part

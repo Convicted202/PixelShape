@@ -68,7 +68,7 @@ test('Dropper =>', (expect) => {
     before();
 
     dropper.handleBufferBrushMove = sinon.spy();
-
+    dropper.mouseDown = true;
     dropper.onMouseUp(100, 100);
     expect.notOk(dropper.mouseDown, 'Should stop processing color on mouseUp');
     expect.ok(dropper.storeCallback.called, 'Should process color with callback modifying store');
