@@ -1,5 +1,5 @@
 import AbstractTool from '../basetool/AbstractTool';
-import { getContextColor, darkenLightenColor, stringToRGBA, colorsEqual } from 'utils/colorUtils';
+import { getContextColor, darkenLightenColor, colorsEqual } from 'utils/colorUtils';
 
 const lightenPersentage = 0.01;
 
@@ -9,7 +9,6 @@ const lightenPersentage = 0.01;
 class ColorAdjust extends AbstractTool {
   constructor (...args) {
     super(...args);
-    this.transparent = [...stringToRGBA(this.state.transparent).slice(0, -1), 0];
     [this.x, this.y] = [null, null];
     [this.buf_x, this.buf_y] = [null, null];
   }
@@ -51,7 +50,7 @@ class ColorAdjust extends AbstractTool {
   getShadedColor (ctx, x, y, percentage) {
     const color = getContextColor(ctx, x, y);
 
-    if (colorsEqual(this.transparent, color)) return false;
+    if (colorsEqual(this.state.transparent, color)) return false;
 
     return darkenLightenColor(color, percentage);
   }

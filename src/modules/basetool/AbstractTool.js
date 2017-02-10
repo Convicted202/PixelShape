@@ -15,7 +15,7 @@ class AbstractTool {
       pixelSize: 20,
       floatPixelSize: 20,
       color: '#000000',
-      transparent: '#000000',
+      transparent: [0, 0, 0, 0],
       alpha: 1,
       compositeOperation: 'source-over',
       tool: 'abstract',
@@ -96,10 +96,9 @@ class AbstractTool {
 
     if (!coords) return;
 
-    color = action === ACTION.DRAW ? this.state.color : this.state.transparent;
+    color = action === ACTION.DRAW ? stringToRGBA(this.state.color) : this.state.transparent;
 
     ctx[action](coords.x, coords.y, this.size, this.size);
-    color = stringToRGBA(color);
 
     if (ctx === this._ctx) {
       fillRectImageData(
