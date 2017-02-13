@@ -42,7 +42,7 @@ export class StateConverter {
   }
 
   static convertToImport (stateObj) {
-    let converted = {}, width, height, frames;
+    let converted = {}, width, height, frames, nums;
 
     Object.keys(SerializationSchema._import)
       .forEach(path => {
@@ -82,8 +82,12 @@ export class StateConverter {
 
     // to make sure if user loads this same project second time, it will have initial changes
     converted.application.projectGuid = uuid();
+
+    nums = converted.frames.order.framesOrderArray
+      .map(el => +el.match(/\d+$/)[0]);
+
     // this is to make new ids start with a distinct proper value
-    setInitialCounter(converted.frames.order.framesOrderArray.length);
+    setInitialCounter(Math.max(...nums) + 1);
 
     return converted;
   }

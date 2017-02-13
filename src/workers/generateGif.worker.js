@@ -44,6 +44,7 @@ self.onmessage = event => {
   // we need to set disposal code of 2 for each frame
   // to be sure that the current frame will override the previous and won't overlap
   encoder.setDispose(2);
+  encoder.setQuality(1);
   encoder.setFrameRate(fps);
   encoder.setSize(width, height);
 
