@@ -12,14 +12,6 @@ const config = {
     filename: 'bundle.js'
   },
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        loader: 'eslint',
-        include: path.join(__dirname, 'src'),
-        exclude: path.join(__dirname, 'src/libs')
-      }
-    ],
     loaders: [
       {
         test: /\.styl$/,
