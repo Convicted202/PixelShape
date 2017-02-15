@@ -1,8 +1,8 @@
 import './framebar.styl';
 
 import React, { Component } from 'react';
-import FrameButton from '../framebutton/FrameButton';
-import FramesContainer from '../../containers/framescontainer/FramesContainer';
+import FrameButton from '../framebutton/Framebutton';
+import FramesContainer from '../../containers/framescontainer/Framescontainer';
 
 import debounce from '../../utils/debounce';
 
