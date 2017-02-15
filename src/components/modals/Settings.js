@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import ModalWindow from 'components/modalwindow/Modalwindow';
-import ToggleCheckbox from 'components/togglecheckbox/Togglecheckbox';
-import CanvasAnchors from 'containers/canvasanchors/Canvasanchors';
+import ModalWindow from '../modalwindow/Modalwindow';
+import ToggleCheckbox from '../togglecheckbox/Togglecheckbox';
+import CanvasAnchors from '../../containers/canvasanchors/Canvasanchors';
 
 // TODO: take styles from apptoolbox and push in separate related stylesheets
 

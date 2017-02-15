@@ -4,11 +4,11 @@ import {
   getImageSize,
   getGridState,
   getStretchState
-} from 'selectors';
+} from '../../selectors';
 
-import { processSizeChange, toggleGrid, toggleStretch } from 'actions/application';
+import { processSizeChange, toggleGrid, toggleStretch } from '../../actions/application';
 
-import SettingsModal from 'components/modals/Settings';
+import SettingsModal from '../../components/modals/Settings';
 
 const mapStateToProps = state => ({
   gridShown: getGridState(state),

@@ -3,7 +3,7 @@ import './canvasanchors.styl';
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-import { ANCHORS } from 'defaults/defaults';
+import { ANCHORS } from '../../defaults/defaults';
 
 const vert = ['N', 'o', 'S'],
       horz = ['W', 'o', 'E'],

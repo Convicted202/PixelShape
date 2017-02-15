@@ -1,4 +1,4 @@
-import GIFEncoder from 'libs/gif/GIFEncoder';
+import GIFEncoder from '../libs/gif/GIFEncoder';
 
 self.onmessage = event => {
   // we need to check if imageDataArr has transparent color in it

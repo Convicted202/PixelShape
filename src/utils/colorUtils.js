@@ -1,4 +1,4 @@
-import {clamp} from 'utils/mathUtils';
+import {clamp} from '../utils/mathUtils';
 
 export const RGBA = 4;
 

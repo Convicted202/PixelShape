@@ -1,9 +1,9 @@
 import {connect} from 'react-redux';
 
-import { setSurfaceConstraints } from 'actions/application';
-import { getProjectGuid } from 'selectors';
+import { setSurfaceConstraints } from '../../actions/application';
+import { getProjectGuid } from '../../selectors';
 
-import App from 'components/app/App';
+import App from '../../components/app/App';
 
 const mapStateToProps = state => ({
   guid: getProjectGuid(state)

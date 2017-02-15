@@ -1,4 +1,4 @@
-import { uniqueId } from 'utils/uuid';
+import { uniqueId } from '../../utils/uuid';
 
 export const defaults = {
   framePrefix: 'frame_',

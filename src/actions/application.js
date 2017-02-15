@@ -1,5 +1,5 @@
 import { updateFramesSize } from './frames';
-import StateLoader from 'statemanager/StateLoader';
+import StateLoader from '../statemanager/StateLoader';
 
 export const SET_IMAGE_SIZE = 'APP:SET_SIZE';
 export const SET_SURFACE_CONSTRAINTS = 'APP:SET_SURFACE_CONSTRAINTS';

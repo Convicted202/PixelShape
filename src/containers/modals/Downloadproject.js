@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 
-import { getGifFramesData, getFramesOrder } from 'selectors';
-import { downloadStore } from 'actions/application';
+import { getGifFramesData, getFramesOrder } from '../../selectors';
+import { downloadStore } from '../../actions/application';
 
-import DownloadProjectModal from 'components/modals/Downloadproject';
+import DownloadProjectModal from '../../components/modals/Downloadproject';
 
 const mapStateToProps = state => ({
   gifFramesData: getGifFramesData(state),

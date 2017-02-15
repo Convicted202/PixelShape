@@ -6,7 +6,7 @@ import {
   UPDATE_FRAME_GIF_DATA,
   SET_FPS,
   RESET_FRAMES_STATE
-} from 'actions/frames';
+} from '../../actions/frames';
 
 function framesActivity (state = framesActivityInitialState(), action) {
   let framesGifData;

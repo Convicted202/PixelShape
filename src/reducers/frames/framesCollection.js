@@ -8,9 +8,9 @@ import {
   REMOVE_FRAME,
   UPDATE_FRAMES_SIZE,
   RESET_FRAMES_STATE
-} from 'actions/frames';
+} from '../../actions/frames';
 
-import { expandImageData } from 'utils/canvasUtils';
+import { expandImageData } from '../../utils/canvasUtils';
 
 function framesCollection (state = framesCollectionInitialState(), action) {
   let framesCollectionObject = {},

@@ -3,7 +3,7 @@ import './frame.styl';
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-import {disableImageSmoothing} from 'utils/canvasUtils';
+import {disableImageSmoothing} from '../../utils/canvasUtils';
 
 class Frame extends Component {
   constructor (...args) {

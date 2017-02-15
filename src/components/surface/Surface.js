@@ -2,8 +2,8 @@ import './surface.styl';
 
 import React, { Component } from 'react';
 
-import toolsMap from 'modules/toolsMap';
-import { disableImageSmoothing, drawGrid, resizeImageData } from 'utils/canvasUtils';
+import toolsMap from '../../modules/toolsMap';
+import { disableImageSmoothing, drawGrid, resizeImageData } from '../../utils/canvasUtils';
 
 const minPixelGridSize = 9,
       LEFT_CLICK = 0;

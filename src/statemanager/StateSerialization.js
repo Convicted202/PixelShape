@@ -1,4 +1,4 @@
-import * as Selectors from 'selectors';
+import * as Selectors from '../selectors';
 
 const Hash = {
   GUID: 'guid',

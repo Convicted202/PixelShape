@@ -1,5 +1,5 @@
 import { getPixelFromImageData, getColor, putColor } from './colorUtils';
-import { ANCHORS } from 'defaults/defaults';
+import { ANCHORS } from '../defaults/defaults';
 
 // TODO: write tests for all of these
 

@@ -1,5 +1,5 @@
 import AbstractTool from '../basetool/AbstractTool';
-import { getContextColor, darkenLightenColor, colorsEqual } from 'utils/colorUtils';
+import { getContextColor, darkenLightenColor, colorsEqual } from '../../utils/colorUtils';
 
 const lightenPersentage = 0.01;
 

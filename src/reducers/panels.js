@@ -2,7 +2,7 @@ import {
   TOGGLE_TOOLBAR,
   TOGGLE_SIDEBAR,
   TOGGLE_FRAMEBAR
-} from 'actions/panels';
+} from '../actions/panels';
 
 const initialState = {
   toolbar: true,

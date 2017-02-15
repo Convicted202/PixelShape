@@ -3,7 +3,7 @@ import {
   getPixelFromImageData,
   rgbToHex,
   getColor
-} from 'utils/colorUtils';
+} from '../../utils/colorUtils';
 
 class Dropper extends AbstractTool {
   constructor (...args) {

@@ -1,5 +1,5 @@
 import Brush from '../brush/Brush.js';
-import lineTo from 'utils/lineTo';
+import lineTo from '../../utils/lineTo';
 
 class Eraser extends Brush {
   constructor (...args) {

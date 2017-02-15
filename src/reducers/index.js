@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import { UPLOAD_STORE } from 'actions/application';
-import { StateConverter } from 'statemanager/StateConverter';
+import { UPLOAD_STORE } from '../actions/application';
+import { StateConverter } from '../statemanager/StateConverter';
 
 import tools from './tools';
 import userPalette from './palette';

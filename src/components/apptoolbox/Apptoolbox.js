@@ -1,12 +1,12 @@
 import './apptoolbox.styl';
 
 import React, { Component } from 'react';
-import AppToolButton from 'components/apptoolbutton/Apptoolbutton';
+import AppToolButton from '../apptoolbutton/Apptoolbutton';
 
-import NewProjectModal from 'containers/modals/Newproject';
-import DownloadProjectModal from 'containers/modals/Downloadproject';
-import CustomizePanelsModal from 'containers/modals/Customizepanels';
-import SettingsModal from 'containers/modals/Settings';
+import NewProjectModal from '../../containers/modals/Newproject';
+import DownloadProjectModal from '../../containers/modals/Downloadproject';
+import CustomizePanelsModal from '../../containers/modals/Customizepanels';
+import SettingsModal from '../../containers/modals/Settings';
 
 const MODALS = {
   NewProject: 'newProjectShow',

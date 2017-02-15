@@ -1,9 +1,9 @@
 import {connect} from 'react-redux';
 
-import {setExpandAnchor} from 'actions/application';
-import {getCurrentAnchor} from 'selectors';
+import {setExpandAnchor} from '../../actions/application';
+import {getCurrentAnchor} from '../../selectors';
 
-import CanvasAnchors from 'components/canvasanchors/Canvasanchors';
+import CanvasAnchors from '../../components/canvasanchors/Canvasanchors';
 
 const mapStateToProps = state => ({
   anchor: getCurrentAnchor(state)

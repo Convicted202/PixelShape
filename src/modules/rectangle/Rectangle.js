@@ -1,5 +1,5 @@
 import Boundshape from '../boundshape/Boundshape';
-import lineTo from 'utils/lineTo';
+import lineTo from '../../utils/lineTo';
 
 class Rectangle extends Boundshape {
   constructor (...args) {

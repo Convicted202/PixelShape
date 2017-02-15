@@ -1,10 +1,10 @@
 import './framebar.styl';
 
 import React, { Component } from 'react';
-import FrameButton from 'components/framebutton/FrameButton';
-import FramesContainer from 'containers/framescontainer/FramesContainer';
+import FrameButton from '../framebutton/FrameButton';
+import FramesContainer from '../../containers/framescontainer/FramesContainer';
 
-import debounce from 'utils/debounce';
+import debounce from '../../utils/debounce';
 
 class Framebar extends Component {
 

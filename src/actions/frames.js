@@ -1,7 +1,7 @@
-import { uniqueId } from 'utils/uuid';
+import { uniqueId } from '../utils/uuid';
 const framePrefix = 'frame_';
 
-import { getFramesOrder } from 'selectors';
+import { getFramesOrder } from '../selectors';
 
 export const ADD_FRAME = 'ADD_FRAME';
 export const REMOVE_FRAME = 'REMOVE_FRAME';

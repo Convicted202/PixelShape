@@ -10,9 +10,9 @@ import {
   SET_FPS,
   UPDATE_FRAMES_SIZE,
   RESET_FRAMES_STATE
-} from 'actions/frames';
+} from '../../actions/frames';
 
-import Immutable from 'utils/immutableArray';
+import Immutable from '../../utils/immutableArray';
 
 function framesOrder (state = framesOrderInitialState(), action) {
   let framesOrderArray,

@@ -1,5 +1,5 @@
 import AbstractTool from '../basetool/AbstractTool';
-import lineTo from 'utils/lineTo';
+import lineTo from '../../utils/lineTo';
 
 class Brush extends AbstractTool {
   constructor (...args) {

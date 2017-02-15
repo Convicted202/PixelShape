@@ -4,11 +4,11 @@ import {
   getToolbarVisibility,
   getSidebarVisibility,
   getFramebarVisibility
-} from 'selectors';
+} from '../../selectors';
 
-import { toggleToolbar, toggleSidebar, toggleFramebar } from 'actions/panels';
+import { toggleToolbar, toggleSidebar, toggleFramebar } from '../../actions/panels';
 
-import CustomizePanelsModal from 'components/modals/Customizepanels';
+import CustomizePanelsModal from '../../components/modals/Customizepanels';
 
 const mapStateToProps = state => ({
   toolbarVisible: getToolbarVisibility(state),

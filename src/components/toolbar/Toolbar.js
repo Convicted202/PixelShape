@@ -1,8 +1,8 @@
 import './toolbar.styl';
 
 import React, { Component } from 'react';
-import ToolButton from 'components/toolbutton/ToolButton';
-import tools from 'defaults/tools';
+import ToolButton from '../toolbutton/ToolButton';
+import tools from '../../defaults/tools';
 
 class Toolbar extends Component {
   constructor (props) {

@@ -1,9 +1,9 @@
 import './framescontainer.styl';
 
 import React, { Component } from 'react';
-import Frame from 'components/frame/Frame';
+import Frame from '../frame/Frame';
 
-const Worker = require('worker!workers/generateGif.worker.js');
+const Worker = require('worker!../../workers/generateGif.worker.js');
 
 class FramesContainer extends Component {
   constructor (...args) {

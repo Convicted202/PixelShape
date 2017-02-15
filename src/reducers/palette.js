@@ -2,7 +2,7 @@ import {
   ADD_COLOR,
   SET_TEMP_COLOR,
   RESET_USER_COLORS
-} from 'actions/palette';
+} from '../actions/palette';
 
 const initialState = {
   tempColor: '',

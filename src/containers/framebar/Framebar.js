@@ -7,7 +7,7 @@ import {
   duplicateFrame,
   updateFrameName,
   setFPS
-} from 'actions/frames';
+} from '../../actions/frames';
 
 import {
   getCurrentFrameUUID,
@@ -15,9 +15,9 @@ import {
   getCurrentFrameName,
   getFPS,
   getFramebarVisibility
-} from 'selectors';
+} from '../../selectors';
 
-import Framebar from 'components/framebar/Framebar';
+import Framebar from '../../components/framebar/Framebar';
 
 const mapStateToProps = state => ({
   currentFrameUUID: getCurrentFrameUUID(state),

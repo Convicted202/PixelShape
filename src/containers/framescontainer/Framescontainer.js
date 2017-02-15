@@ -10,15 +10,15 @@ import {
   getModifiedFramesArray,
   getGifFramesData,
   getImageSize
-} from 'selectors';
+} from '../../selectors';
 
 import {
   addFrame,
   setCurrentFrame,
   updateFrameGIFData
-} from 'actions/frames';
+} from '../../actions/frames';
 
-import Framescontainer from 'components/framescontainer/Framescontainer';
+import Framescontainer from '../../components/framescontainer/Framescontainer';
 
 const mapStateToProps = state => ({
   currentUUID: getCurrentFrameUUID(state),

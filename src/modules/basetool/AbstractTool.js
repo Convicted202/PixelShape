@@ -1,4 +1,4 @@
-import { fillRectImageData, stringToRGBA } from 'utils/colorUtils';
+import { fillRectImageData, stringToRGBA } from '../../utils/colorUtils';
 
 const ACTION = {
   DRAW: 'fillRect',

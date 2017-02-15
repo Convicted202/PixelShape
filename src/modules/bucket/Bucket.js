@@ -1,6 +1,6 @@
 import AbstractTool from '../basetool/AbstractTool';
-import floodFill from 'utils/floodFill';
-import { resizeImageData } from 'utils/canvasUtils';
+import floodFill from '../../utils/floodFill';
+import { resizeImageData } from '../../utils/canvasUtils';
 
 class Bucket extends AbstractTool {
   constructor (...args) {

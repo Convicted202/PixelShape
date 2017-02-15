@@ -2,7 +2,7 @@ import {
   SET_TOOL,
   SET_COLOR,
   SET_SIZE
-} from 'actions/tools';
+} from '../actions/tools';
 
 const initialState = {
   tool: 'Brush',

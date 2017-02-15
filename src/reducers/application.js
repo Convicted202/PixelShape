@@ -5,9 +5,9 @@ import {
   TOGGLE_GRID,
   TOGGLE_STRETCH,
   SET_EXPAND_ANCHOR
-} from 'actions/application';
+} from '../actions/application';
 
-import { uuid } from 'utils/uuid';
+import { uuid } from '../utils/uuid';
 
 // TODO: move this to defaults
 const defaultConsts = {

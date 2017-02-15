@@ -1,5 +1,5 @@
-import Downloader from 'fileloaders/Downloader';
-import Uploader from 'fileloaders/Uploader';
+import Downloader from '../fileloaders/Downloader';
+import Uploader from '../fileloaders/Uploader';
 import { StateConverter } from './StateConverter';
 
 class StateLoader {

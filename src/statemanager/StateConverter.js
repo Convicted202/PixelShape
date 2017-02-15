@@ -1,5 +1,5 @@
 import { StateSelector, SerializationSchema } from './StateSerialization';
-import { uuid, setInitialCounter } from 'utils/uuid';
+import { uuid, setInitialCounter } from '../utils/uuid';
 
 export class StateConverter {
   // TODO: iData should be converted to Array containing ONLY HEX values

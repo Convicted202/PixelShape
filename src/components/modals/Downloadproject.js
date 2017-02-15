@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import ModalWindow from 'components/modalwindow/Modalwindow';
-import ToggleCheckbox from 'components/togglecheckbox/Togglecheckbox';
+import ModalWindow from '../modalwindow/Modalwindow';
+import ToggleCheckbox from '../togglecheckbox/Togglecheckbox';
 
-import Downloader from 'fileloaders/Downloader';
+import Downloader from '../../fileloaders/Downloader';
 
 class DownloadProjectModal extends Component {
   constructor (props) {
