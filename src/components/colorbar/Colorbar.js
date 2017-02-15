@@ -25,7 +25,11 @@ class Colorbar extends Component {
   }
 
   getUserColorPalette () {
-    return this.getPalette(this.props.userColors);
+    return (
+      <div className="colorbar__user-palette-wrapper">
+        {this.getPalette(this.props.userColors)}
+      </div>
+    );
   }
 
   render () {

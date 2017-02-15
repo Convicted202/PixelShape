@@ -26,9 +26,11 @@ class Brush extends AbstractTool {
   }
 
   onMouseMove (x, y) {
-    this.handleBufferBrushMove(x, y);
     // actual drawing
-    if (!this.mouseDown) return;
+    if (!this.mouseDown) {
+      this.handleBufferBrushMove(x, y);
+      return;
+    }
     this.draw(this._ctx, this.x, this.y, x, y);
     [this.x, this.y] = [x, y];
   }

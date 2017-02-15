@@ -11,6 +11,17 @@ class Boundshape extends AbstractTool {
     this.clearCoords();
   }
 
+  handleBufferBrushMove (x, y) {
+    // "ghost" moving
+    // on each move clear previous pixel and draw current
+    this._buffer.save();
+    this.useGhostStateOn(this._buffer);
+    this.clearPixelCell(this._buffer, this.buf_x, this.buf_y);
+    this.drawPixelCell(this._buffer, x, y);
+    this._buffer.restore();
+    [this.buf_x, this.buf_y] = [x, y];
+  }
+
   clearCoords () {
     this.coords = {
       x0: null, y0: null,
@@ -19,23 +30,25 @@ class Boundshape extends AbstractTool {
   }
 
   onMouseDown (x, y) {
-    this.drawing = true;
+    this.mouseDown = true;
     this.coords.x0 = x;
     this.coords.y0 = y;
   }
 
   onMouseMove (x, y) {
-    if (!this.drawing) return;
-    // TODO: implenet cleaning of only needed part
+    if (!this.mouseDown) {
+      this.handleBufferBrushMove(x, y);
+      return;
+    }
+    // TODO: implement cleaning of only needed part
     this._buffer.clearRect(0, 0, this._buffer.canvas.width, this._buffer.canvas.height);
     this.update(this._buffer, x, y);
   }
 
   onMouseUp (x, y) {
-    if (!this.mouseDown) return;
-    this.drawing = false;
+    this.mouseDown = false;
     this.update(this._ctx, x, y);
-    // TODO: implenet cleaning of only needed part
+    // TODO: implement cleaning of only needed part
     this._buffer.clearRect(0, 0, this._buffer.canvas.width, this._buffer.canvas.height);
     this.clearCoords();
   }
