@@ -13,7 +13,6 @@ class AbstractTool {
     this.state = {
       size: 1,
       pixelSize: 20,
-      floatPixelSize: 20,
       color: '#000000',
       transparent: [0, 0, 0, 0],
       alpha: 1,
@@ -56,8 +55,7 @@ class AbstractTool {
   }
 
   applyPixelSize (pixelSize) {
-    this.state.floatPixelSize = pixelSize;
-    this.state.pixelSize = pixelSize | 0;
+    this.state.pixelSize = pixelSize;
   }
 
   useStateOn (ctx) {
@@ -78,15 +76,15 @@ class AbstractTool {
     if (typeof x === 'undefined' || typeof y === 'undefined') return false;
     // shift x and y half a brush size and get how much grid pixels are in it
     const pixelShift = this.state.size / 2 | 0,
-          xCell = getCellCount(x, this.state.pixelSize) - pixelShift,
-          yCell = getCellCount(y, this.state.pixelSize) - pixelShift;
+          xCell = getCellCount(x, this.state.pixelSize),
+          yCell = getCellCount(y, this.state.pixelSize);
 
     return {
-      x: xCell * this.state.pixelSize,
-      y: yCell * this.state.pixelSize,
+      x: (xCell - pixelShift) * this.state.pixelSize,
+      y: (yCell - pixelShift) * this.state.pixelSize,
       // these should be perfect mappings from surface coords to natural image data coords
-      naturalX: getCellCount(x, this.state.floatPixelSize),
-      naturalY: getCellCount(y, this.state.floatPixelSize)
+      naturalX: xCell,
+      naturalY: yCell
     };
   }
 
@@ -94,7 +92,7 @@ class AbstractTool {
     const coords = this.getPixeledCoords(x, y);
     let color;
 
-    if (!coords) return;
+    if (!coords || x < 0 || y < 0) return;
 
     color = action === ACTION.DRAW ? stringToRGBA(this.state.color) : this.state.transparent;
 

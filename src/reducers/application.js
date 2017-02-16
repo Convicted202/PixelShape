@@ -54,6 +54,8 @@ function application (state = initialState, action) {
       if (action.width * pixelSize > constraints.width) pixelSize = constraints.width / action.width;
       if (action.height * pixelSize > constraints.height) pixelSize = constraints.height / action.height;
 
+      pixelSize |= 0;
+
       return {
         ...state,
         pixelSize,
@@ -68,6 +70,8 @@ function application (state = initialState, action) {
 
       if (state.size.width * pixelSize > constraints.width) pixelSize = constraints.width / state.size.width;
       if (state.size.height * pixelSize > constraints.height) pixelSize = constraints.height / state.size.height;
+
+      pixelSize |= 0;
 
       return {
         ...state,
