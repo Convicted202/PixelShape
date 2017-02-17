@@ -1,12 +1,12 @@
 import test from 'blue-tape';
 import sinon from 'sinon';
 
-import panels from 'reducers/panels';
+import panels from '../../src/reducers/panels';
 import {
   toggleToolbar,
   toggleSidebar,
   toggleFramebar
-} from 'actions/panels';
+} from '../../src/actions/panels';
 
 const initialState = {
   toolbar: true,

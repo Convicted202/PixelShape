@@ -11,7 +11,7 @@ import {
   equallyColored,
   colorsEqual,
   darkenLightenColor
-} from 'utils/colorUtils';
+} from '../../src/utils/colorUtils';
 
 test('Color Utils =>', (expect) => {
   expect.test('::stringToHex', (expect) => {

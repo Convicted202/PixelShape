@@ -3,7 +3,7 @@ import sinon from 'sinon';
 
 import { framesOrderInitialState } from '../importStubs/framesInitialState.stub';
 
-import framesOrder from 'reducers/frames/framesOrder';
+import framesOrder from '../../src/reducers/frames/framesOrder';
 import {
   addFrame,
   updateFrameImageData,
@@ -14,7 +14,7 @@ import {
   setFPS,
   updateFramesSize,
   resetFramesState
-} from 'actions/frames';
+} from '../../src/actions/frames';
 
 const initialState = framesOrderInitialState();
 

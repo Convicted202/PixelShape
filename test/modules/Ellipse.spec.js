@@ -1,7 +1,7 @@
 import test from 'blue-tape';
 import sinon from 'sinon';
-import Boundshape from 'modules/boundshape/Boundshape';
-import Ellipse from 'modules/ellipse/Ellipse';
+import Boundshape from '../../src/modules/boundshape/Boundshape';
+import Ellipse from '../../src/modules/ellipse/Ellipse';
 import ellipse from '../importStubs/ellipseCircle.stub';
 import RenderingContext2d from '../mocks/RenderingContext2d.mock';
 

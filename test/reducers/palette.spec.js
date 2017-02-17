@@ -1,12 +1,12 @@
 import test from 'blue-tape';
 import sinon from 'sinon';
 
-import palette from 'reducers/palette';
+import palette from '../../src/reducers/palette';
 import {
   addColor,
   setTempColor,
   resetUserColors
-} from 'actions/palette';
+} from '../../src/actions/palette';
 
 const initialState = {
   tempColor: '',

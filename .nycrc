@@ -1,0 +1,20 @@
+{
+  "include": [
+    "src/**/*.js"
+  ],
+  "exclude": [
+    "src/components/**",
+    "src/containers/**",
+    "src/libs/**"
+  ],
+  "require": [
+    "babel-register"
+  ],
+  "reporter": [
+    "lcov",
+    "text-summary"
+  ],
+  "all": true,
+  "sourceMap": false,
+  "instrument": false
+}

@@ -3,14 +3,14 @@ import sinon from 'sinon';
 
 import { framesActivityInitialState } from '../importStubs/framesInitialState.stub';
 
-import framesActivity from 'reducers/frames/framesActivity';
+import framesActivity from '../../src/reducers/frames/framesActivity';
 import {
   setCurrentFrame,
   removeFrameData,
   updateFrameGIFData,
   setFPS,
   resetFramesState
-} from 'actions/frames';
+} from '../../src/actions/frames';
 
 const initialState = framesActivityInitialState();
 

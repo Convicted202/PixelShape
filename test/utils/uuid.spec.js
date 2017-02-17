@@ -1,5 +1,5 @@
 import test from 'blue-tape';
-import { uniqueId, setInitialCounter } from 'utils/uuid';
+import { uniqueId, setInitialCounter } from '../../src/utils/uuid';
 
 test('UUID =>', (expect) => {
   expect.test('::uniqueId', (expect) => {

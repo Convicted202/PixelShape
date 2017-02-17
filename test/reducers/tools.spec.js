@@ -1,12 +1,12 @@
 import test from 'blue-tape';
 import sinon from 'sinon';
 
-import tools from 'reducers/tools';
+import tools from '../../src/reducers/tools';
 import {
   setTool,
   setColor,
   setSize
-} from 'actions/tools';
+} from '../../src/actions/tools';
 
 const initialState = {
   tool: 'Brush',

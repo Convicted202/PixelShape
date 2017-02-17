@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 import ImageData from '../mocks/ImageData.mock';
-import * as initialStateOriginal from 'reducers/frames/initialState';
+import * as initialStateOriginal from '../../src/reducers/frames/initialState';
 
 export const framesOrderInitialState = sinon.stub(initialStateOriginal, 'framesOrderInitialState', () => ({
   // store order of frames presented in gif; stored by unique id
