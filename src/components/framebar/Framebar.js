@@ -16,6 +16,10 @@ class Framebar extends Component {
     this.setFPS = debounce(this.props.setFPS, 300);
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (this.state.fps !== nextProps.fps) this.setState({ fps: nextProps.fps });
+  }
+
   removeCurrentFrame () {
     this.props.removeFrame(this.props.currentFrameUUID);
   }
