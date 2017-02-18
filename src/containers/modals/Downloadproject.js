@@ -1,13 +1,14 @@
 import { connect } from 'react-redux';
 
-import { getGifFramesData, getFramesOrder } from '../../selectors';
+import { getGifFramesData, getFramesOrder, getAllFrames } from '../../selectors';
 import { downloadStore } from '../../actions/application';
 
 import DownloadProjectModal from '../../components/modals/Downloadproject';
 
 const mapStateToProps = state => ({
   gifFramesData: getGifFramesData(state),
-  framesOrder: getFramesOrder(state)
+  framesOrder: getFramesOrder(state),
+  framesCollection: getAllFrames(state)
 });
 
 const mapDispatchToProps = dispatch => ({

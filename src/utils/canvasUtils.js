@@ -114,3 +114,23 @@ export const expandImageData = (imageData, width, height, anchor = 'oo', stretch
   stretch
     ? resizeImageData(imageData, width, height)
     : extendImageData(imageData, width, height, anchor);
+
+export const combineImageDataToCanvas = (imageDataArr, imageDataWidth, imageDataHeight) => {
+  let tmpCanvas = createCanvas(imageDataWidth, imageDataHeight),
+      tmpContext = tmpCanvas.getContext('2d'),
+      resultCanvas = createCanvas(imageDataArr.length * imageDataWidth, imageDataHeight),
+      rContext = resultCanvas.getContext('2d');
+
+  imageDataArr.forEach((data, i) => {
+    tmpContext.putImageData(data, 0, 0);
+    rContext.drawImage(
+      tmpCanvas,
+      i * imageDataWidth,
+      0,
+      imageDataWidth,
+      imageDataHeight
+    );
+  });
+
+  return resultCanvas;
+};
