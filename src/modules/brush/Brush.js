@@ -8,17 +8,6 @@ class Brush extends AbstractTool {
     [this.buf_x, this.buf_y] = [null, null];
   }
 
-  handleBufferBrushMove (x, y) {
-    // "ghost" moving
-    // on each move clear previous pixel and draw current
-    this._buffer.save();
-    this.useGhostStateOn(this._buffer);
-    this.clearPixelCell(this._buffer, this.buf_x, this.buf_y);
-    this.drawPixelCell(this._buffer, x, y);
-    this._buffer.restore();
-    [this.buf_x, this.buf_y] = [x, y];
-  }
-
   onMouseDown (x, y) {
     this.mouseDown = true;
     [this.x, this.y] = [x, y];
@@ -28,7 +17,7 @@ class Brush extends AbstractTool {
   onMouseMove (x, y) {
     // actual drawing
     if (!this.mouseDown) {
-      this.handleBufferBrushMove(x, y);
+      this.handleGhostPixelMove(x, y);
       return;
     }
     this.draw(this._ctx, this.x, this.y, x, y);

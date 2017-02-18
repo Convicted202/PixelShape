@@ -11,17 +11,6 @@ class Dropper extends AbstractTool {
     [this.buf_x, this.buf_y] = [null, null];
   }
 
-  handleBufferBrushMove (x, y) {
-    // "ghost" moving
-    // on each move clear previous pixel and draw current
-    this._buffer.save();
-    this.useGhostStateOn(this._buffer);
-    this.clearPixelCell(this._buffer, this.buf_x, this.buf_y);
-    this.drawPixelCell(this._buffer, x, y);
-    this._buffer.restore();
-    [this.buf_x, this.buf_y] = [x, y];
-  }
-
   getUnderlyingColor (x, y) {
     const rounds = this.getPixeledCoords(x, y),
           imageData = this._ctx.getImageData(0, 0, this._ctx.canvas.width, this._ctx.canvas.height),
@@ -39,7 +28,7 @@ class Dropper extends AbstractTool {
   }
 
   onMouseMove (x, y) {
-    this.handleBufferBrushMove(x, y);
+    this.handleGhostPixelMove(x, y);
     // actual picking
     if (!this.mouseDown) return;
 

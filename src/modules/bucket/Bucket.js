@@ -7,24 +7,13 @@ class Bucket extends AbstractTool {
     super(...args);
   }
 
-  handleBufferBrushMove (x, y) {
-    // "ghost" moving
-    // on each move clear previous pixel and draw current
-    this._buffer.save();
-    this.useGhostStateOn(this._buffer);
-    this.clearPixelCell(this._buffer, this.buf_x, this.buf_y);
-    this.drawPixelCell(this._buffer, x, y);
-    this._buffer.restore();
-    [this.buf_x, this.buf_y] = [x, y];
-  }
-
   onMouseDown (x, y) {
     this.mouseDown = true;
     this.draw(this._ctx, x, y);
   }
 
-  onMouseMove (/* x, y */) {
-    this.handleBufferBrushMove(...arguments);
+  onMouseMove (x, y) {
+    this.handleGhostPixelMove(x, y);
     this.mouseDown = false;
   }
 
