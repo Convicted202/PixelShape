@@ -6,25 +6,31 @@ const Type = {
 };
 
 export default class Downloader {
-  static asGIF (data, name = 'myGif.gif') {
+  static prepareGIFBlob (data) {
     const len = data.length,
           bytes = [];
 
-    let i = 0, blob = null;
+    let i = 0;
 
     for (; i < len; i++)
       bytes[i] = data.charCodeAt(i);
 
-    blob = new Blob([new Uint8Array(bytes)], { type: Type.GIF });
+    return new Blob([new Uint8Array(bytes)], { type: Type.GIF });
+  }
+
+  static prepareJSONBlob (data) {
+    const json = JSON.stringify(data);
+
+    return new Blob([json], { type: Type.JSON });
+  }
+
+  static asGIF (data, name = 'myGif.gif') {
+    const blob = Downloader.prepareGIFBlob(data);
     FileSaver.saveAs(blob, name);
   }
 
   static asJSON (data, name = 'myJSON.json') {
-    const json = JSON.stringify(data);
-
-    let blob = null;
-
-    blob = new Blob([json], { type: Type.JSON });
+    const blob = Downloader.prepareJSONBlob(data);
     FileSaver.saveAs(blob, name);
   }
 }

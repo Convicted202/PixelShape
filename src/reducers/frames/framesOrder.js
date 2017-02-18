@@ -79,7 +79,7 @@ function framesOrder (state = framesOrderInitialState(), action) {
     case DUPLICATE_FRAME:
       index = state.framesOrderArray.findIndex(el => el === action.uuid);
 
-      framesOrderArray = Immutable.insert(state.framesOrderArray, action.id, index);
+      framesOrderArray = Immutable.insert(state.framesOrderArray, action.id, index + 1);
 
       modifiedFramesArray = [
         { [action.uuid]: index },

@@ -1,5 +1,6 @@
 import test from 'blue-tape';
 import RenderingContext2d from '../mocks/RenderingContext2d.mock';
+import ImageData from '../mocks/ImageData.mock.js';
 import {
   RGBA,
   stringToHex,
@@ -10,7 +11,9 @@ import {
   getColor,
   equallyColored,
   colorsEqual,
-  darkenLightenColor
+  darkenLightenColor,
+  getContextColor,
+  fillRectImageData
 } from '../../src/utils/colorUtils';
 
 test('Color Utils =>', (expect) => {
@@ -49,6 +52,37 @@ test('Color Utils =>', (expect) => {
           pixelIndex = getPixelFromImageData(context1.getImageData(0, 0, 100, 100), 20, 20);
 
     expect.equal(pixelIndex, 8080, 'Should convert hex color to rgba color')
+    expect.end();
+  });
+
+  expect.test('::putColor', (expect) => {
+    const iData = new ImageData(1, 1),
+          color = [255, 255, 255, 255];
+
+    putColor(iData, 0, color);
+    expect.ok(iData.data.every(el => el === 255), 'Should color one pixel in the image data');
+    expect.end();
+  });
+
+  expect.test('::getContextColor', (expect) => {
+    const context = new RenderingContext2d(),
+          color = getContextColor(context, 10, 10);
+
+    expect.deepEqual(color, [0, 0, 0, 0], 'Should retrieve color from context');
+    expect.end();
+  });
+
+  expect.test('::fillRectImageData', (expect) => {
+    const iData = new ImageData(5, 5),
+          color = [128, 128, 128, 128],
+          index1 = getPixelFromImageData(iData, 1, 1),
+          index2 = getPixelFromImageData(iData, 2, 1);
+
+    fillRectImageData(iData, 1, 1, 2, 1, color);
+    expect.deepEqual(getColor(iData, index1), color, 'Should call putColor on image data');
+    expect.deepEqual(getColor(iData, index2), color, 'Should fill specified rect on image data');
+    fillRectImageData(iData, 1, 1, 1, 1);
+    expect.deepEqual(getColor(iData, index1), [0, 0, 0, 0], 'Should remove color on index if no color provided');
     expect.end();
   });
 

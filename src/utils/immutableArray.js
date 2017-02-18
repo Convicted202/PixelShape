@@ -1,3 +1,5 @@
+const isInBounds = (arr, index) => (index < arr.length) && (index > -1);
+
 export default class Immutable {
   static push (arr, value) {
     return [
@@ -30,13 +32,14 @@ export default class Immutable {
 
   static insert (arr, value, index) {
     return [
-      ...arr.slice(0, index + 1),
+      ...arr.slice(0, index),
       value,
-      ...arr.slice(index + 1)
+      ...arr.slice(index)
     ];
   }
 
   static swapWithPrevious (arr, index) {
+    if (!isInBounds(arr, index) || !isInBounds(arr, index - 1)) return [...arr];
     return [
       ...arr.slice(0, index - 1),
       arr[index],
@@ -46,6 +49,7 @@ export default class Immutable {
   }
 
   static swapWithNext (arr, index) {
+    if (!isInBounds(arr, index) || !isInBounds(arr, index + 1)) return [...arr];
     return [
       ...arr.slice(0, index),
       arr[index + 1],
