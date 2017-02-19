@@ -8,7 +8,7 @@ import {
 
 import { toggleToolbar, toggleSidebar, toggleFramebar } from '../../actions/panels';
 
-import CustomizePanelsModal from '../../components/modals/Customizepanels';
+import CustomizePanelsModal from '../../components/modals/Customizepanels/Customizepanels';
 
 const mapStateToProps = state => ({
   toolbarVisible: getToolbarVisibility(state),

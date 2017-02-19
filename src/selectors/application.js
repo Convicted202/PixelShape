@@ -41,3 +41,19 @@ export function getUnscaledSurfaceWidth (state) {
 export function getUnscaledSurfaceHeight (state) {
   return state.application.size.height * state.application.optimalPixelSize;
 }
+
+export function getSpritesheetDownloadOption (state) {
+  return state.application.downloadOptions.includeSpritesheet;
+}
+
+export function getGifDownloadOption (state) {
+  return state.application.downloadOptions.includeGif;
+}
+
+export function getProjectDownloadOption (state) {
+  return state.application.downloadOptions.includeProject;
+}
+
+export function getPaletteDownloadOption (state) {
+  return state.application.downloadOptions.includePalette;
+}

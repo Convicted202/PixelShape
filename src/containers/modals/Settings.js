@@ -8,7 +8,7 @@ import {
 
 import { processSizeChange, toggleGrid, toggleStretch } from '../../actions/application';
 
-import SettingsModal from '../../components/modals/Settings';
+import SettingsModal from '../../components/modals/Settings/Settings';
 
 const mapStateToProps = state => ({
   gridShown: getGridState(state),

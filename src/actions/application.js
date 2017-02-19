@@ -9,6 +9,11 @@ export const TOGGLE_STRETCH = 'APP:TOGGLE_STRETCH';
 export const SET_EXPAND_ANCHOR = 'APP:SET_EXPAND_ANCHOR';
 export const UPLOAD_STORE = 'APP:UPLOAD_STORE';
 
+export const TOGGLE_INCLUDE_GIF = 'APP:TOGGLE_INCLUDE_GIF';
+export const TOGGLE_INCLUDE_SPRITESHEET = 'APP:TOGGLE_INCLUDE_SPRITESHEET';
+export const TOGGLE_INCLUDE_PROJECT = 'APP:TOGGLE_INCLUDE_PROJECT';
+export const TOGGLE_INCLUDE_PALETTE = 'APP:TOGGLE_INCLUDE_PALETTE';
+
 export const setImageSize = (width, height) => ({
   type: SET_IMAGE_SIZE,
   width,
@@ -36,6 +41,22 @@ export const toggleGrid = () => ({
 
 export const toggleStretch = () => ({
   type: TOGGLE_STRETCH
+});
+
+export const toggleIncludeGif = () => ({
+  type: TOGGLE_INCLUDE_GIF
+});
+
+export const toggleIncludeSpritesheet = () => ({
+  type: TOGGLE_INCLUDE_SPRITESHEET
+});
+
+export const toggleIncludeProject = () => ({
+  type: TOGGLE_INCLUDE_PROJECT
+});
+
+export const toggleIncludePalette = () => ({
+  type: TOGGLE_INCLUDE_PALETTE
 });
 
 export const processSizeChange = (width, height, stretch) => (dispatch, getState) => {

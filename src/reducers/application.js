@@ -32,7 +32,13 @@ const initialState = {
   resetPalette: false,
   grid: false,
   stretch: false,
-  anchor: 'oo'
+  anchor: 'oo',
+  downloadOptions: {
+    includeGif: true,
+    includeSpritesheet: true,
+    includeProject: true,
+    includePalette: true
+  }
 };
 
 function getActualConstraints (width, height) {

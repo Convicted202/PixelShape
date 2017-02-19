@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import ModalWindow from '../modalwindow/Modalwindow';
-import ToggleCheckbox from '../togglecheckbox/Togglecheckbox';
+import ModalWindow from '../../modalwindow/Modalwindow';
+import ToggleCheckbox from '../../togglecheckbox/Togglecheckbox';
 
-import StateLoader from '../../statemanager/StateLoader';
+import StateLoader from '../../../statemanager/StateLoader';
 
 import './newproject.styl';
 

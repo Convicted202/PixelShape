@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import ModalWindow from '../modalwindow/Modalwindow';
-import ToggleCheckbox from '../togglecheckbox/Togglecheckbox';
-import CanvasAnchors from '../../containers/canvasanchors/Canvasanchors';
+import ModalWindow from '../../modalwindow/Modalwindow';
+import ToggleCheckbox from '../../togglecheckbox/Togglecheckbox';
+import CanvasAnchors from '../../../containers/canvasanchors/Canvasanchors';
 
+import './settings.styl';
 // TODO: take styles from apptoolbox and push in separate related stylesheets
 
 const maxVal = 600,
@@ -46,7 +47,7 @@ class SettingsModal extends Component {
   getErrorMessage () {
     if (this.state.widthError || this.state.heightError) {
       return (
-        <span className="apptoolbox__dimensions-inputs-error">Sorry, max allowed value is 600</span>
+        <span className="settings__dimensions-inputs-error">Sorry, max allowed value is 600</span>
       );
     }
     return null;
@@ -73,9 +74,9 @@ class SettingsModal extends Component {
   getInputs () {
     return [
       <div key="width">
-        <span className="apptoolbox__inputlabel">Width </span>
+        <span className="settings__inputlabel">Width </span>
         <input
-          className="apptoolbox__inputinline"
+          className="settings__inputinline"
           ref={w => this._widthInput = w}
           key={this.props.imageSize.width}
           style={{ borderColor: this.state.widthError ? errorColor : regularColor }}
@@ -83,9 +84,9 @@ class SettingsModal extends Component {
       </div>,
 
       <div key="height">
-        <span className="apptoolbox__inputlabel">Height </span>
+        <span className="settings__inputlabel">Height </span>
         <input
-          className="apptoolbox__inputinline"
+          className="settings__inputinline"
           ref={h => this._heightInput = h}
           key={this.props.imageSize.height}
           style={{ borderColor: this.state.heightError ? errorColor : regularColor }}
@@ -102,23 +103,23 @@ class SettingsModal extends Component {
         cancel={{ text: 'Cancel', action: this.cancel.bind(this) }}
         isShown={this.props.isShown}>
 
-        <div className="apptoolbox__dimensions">
-          <div className="apptoolbox__dimensions-edit">
-            <div className="apptoolbox__dimensions-inputs">
+        <div className="settings__dimensions">
+          <div className="settings__dimensions-edit">
+            <div className="settings__dimensions-inputs">
               { this.getInputs() }
               { this.getErrorMessage() }
             </div>
             <ToggleCheckbox
-              className="apptoolbox__dimensions-edit__ratio"
+              className="settings__dimensions-edit__ratio"
               value={false}
               onChange={() => {}}>Keep ratio</ToggleCheckbox>
           </div>
-          <div className="apptoolbox__dimensions-modifiers">
+          <div className="settings__dimensions-modifiers">
             <CanvasAnchors
-              className="apptoolbox__dimensions-modifiers__anchors"
+              className="settings__dimensions-modifiers__anchors"
               disabled={this.props.stretchOn} />
             <ToggleCheckbox
-              className="apptoolbox__dimensions-modifiers__stretch"
+              className="settings__dimensions-modifiers__stretch"
               value={this.props.stretchOn}
               onChange={this.props.toggleStretch.bind(this)}>Stretch</ToggleCheckbox>
           </div>
