@@ -2,7 +2,6 @@ import test from 'blue-tape';
 import sinon from 'sinon';
 import Brush from '../../src/modules/brush/Brush';
 import lineTo from '../importStubs/lineTo.stub';
-import RenderingContext2d from '../mocks/RenderingContext2d.mock';
 
 let brush;
 

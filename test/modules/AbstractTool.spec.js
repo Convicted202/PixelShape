@@ -1,7 +1,6 @@
 import test from 'blue-tape'
 import sinon from 'sinon';
 import AbstractTool from '../../src/modules/basetool/AbstractTool';
-import RenderingContext2d from '../mocks/RenderingContext2d.mock';
 
 let tool, context;
 

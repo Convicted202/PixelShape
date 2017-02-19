@@ -2,7 +2,6 @@ import test from 'blue-tape';
 import sinon from 'sinon';
 import Boundshape from '../../src/modules/boundshape/Boundshape';
 import Rectangle from '../../src/modules/rectangle/Rectangle';
-import RenderingContext2d from '../mocks/RenderingContext2d.mock';
 
 let rectangle;
 

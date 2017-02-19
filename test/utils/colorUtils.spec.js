@@ -1,6 +1,5 @@
 import test from 'blue-tape';
-import RenderingContext2d from '../mocks/RenderingContext2d.mock';
-import ImageData from '../mocks/ImageData.mock.js';
+
 import {
   RGBA,
   stringToHex,

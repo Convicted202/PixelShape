@@ -1,15 +1,16 @@
 import test from 'blue-tape';
 import sinon from 'sinon';
-import RenderingContext2d from '../mocks/RenderingContext2d.mock';
-import ImageData from '../mocks/ImageData.mock.js';
 
 import {
   enableImageSmoothing,
   disableImageSmoothing,
-  drawGrid
+  drawGrid,
+  createCanvas,
+  resizeImageData,
+  extendImageData
 } from '../../src/utils/canvasUtils';
 
-import { getColor, putColor } from '../../src/utils/colorUtils';
+import { getColor, putColor, getPixelFromImageData } from '../../src/utils/colorUtils';
 
 test('Canvas Utils =>', (expect) => {
   expect.test('::enableImageSmoothing', (expect) => {
@@ -35,6 +36,34 @@ test('Canvas Utils =>', (expect) => {
     expect.equal(context.lineTo.callCount, 40, 'Should create vertical and horizontal lines');
     expect.ok(context.lineWidth === gutter && context.strokeStyle === stroke, 'Should set grid options');
     expect.ok(context.stroke.called, 'Should draw actual grid');
+    expect.end();
+  });
+
+  expect.test('::createCanvas', (expect) => {
+    const canvas = createCanvas(100, 100);
+
+    expect.ok(canvas.width === 100 && canvas.height === 100, 'Should create a canvas with width and height specified');
+    expect.end();
+  });
+
+  expect.test('::resizeImageData', (expect) => {
+    const iData = resizeImageData(new ImageData(5, 5), 100, 100);
+
+    expect.ok(iData.width === 100 && iData.height === 100, 'Should return new image data of requested size');
+    expect.end();
+  });
+
+  // need to add more tests to test all possible cases
+  expect.test('::extendImageData', (expect) => {
+    const iData = new ImageData(1, 1);
+
+    putColor(iData, 0, [255, 255, 255, 255]);
+
+    const _iData = extendImageData(iData, 3, 3, 'oo'),
+          index = getPixelFromImageData(_iData, 1, 1);
+
+    expect.deepEqual(getColor(_iData, 0), [0, 0, 0, 0], 'Should not touch other pixel than the central one');
+    expect.deepEqual(getColor(_iData, index), [255, 255, 255, 255], 'Should not touch other pixel than the central one');
     expect.end();
   });
 

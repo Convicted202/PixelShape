@@ -1,7 +1,7 @@
 import test from 'blue-tape';
 import sinon from 'sinon';
 
-import { framesOrderInitialState } from '../importStubs/framesInitialState.stub';
+import { framesOrderInitialState } from '../../src/reducers/frames/initialState';
 
 import framesOrder from '../../src/reducers/frames/framesOrder';
 import {

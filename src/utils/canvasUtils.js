@@ -43,7 +43,7 @@ export const drawGrid = (context, space, gutter) => {
   context.stroke();
 };
 
-const createCanvas = (width, height) => {
+export const createCanvas = (width, height) => {
   const canvas = document.createElement('canvas');
 
   canvas.width = width;

@@ -1,7 +1,6 @@
 import test from 'blue-tape';
 import sinon from 'sinon';
 import Dropper from '../../src/modules/dropper/Dropper';
-import RenderingContext2d from '../mocks/RenderingContext2d.mock';
 
 let dropper;
 

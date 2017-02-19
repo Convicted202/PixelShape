@@ -3,7 +3,6 @@ import sinon from 'sinon';
 import Brush from '../../src/modules/brush/Brush';
 import Eraser from '../../src/modules/eraser/Eraser';
 import lineTo from '../importStubs/lineTo.stub';
-import RenderingContext2d from '../mocks/RenderingContext2d.mock';
 
 let eraser;
 

@@ -10,11 +10,11 @@
     "prebuild": "npm run clean",
     "build": "cross-env NODE_ENV=production webpack -p",
     "lint": "eslint ./src",
-    "test-runner": "babel-node node_modules/blue-tape/bin/blue-tape test/**/*.spec.js",
+    "test-runner": "babel-node node_modules/blue-tape/bin/blue-tape -r ./test/requireHook.js test/**/*.spec.js",
     "pretest": "npm run lint",
     "test": "npm run test-runner",
     "test:dev": "npm run test-runner | tap-spec || true",
-    "coverage": "cross-env NODE_ENV=test nyc tape -- test/**/*.spec.js | tap-spec",
+    "coverage": "cross-env NODE_ENV=test nyc tape -r ./test/requireHook.js -- test/**/*.spec.js | tap-spec",
     "postcoverage": "nyc report --reporter=html"
   },
   "repository": {
