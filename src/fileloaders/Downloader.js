@@ -1,4 +1,5 @@
 import FileSaver from 'file-saver';
+import JSZip from 'jszip';
 
 const Type = {
   JSON: 'application/json',
@@ -32,37 +33,96 @@ const toBlob = canvas => {
 };
 
 export default class Downloader {
-  static prepareGIFBlob (data) {
-    const len = data.length,
-          bytes = [];
+  static prepareGIFBlobAsync (data, name) {
+    return new Promise(resolve => {
+      const len = data.length,
+            bytes = [];
 
-    let i = 0;
+      let i = 0;
 
-    for (; i < len; i++)
-      bytes[i] = data.charCodeAt(i);
+      for (; i < len; i++)
+        bytes[i] = data.charCodeAt(i);
 
-    return new Blob([new Uint8Array(bytes)], { type: Type.GIF });
+      resolve({
+        blob: new Blob([new Uint8Array(bytes)], { type: Type.GIF }),
+        name
+      });
+    });
   }
 
-  static prepareJSONBlob (data) {
-    const json = JSON.stringify(data);
+  static prepareJSONBlobAsync (data, name) {
+    return new Promise(resolve => {
+      const json = JSON.stringify(data);
 
-    return new Blob([json], { type: Type.JSON });
+      resolve({
+        blob: new Blob([json], { type: Type.JSON }),
+        name
+      });
+    });
   }
 
-  static canvasAsPNG (canvas, name = 'myPng.png') {
-    toBlob(canvas)(blob => {
-      FileSaver.saveAs(blob, name);
-    }, Type.PNG);
+  static prepareCanvasBlobAsync (canvas, name) {
+    return new Promise(resolve => {
+      toBlob(canvas)(blob => {
+        resolve({
+          blob,
+          name
+        });
+      }, Type.PNG);
+    });
   }
 
-  static asGIF (data, name = 'myGif.gif') {
-    const blob = Downloader.prepareGIFBlob(data);
-    FileSaver.saveAs(blob, name);
+  static prepareAndDownloadCanvasAsPNG (canvas, name = 'myPng.png') {
+    Downloader
+      .prepareCanvasBlobAsync(canvas, name)
+      .then(blobObj => FileSaver.saveAs(blobObj.blob, name));
   }
 
-  static asJSON (data, name = 'myJSON.json') {
-    const blob = Downloader.prepareJSONBlob(data);
-    FileSaver.saveAs(blob, name);
+  static prepareAndDownloadAsGIF (data, name = 'myGif.gif') {
+    Downloader
+      .prepareGIFBlobAsync(data, name)
+      .then(blobObj => FileSaver.saveAs(blobObj.blob, name));
+  }
+
+  static prepareAndDownloadAsJSON (data, name = 'myJSON.json') {
+    Downloader
+      .prepareJSONBlobAsync(data, name)
+      .then(blobObj => FileSaver.saveAs(blobObj.blob, name));
+  }
+
+  static asFiles (asyncFileArr /* [{name: ..., blob: ...}] */) {
+    asyncFileArr.forEach(promise =>
+      promise.then(blobObj =>
+        FileSaver.saveAs(blobObj.blob, blobObj.name)
+      )
+    );
+  }
+
+  static asZIP (asyncFileArr /* [{name: ..., blob: ...}] */, name = 'PixelShapeApp.zip') {
+    const zip = new JSZip();
+
+    Promise.all(asyncFileArr)
+      .then(() =>
+        zip.generateAsync(
+          {
+            type: 'blob',
+            compression: 'DEFLATE',
+            compressionOptions: {
+              level: 6
+            }
+          },
+          data => console.log(data.percent | 0)
+        ).then(blob => FileSaver.saveAs(blob, name))
+      );
+
+    asyncFileArr.forEach(promise =>
+      promise.then(blobObj =>
+        zip.file(
+          blobObj.name,
+          blobObj.blob,
+          { binary: true }
+        )
+      )
+    );
   }
 }

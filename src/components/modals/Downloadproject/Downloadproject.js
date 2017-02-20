@@ -5,6 +5,7 @@ import ToggleCheckbox from '../../togglecheckbox/Togglecheckbox';
 import Downloader from '../../../fileloaders/Downloader';
 import { combineImageDataToCanvas, combineColorPaletteToCanvas } from '../../../utils/canvasUtils';
 import { getAllActiveColors } from '../../../utils/colorUtils';
+import StateLoader from '../../../statemanager/StateLoader';
 
 class DownloadProjectModal extends Component {
   constructor (props) {
@@ -17,20 +18,21 @@ class DownloadProjectModal extends Component {
     ).join('');
   }
 
-  downloadGif () {
+  prepareProject () {
+    const state = this.props.getProjectState();
+    return StateLoader.prepareForDownload(state, 'project.pxlsh');
+  }
+
+  prepareGif () {
     const combinedData = this.combineGifData();
-    Downloader.asGIF(combinedData);
+    return Downloader.prepareGIFBlobAsync(combinedData, 'myGif.gif');
   }
 
-  downloadProject () {
-    this.props.downloadProject('project.pxlsh');
-  }
-
-  downloadSpritesheet () {
+  prepareSpritesheet () {
     const spritesImageDataArray = this.props.framesOrder.map(
       el => this.props.framesCollection[el].naturalImageData
     );
-    Downloader.canvasAsPNG(
+    return Downloader.prepareCanvasBlobAsync(
       combineImageDataToCanvas(
         spritesImageDataArray,
         spritesImageDataArray[0].width,
@@ -40,11 +42,11 @@ class DownloadProjectModal extends Component {
     );
   }
 
-  downloadPalette () {
+  preparePalette () {
     const spritesImageDataArray = this.props.framesOrder.map(
       el => this.props.framesCollection[el].naturalImageData
     );
-    Downloader.canvasAsPNG(
+    return Downloader.prepareCanvasBlobAsync(
       combineColorPaletteToCanvas(
         getAllActiveColors(spritesImageDataArray),
         100,
@@ -55,10 +57,15 @@ class DownloadProjectModal extends Component {
   }
 
   confirm () {
-    if (this.props.includeGif) this.downloadGif();
-    if (this.props.includePalette) this.downloadPalette();
-    if (this.props.includeProject) this.downloadProject();
-    if (this.props.includeSpritesheet) this.downloadSpritesheet();
+    const blobs = [];
+
+    if (this.props.includeGif) blobs.push(this.prepareGif());
+    if (this.props.includePalette) blobs.push(this.preparePalette());
+    if (this.props.includeProject) blobs.push(this.prepareProject());
+    if (this.props.includeSpritesheet) blobs.push(this.prepareSpritesheet());
+    if (!blobs.length) return;
+
+    Downloader.asZIP(blobs);
     this.props.closeModal();
   }
 

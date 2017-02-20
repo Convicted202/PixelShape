@@ -11,7 +11,7 @@ import {
 } from '../../selectors';
 
 import {
-  downloadStore,
+  getStore,
   toggleIncludeGif,
   toggleIncludeSpritesheet,
   toggleIncludeProject,
@@ -31,8 +31,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  downloadProject (fileName) {
-    return dispatch(downloadStore(fileName));
+  getProjectState () {
+    return dispatch(getStore());
   },
   toggleIncludeGif () {
     return dispatch(toggleIncludeGif());

@@ -3,18 +3,14 @@ import Uploader from '../fileloaders/Uploader';
 import { StateConverter } from './StateConverter';
 
 class StateLoader {
-  prepareBeforeDownload (state) {
+  serializeForDownload (state) {
     return StateConverter.convertToExport(state);
   }
 
-  download (state, fileName) {
-    Downloader.asJSON(state, fileName);
-  }
+  prepareForDownload (state, fileName) {
+    const serialized = this.serializeForDownload(state);
 
-  prepareAndDownload (state, fileName) {
-    const prepared = this.prepareBeforeDownload(state);
-
-    this.download(prepared, fileName);
+    return Downloader.prepareJSONBlobAsync(serialized, fileName);
   }
 
   prepareAfterUploadAsync (data) {
