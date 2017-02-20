@@ -12,7 +12,11 @@ import {
   colorsEqual,
   darkenLightenColor,
   getContextColor,
-  fillRectImageData
+  fillRectImageData,
+  isLightColor,
+  getBlackWhiteContrastColor,
+  getImageDataActiveColors,
+  getAllActiveColors
 } from '../../src/utils/colorUtils';
 
 test('Color Utils =>', (expect) => {
@@ -100,6 +104,51 @@ test('Color Utils =>', (expect) => {
     const areEqual = colorsEqual([125, 125, 125, 255], [125, 125, 125, 255]);
 
     expect.ok(areEqual, 'Should tell if two colors are equal');
+    expect.end();
+  });
+
+  expect.test('::isLightColor', (expect) => {
+    const light = isLightColor([250, 150, 220, 255]),
+          dark = isLightColor([10, 3, 14, 255]);
+
+    expect.true(light, 'Should tell if color is light');
+    expect.false(dark, 'Should tell if color is dark');
+    expect.end();
+  });
+
+  expect.test('::getBlackWhiteContrastColor', (expect) => {
+    const black = getBlackWhiteContrastColor([250, 150, 220, 255]),
+          white = getBlackWhiteContrastColor([10, 3, 14, 255]);
+
+    expect.equal(white, '#ffffff', 'Should return white for dark color provided');
+    expect.equal(black, '#000000', 'Should return black for light color provided');
+    expect.end();
+  });
+
+  expect.test('::getImageDataActiveColors', (expect) => {
+    const iData = new ImageData(3, 3);
+    let list;
+
+    putColor(iData, 0, [255, 255, 255, 255]);
+    putColor(iData, 4, [0, 0, 0, 255])
+
+    list = getImageDataActiveColors(iData);
+
+    expect.ok(list.includes('#000000') && list.includes('#ffffff'), 'Should create list of used colors present on the image data provided');
+    expect.end();
+  });
+
+  expect.test('::getAllActiveColors', (expect) => {
+    const iData1 = new ImageData(1, 1),
+          iData2 = new ImageData(1, 1);
+    let list;
+
+    putColor(iData1, 0, [255, 255, 255, 255]);
+    putColor(iData2, 0, [0, 0, 0, 255])
+
+    list = [...getAllActiveColors([iData1, iData2])];
+
+    expect.deepEqual(list, ['#000000', '#ffffff'], 'Should create list of used colors from all image data present in the project');
     expect.end();
   });
 

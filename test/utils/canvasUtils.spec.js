@@ -7,7 +7,9 @@ import {
   drawGrid,
   createCanvas,
   resizeImageData,
-  extendImageData
+  extendImageData,
+  combineImageDataToCanvas,
+  combineColorPaletteToCanvas
 } from '../../src/utils/canvasUtils';
 
 import { getColor, putColor, getPixelFromImageData } from '../../src/utils/colorUtils';
@@ -64,6 +66,22 @@ test('Canvas Utils =>', (expect) => {
 
     expect.deepEqual(getColor(_iData, 0), [0, 0, 0, 0], 'Should not touch other pixel than the central one');
     expect.deepEqual(getColor(_iData, index), [255, 255, 255, 255], 'Should not touch other pixel than the central one');
+    expect.end();
+  });
+
+  expect.test('::combineImageDataToCanvas', (expect) => {
+    const iDatas = [new ImageData(5, 5), new ImageData(5, 5)],
+          canvas = combineImageDataToCanvas(iDatas, 5, 5);
+
+    expect.ok(canvas.width === 10 && canvas.height === 5, 'Should create a resulting canvas of proper size');
+    expect.end();
+  });
+
+  expect.test('::combineColorPaletteToCanvas', (expect) => {
+    const colors = ['#000000', '#ffffff'],
+          canvas = combineColorPaletteToCanvas(colors, 100, 500);
+
+    expect.ok(canvas.width === 500 && canvas.height === 200, 'Should create a resulting canvas of proper size');
     expect.end();
   });
 
