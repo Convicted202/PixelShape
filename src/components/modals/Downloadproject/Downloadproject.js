@@ -3,7 +3,8 @@ import ModalWindow from '../../modalwindow/Modalwindow';
 import ToggleCheckbox from '../../togglecheckbox/Togglecheckbox';
 
 import Downloader from '../../../fileloaders/Downloader';
-import { combineImageDataToCanvas } from '../../../utils/canvasUtils';
+import { combineImageDataToCanvas, combineColorPaletteToCanvas } from '../../../utils/canvasUtils';
+import { getAllActiveColors } from '../../../utils/colorUtils';
 
 class DownloadProjectModal extends Component {
   constructor (props) {
@@ -39,8 +40,23 @@ class DownloadProjectModal extends Component {
     );
   }
 
+  downloadPalette () {
+    const spritesImageDataArray = this.props.framesOrder.map(
+      el => this.props.framesCollection[el].naturalImageData
+    );
+    Downloader.canvasAsPNG(
+      combineColorPaletteToCanvas(
+        getAllActiveColors(spritesImageDataArray),
+        100,
+        500
+      ),
+      'palette.png'
+    );
+  }
+
   confirm () {
     if (this.props.includeGif) this.downloadGif();
+    if (this.props.includePalette) this.downloadPalette();
     if (this.props.includeProject) this.downloadProject();
     if (this.props.includeSpritesheet) this.downloadSpritesheet();
     this.props.closeModal();

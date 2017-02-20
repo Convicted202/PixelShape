@@ -96,3 +96,46 @@ export const colorsEqual = (color0, color1) => {
 
   return diff < Number.EPSILON;
 };
+
+export const isLightColor = color => {
+  const [R, G, B] = color;
+
+  return (R * 0.299 + G * 0.587 + B * 0.114) > 186;
+};
+
+export const getBlackWhiteContrastColor = color => isLightColor(color) ? '#000000' : '#ffffff';
+
+export const getImageDataActiveColors = (imageData, transparent = [0, 0, 0, 0]) => {
+  const list = [];
+  let i, j, index, color, hex,
+      width = imageData.width,
+      height = imageData.height;
+
+  for (i = 0; i < width; i++) {
+    for (j = 0; j < height; j++) {
+      index = getPixelFromImageData(imageData, i, j);
+      color = getColor(imageData, index);
+      hex = rgbToHex(...color);
+
+      if (colorsEqual(color, transparent) || list.includes(hex)) continue;
+      list.push(hex);
+    }
+  }
+
+  return list;
+};
+
+export const getAllActiveColors = (imageDataArr, transparent = [0, 0, 0, 0]) => {
+  const list = imageDataArr.reduce((list, data) => (
+    list.concat(getImageDataActiveColors(data, transparent))
+  ), []);
+
+  let result = [...new Set(list)];
+
+  return result.sort((a, b) => {
+    const _a = `0x${a.slice(1)}`,
+          _b = `0x${b.slice(1)}`;
+
+    return +_a - +_b;
+  });
+};

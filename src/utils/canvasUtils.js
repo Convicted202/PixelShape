@@ -1,4 +1,10 @@
-import { getPixelFromImageData, getColor, putColor } from './colorUtils';
+import {
+  getPixelFromImageData,
+  getColor,
+  putColor,
+  stringToRGBA,
+  getBlackWhiteContrastColor
+} from './colorUtils';
 import { ANCHORS } from '../defaults/defaults';
 
 // TODO: write tests for all of these
@@ -130,6 +136,28 @@ export const combineImageDataToCanvas = (imageDataArr, imageDataWidth, imageData
       imageDataWidth,
       imageDataHeight
     );
+  });
+
+  return resultCanvas;
+};
+
+export const combineColorPaletteToCanvas = (colorsArr, colorHeight, colorWidth) => {
+  let resultCanvas = createCanvas(colorWidth, colorsArr.length * colorHeight),
+      rContext = resultCanvas.getContext('2d');
+
+  colorsArr.forEach((color, i) => {
+    rContext.fillStyle = color;
+    rContext.fillRect(
+      0,
+      i * colorHeight,
+      colorWidth,
+      (i + 1) * colorHeight
+    );
+
+    rContext.textAlign = 'center';
+    rContext.font = '36px Arial';
+    rContext.fillStyle = getBlackWhiteContrastColor(stringToRGBA(color));
+    rContext.fillText(color, colorWidth / 2, (i + 1 / 2) * colorHeight + 15);
   });
 
   return resultCanvas;
