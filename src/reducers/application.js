@@ -4,7 +4,11 @@ import {
   TOGGLE_RESET_PALETTE,
   TOGGLE_GRID,
   TOGGLE_STRETCH,
-  SET_EXPAND_ANCHOR
+  SET_EXPAND_ANCHOR,
+  TOGGLE_INCLUDE_GIF,
+  TOGGLE_INCLUDE_SPRITESHEET,
+  TOGGLE_INCLUDE_PROJECT,
+  TOGGLE_INCLUDE_PALETTE
 } from '../actions/application';
 
 import { uuid } from '../utils/uuid';
@@ -50,7 +54,8 @@ function getActualConstraints (width, height) {
 
 function application (state = initialState, action) {
   let constraints = {},
-      pixelSize = 0;
+      pixelSize = 0,
+      downloadOptions;
 
   switch (action.type) {
     case SET_IMAGE_SIZE:
@@ -95,6 +100,19 @@ function application (state = initialState, action) {
       return { ...state, stretch: !state.stretch };
     case SET_EXPAND_ANCHOR:
       return { ...state, anchor: action.anchor };
+
+    case TOGGLE_INCLUDE_GIF:
+      downloadOptions = { ...state.downloadOptions, includeGif: !state.downloadOptions.includeGif };
+      return { ...state, downloadOptions };
+    case TOGGLE_INCLUDE_SPRITESHEET:
+      downloadOptions = { ...state.downloadOptions, includeSpritesheet: !state.downloadOptions.includeSpritesheet };
+      return { ...state, downloadOptions };
+    case TOGGLE_INCLUDE_PALETTE:
+      downloadOptions = { ...state.downloadOptions, includePalette: !state.downloadOptions.includePalette };
+      return { ...state, downloadOptions };
+    case TOGGLE_INCLUDE_PROJECT:
+      downloadOptions = { ...state.downloadOptions, includeProject: !state.downloadOptions.includeProject };
+      return { ...state, downloadOptions };
     default:
       return state;
   }
