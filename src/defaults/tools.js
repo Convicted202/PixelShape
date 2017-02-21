@@ -24,8 +24,18 @@ export default [
     icon: 'circle'
   },
   {
-    tool: 'ColorAdjust',
-    icon: 'lightener'
+    tool: 'Lightener',
+    icon: 'lightener',
+    list: [
+      {
+        tool: 'Lightener',
+        icon: 'lightener'
+      },
+      {
+        tool: 'Darkener',
+        icon: 'darkener'
+      }
+    ]
   },
   {
     tool: 'Cropper',

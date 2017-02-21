@@ -1,14 +1,13 @@
 import AbstractTool from '../basetool/AbstractTool';
 import { getContextColor, darkenLightenColor, colorsEqual } from '../../utils/colorUtils';
 
-const lightenPersentage = 0.01;
-
 // TODO: need to write tests for this and prior to that separate common functionality
 // from this module and brush-likes to another module
 
 class ColorAdjust extends AbstractTool {
   constructor (...args) {
     super(...args);
+    this.shadingPercentage = 0;
     [this.x, this.y] = [null, null];
     [this.buf_x, this.buf_y] = [null, null];
   }
@@ -68,7 +67,7 @@ class ColorAdjust extends AbstractTool {
       for (j = 0; j < stateSize; j++) {
         partialX = x + (i - halfSize) * this.state.pixelSize;
         partialY = y + (j - halfSize) * this.state.pixelSize;
-        color = this.getShadedColor(ctx, partialX, partialY, lightenPersentage);
+        color = this.getShadedColor(ctx, partialX, partialY, this.shadingPercentage);
 
         if (color) {
           ctx.fillStyle = color;
