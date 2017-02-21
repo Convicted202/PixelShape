@@ -74,7 +74,7 @@ class DropToolButton extends Component {
       'toolbutton',
       'tooltip-right',
       {
-        'active': this.props.isActive
+        'active': this.state.activeTool === this.props.activeTool
       });
 
     return (

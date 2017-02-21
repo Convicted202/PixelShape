@@ -16,7 +16,7 @@ class Toolbar extends Component {
           key={keyValue}
           tool={toolObj.tool}
           icon={toolObj.icon}
-          isActive={this.props.tool === toolObj.tool}
+          activeTool={this.props.tool}
           setTool={this.props.setTool.bind(this)}
           dropdownTools={toolObj.list} />
       ));
