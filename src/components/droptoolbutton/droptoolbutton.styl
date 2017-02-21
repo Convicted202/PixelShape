@@ -1,0 +1,61 @@
+@import '../../styles/variables.styl'
+
+.toolbutton
+  width: 70px
+  height: 70px
+  border-bottom: 1px solid colors['paleblue']
+  border-left: 8px solid colors['deeppaleblue']
+  cursor: pointer
+
+  &:first-child
+    border-top-right-radius: 6px
+
+  &__icon
+    margin: 15px 11px
+    fill: colors['grey']
+
+  &__active-button
+    display: inline-block
+    height: 70px
+
+    &[data-tooltip]:before
+      background: #1b2631
+      left: 105%
+      z-index: 1
+
+  &:hover, &.active
+    border-left-color: colors['seagreen']
+    background: colors['deeppaleblue']
+
+    .toolbutton__icon
+      fill: colors['seagreen']
+
+  &:hover
+    .toolbutton-dropdown
+      display: inline-flex
+
+  &-dropdown
+    left: 70px
+    list-style: none
+    padding-left: 5px
+    position: absolute
+    display: none
+
+    &__toolbutton
+      width: 70px
+      height: 70px
+      cursor: pointer
+      background: #264653
+      border-left: 1px solid colors['deeppaleblue']
+
+      &:hover, &.active
+        border-left-color: colors['seagreen']
+        background: colors['deeppaleblue']
+
+      &[data-tooltip]:before
+        background: #1b2631
+        z-index: 1
+
+      &__icon
+        margin: 15px
+        fill: #b7b7b7

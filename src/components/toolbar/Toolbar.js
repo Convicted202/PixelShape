@@ -1,7 +1,7 @@
 import './toolbar.styl';
 
 import React, { Component } from 'react';
-import ToolButton from '../toolbutton/ToolButton';
+import DropToolButton from '../droptoolbutton/Droptoolbutton';
 import tools from '../../defaults/tools';
 
 class Toolbar extends Component {
@@ -12,12 +12,13 @@ class Toolbar extends Component {
   getButtons () {
     return tools
       .map((toolObj, keyValue) => (
-        <ToolButton
+        <DropToolButton
           key={keyValue}
-          btnTooltip={toolObj.tool}
+          tool={toolObj.tool}
           icon={toolObj.icon}
           isActive={this.props.tool === toolObj.tool}
-          setTool={this.props.setTool.bind(this, toolObj.tool)} />
+          setTool={this.props.setTool.bind(this)}
+          dropdownTools={toolObj.list} />
       ));
   }
 
