@@ -35,11 +35,21 @@
       display: inline-flex
 
   &-dropdown
-    left: 70px
+    left: 65px
     list-style: none
-    padding-left: 5px
+    padding-left: 0
     position: absolute
     display: none
+
+    &:before
+      content: ''
+      height: 0
+      width: 0
+      margin-top: 25px
+      border: 10px solid #264653
+      border-top-color: transparent
+      border-left-color: transparent
+      border-bottom-color: transparent
 
     &__toolbutton
       width: 70px
@@ -48,14 +58,27 @@
       background: #264653
       border-left: 1px solid colors['deeppaleblue']
 
+      &__icon
+        margin: 15px
+        fill: #b7b7b7
+
+      &:first-child
+        border-left: none
+        border-top-left-radius: 6px
+        border-bottom-left-radius: 6px
+
+      &:last-child
+        border-top-right-radius: 6px
+        border-bottom-right-radius: 6px
+
       &:hover, &.active
         border-left-color: colors['seagreen']
-        background: colors['deeppaleblue']
+        border-bottom: 6px solid colors['seagreen'];
+
+        .toolbutton-dropdown__toolbutton__icon
+          fill: colors['seagreen']
+
 
       &[data-tooltip]:before
         background: #1b2631
         z-index: 1
-
-      &__icon
-        margin: 15px
-        fill: #b7b7b7
