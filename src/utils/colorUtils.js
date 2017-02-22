@@ -139,3 +139,17 @@ export const getAllActiveColors = (imageDataArr, transparent = [0, 0, 0, 0]) => 
     return +_a - +_b;
   });
 };
+
+export const replaceColor = (imageData, baseColor, replacementColor) => {
+  let i, j, index,
+      width = imageData.width,
+      height = imageData.height;
+
+  for (i = 0; i < width; i++) {
+    for (j = 0; j < height; j++) {
+      index = getPixelFromImageData(imageData, i, j);
+
+      if (equallyColored(imageData, index, baseColor)) putColor(imageData, index, replacementColor);
+    }
+  }
+};

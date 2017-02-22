@@ -5,7 +5,17 @@ export default [
   },
   {
     tool: 'Bucket',
-    icon: 'colorfill'
+    icon: 'colorfill',
+    list: [
+      {
+        tool: 'Bucket',
+        icon: 'colorfill'
+      },
+      {
+        tool: 'ColorReplace',
+        icon: 'globalcolorfill'
+      }
+    ]
   },
   {
     tool: 'Eraser',
