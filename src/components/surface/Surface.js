@@ -118,7 +118,7 @@ class Surface extends Component {
   }
 
   isInBounds (ev) {
-    return ev.target === this._buffer;
+    return ev.target === this._handleLayer;
   }
 
   render () {
@@ -131,13 +131,6 @@ class Surface extends Component {
           className="surface__drawer"
           style={{width: this.props.surfaceWidth, height: this.props.surfaceHeight}}>
           <canvas
-            className="grid-canvas"
-            ref={c => this._grid = c}
-            style={{display: this.shouldShowGrid() ? 'block' : 'none'}}
-            height={this.props.surfaceHeight}
-            width={this.props.surfaceWidth}>
-          </canvas>
-          <canvas
             className="main-rendering-canvas"
             ref={c => this._canvas = c}
             height={this.props.surfaceHeight}
@@ -147,9 +140,22 @@ class Surface extends Component {
             className="buffer-canvas"
             ref={c => this._buffer = c}
             height={this.props.surfaceHeight}
+            width={this.props.surfaceWidth}>
+          </canvas>
+          <canvas
+            className="grid-canvas"
+            ref={c => this._grid = c}
+            height={this.props.surfaceHeight}
+            width={this.props.surfaceWidth}
+            style={{display: this.shouldShowGrid() ? 'block' : 'none'}}>
+          </canvas>
+          <canvas
+            className="handle-layer"
+            ref={c => this._handleLayer = c}
+            height={this.props.surfaceHeight}
             width={this.props.surfaceWidth}
             onMouseDown={this.onMouseDown.bind(this)}
-            onMouseUp={this.onMouseUp.bind(this)} >
+            onMouseUp={this.onMouseUp.bind(this)}>
           </canvas>
         </section>
       </main>
