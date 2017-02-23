@@ -69,7 +69,7 @@ class CanvasAnchors extends Component {
         {
           idents.map((id, i) => (
             <li className="canvas-anchor" key={i} onClick={() => this.updateAnchorState(row, i)}>
-              <svg className="canvas-anchor__icon" viewBox="0 0 24 24" width={24} height={24}>
+              <svg className="canvas-anchor__icon" viewBox="0 0 32 32" width={24} height={24}>
                 <use xlinkHref={`#arrow-${id}`}></use>
               </svg>
             </li>
