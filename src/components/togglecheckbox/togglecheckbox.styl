@@ -1,40 +1,48 @@
 .togglecheckbox
   padding: 10px 0
 
-  &__switch
-    width: 40px
-    position: relative
-    visibility: hidden
-    cursor: pointer
-    margin-right: 24px
+  &-checkbox
+    display: none
 
-    &:before
-      content: ''
-      position: absolute
-      visibility: visible
+    &__text
+      vertical-align: middle
+
+    &__switch
       width: 40px
-      height: 15px
-      border-radius: 10px
-      background: rgba(81, 107, 117, 0.7)
-      box-shadow: inset 0 1px 1px 0px #637075
+      height: 1em
+      display: inline-block
+      vertical-align: middle
+      position: relative
+      cursor: pointer
+      margin: 3px 24px 3px 4px
 
-    &:after
-      content: ''
-      position: absolute
-      visibility: visible
-      width: 25px
-      height: 25px
-      left: -5px
-      margin-top: -5px
-      border-radius: 50%
-      background: #c7c7c7
-      box-shadow: 0px 2px 2px #a5a5a5
-      transition: all 0.3s ease
-
-    &:checked
       &:before
-        background: #bddcd7
+        content: ''
+        position: absolute
+        visibility: visible
+        width: 40px
+        height: 15px
+        border-radius: 10px
+        background: rgba(81, 107, 117, 0.7)
+        box-shadow: inset 0 1px 1px 0px #637075
 
       &:after
-        left: 20px
-        background: #70c1b3
+        content: ''
+        position: absolute
+        visibility: visible
+        width: 25px
+        height: 25px
+        left: -5px
+        margin-top: -5px
+        border-radius: 50%
+        background: #c7c7c7
+        box-shadow: 0px 2px 2px #a5a5a5
+        transition: all 0.3s ease
+
+    &:checked ~ .togglecheckbox-checkbox__switch
+        &:before
+          background: #bddcd7
+
+        &:after
+          left: 20px
+          background: #70c1b3
