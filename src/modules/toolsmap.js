@@ -7,10 +7,14 @@ import Rectangle from './rectangle/Rectangle';
 import Ellipse from './ellipse/Ellipse';
 import Lightener from './lightener/Lightener';
 import Darkener from './darkener/Darkener';
+import HorzMirrorBrush from './horzmirrorbrush/HorzMirrorBrush';
+import VertMirrorBrush from './vertmirrorbrush/VertMirrorBrush';
 
 const toolsMap = new Map();
 
 toolsMap.set('Brush', new Brush());
+toolsMap.set('HorzMirrorBrush', new HorzMirrorBrush());
+toolsMap.set('VertMirrorBrush', new VertMirrorBrush());
 toolsMap.set('Bucket', new Bucket());
 toolsMap.set('ColorReplace', new ColorReplace());
 toolsMap.set('Eraser', new Eraser());

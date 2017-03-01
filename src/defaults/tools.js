@@ -1,7 +1,21 @@
 export default [
   {
     tool: 'Brush',
-    icon: 'brush'
+    icon: 'brush',
+    list: [
+      {
+        tool: 'Brush',
+        icon: 'brush'
+      },
+      {
+        tool: 'HorzMirrorBrush',
+        icon: 'horizontal-mirror-brush'
+      },
+      {
+        tool: 'VertMirrorBrush',
+        icon: 'vertical-mirror-brush'
+      }
+    ]
   },
   {
     tool: 'Bucket',
