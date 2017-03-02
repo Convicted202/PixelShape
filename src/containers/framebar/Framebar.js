@@ -6,7 +6,8 @@ import {
   moveFrameLeft,
   duplicateFrame,
   updateFrameName,
-  setFPS
+  setFPS,
+  setCurrentFrame
 } from '../../actions/frames';
 
 import {
@@ -14,7 +15,11 @@ import {
   getAllFrames,
   getCurrentFrameName,
   getFPS,
-  getFramebarVisibility
+  getFramebarVisibility,
+  getFramesAmount,
+  getCurrentFrameIndex,
+  getPreviousFrameUUID,
+  getNextFrameUUID
 } from '../../selectors';
 
 import Framebar from '../../components/framebar/Framebar';
@@ -24,10 +29,17 @@ const mapStateToProps = state => ({
   currentFrameName: getCurrentFrameName(state),
   framesCollection: getAllFrames(state),
   fps: getFPS(state),
-  visible: getFramebarVisibility(state)
+  visible: getFramebarVisibility(state),
+  framesCount: getFramesAmount(state),
+  currentFrameIndex: getCurrentFrameIndex(state),
+  nextFrameUUID: getNextFrameUUID(state),
+  previousFrameUUID: getPreviousFrameUUID(state)
 });
 
 const mapDispatchToProps = dispatch => ({
+  setCurrentFrame (uuid) {
+    return dispatch(setCurrentFrame(uuid));
+  },
   removeFrame (frameUUID) {
     return dispatch(removeFrame(frameUUID));
   },

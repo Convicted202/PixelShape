@@ -74,10 +74,11 @@ export default [
         icon: 'darkener'
       }
     ]
-  },
-  {
-    name: '',
-    tool: 'Cropper',
-    icon: 'selectcrop'
   }
+  // ,
+  // {
+  //   name: '',
+  //   tool: 'Cropper',
+  //   icon: 'selectcrop'
+  // }
 ];

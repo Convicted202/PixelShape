@@ -1,6 +1,7 @@
 import './framescontainer.styl';
 
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import Frame from '../frame/Frame';
 
 const Worker = require('worker!../../workers/generateGif.worker.js');
@@ -119,8 +120,15 @@ class FramesContainer extends Component {
   }
 
   render () {
+    const classes = classNames(
+      'framescontainer',
+      {
+        'hidden': this.props.hidden
+      }
+    );
+
     return (
-      <div className="framescontainer">
+      <div className={classes}>
         <div className="framescontainer__gif-container">
           <div className="framescontainer__gif">
             <div

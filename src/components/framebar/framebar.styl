@@ -18,6 +18,14 @@
   box-shadow: 0px 2px 4px #000000
   background: colors['blue']
 
+  &.minimized
+    height: 70px
+
+  &__frame-counter
+    flex: 0.7
+    padding: 18px
+    color: #b7b7b7
+
   &__controls
     display: flex
     margin-bottom: 2px
@@ -41,7 +49,7 @@
       background-color: #1b2631
 
   &__frames-controls
-    width: 100%
+    width: 40%
     height: 50px
     display: inline-flex
     margin: 0
@@ -49,6 +57,9 @@
     align-items: center
     justify-content: center
     list-style-type: none
+
+    &-big
+      height: 60px
 
   &__framename
     height: 50px
@@ -65,3 +76,23 @@
       color: #fff
       background: #264653
       outline: none
+
+  &__minimize
+    flex: 1
+    display: inline-flex
+    align-items: center
+    justify-content: flex-end
+
+    &-button
+      width: 90px
+      height: 40px
+      padding: 8px
+      text-align: center
+      display: inline-block
+      color: #b7b7b7
+      font-weight: bold
+      cursor: pointer
+      user-select: none
+
+      &:hover
+        background: #40606d
