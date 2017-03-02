@@ -14,6 +14,7 @@ class Toolbar extends Component {
       .map((toolObj, keyValue) => (
         <DropToolButton
           key={keyValue}
+          name={toolObj.name}
           tool={toolObj.tool}
           icon={toolObj.icon}
           activeTool={this.props.tool}
