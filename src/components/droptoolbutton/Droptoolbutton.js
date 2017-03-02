@@ -24,8 +24,15 @@ class DropToolButton extends Component {
   }
 
   getActiveTool () {
+    const classes = classNames(
+      'toolbutton__active-button',
+      {
+        'tooltipshift': this.props.dropdownTools && this.props.dropdownTools.length
+      }
+    );
+
     return (
-      <div className="toolbutton__active-button" onClick={this.props.setTool.bind(null, this.state.activeTool)} data-tooltip={this.props.name}>
+      <div className={classes} onClick={this.props.setTool.bind(null, this.state.activeTool)} data-tooltip={this.props.name}>
         <svg className="toolbutton__icon" viewBox="0 0 24 24" width="40" height="40">
           <use xlinkHref={`#${this.state.activeIcon}`}></use>
         </svg>
