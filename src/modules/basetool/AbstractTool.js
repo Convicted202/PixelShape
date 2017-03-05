@@ -83,8 +83,8 @@ class AbstractTool {
       x: (xCell - pixelShift) * this.state.pixelSize,
       y: (yCell - pixelShift) * this.state.pixelSize,
       // these should be perfect mappings from surface coords to natural image data coords
-      naturalX: xCell,
-      naturalY: yCell
+      naturalX: xCell - pixelShift,
+      naturalY: yCell - pixelShift
     };
   }
 
