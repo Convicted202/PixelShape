@@ -10,7 +10,7 @@ import {
   RESET_FRAMES_STATE
 } from '../../actions/frames';
 
-import { expandImageData } from '../../utils/canvasUtils';
+import { expandImageData, copyImageData } from '../../utils/canvasUtils';
 
 function framesCollection (state = framesCollectionInitialState(), action) {
   let framesCollectionObject = {},
@@ -34,7 +34,7 @@ function framesCollection (state = framesCollectionInitialState(), action) {
 
       framesCollectionObject[action.frameUUID] = {
         ...chosenFrame,
-        naturalImageData: action.naturalImageData
+        naturalImageData: copyImageData(action.naturalImageData)
       };
 
       return {
@@ -43,11 +43,7 @@ function framesCollection (state = framesCollectionInitialState(), action) {
       };
 
     case DUPLICATE_FRAME:
-      const currentNaturalImgData = state[action.uuid].naturalImageData,
-            naturalImageData = new ImageData(currentNaturalImgData.width, currentNaturalImgData.height),
-            naturalDataCopy = new Uint8ClampedArray(currentNaturalImgData.data);
-
-      naturalImageData.data.set(naturalDataCopy);
+      const naturalImageData = copyImageData(state[action.uuid].naturalImageData);
 
       framesCollectionObject[action.id] = {
         name: `${state[action.uuid].name}_copy`,

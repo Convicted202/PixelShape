@@ -5,7 +5,7 @@ import Toolbar from '../../containers/toolbar/Toolbar';
 import Surface from '../../containers/surface/Surface';
 import Sidebar from '../../containers/sidebar/Sidebar';
 import Framebar from '../../containers/framebar/Framebar';
-import Apptoolbox from '../apptoolbox/Apptoolbox';
+import Apptoolbox from '../../containers/apptoolbox/Apptoolbox';
 
 class App extends Component {
   constructor (...args) {

@@ -60,11 +60,11 @@ class Apptoolbox extends Component {
           <AppToolButton
             btnTooltip="Undo"
             width="30" height="30" icon="undo"
-            doAction={() => {}} />
+            doAction={this.props.undo} />
           <AppToolButton
             btnTooltip="Redo"
             width="30" height="30" icon="redo"
-            doAction={() => {}} />
+            doAction={this.props.redo} />
           <AppToolButton
             btnTooltip="Download"
             width="30" height="30" icon="download"
