@@ -2,10 +2,12 @@ import {connect} from 'react-redux';
 import { ActionCreators } from 'redux-undo';
 
 import Apptoolbox from '../../components/apptoolbox/Apptoolbox';
+import { canRedo, canUndo } from '../../selectors/frames';
 
-// const mapStateToProps = state => ({
-//   guid: getProjectGuid(state)
-// });
+const mapStateToProps = state => ({
+  canRedo: canRedo(state),
+  canUndo: canUndo(state)
+});
 
 const mapDispatchToProps = dispatch => ({
   undo () {
@@ -17,7 +19,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const ApptoolboxContainer = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Apptoolbox);
 

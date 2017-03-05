@@ -23,7 +23,6 @@ class Surface extends Component {
 
   applyImageData () {
     this.tool._applyNaturalImageData(copyImageData(this.props.currentFrame.naturalImageData));
-    console.log('naturalID');
   }
 
   detectImageSizeChanged (props, changedProps) {
@@ -76,9 +75,8 @@ class Surface extends Component {
       this.applyImageData();
     }
 
-    if (this.tool._naturalImageData !== nextProps.currentFrame.naturalImageData) {
+    if (this.tool._naturalImageData !== nextProps.currentFrame.naturalImageData)
       this.tool._applyNaturalImageData(copyImageData(nextProps.currentFrame.naturalImageData));
-    }
   }
 
   shouldComponentUpdate (nextProps) {

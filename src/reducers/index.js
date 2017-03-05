@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import undoable, { includeAction, excludeAction } from 'redux-undo';
+import undoable, { includeAction } from 'redux-undo';
 
 import {
   SET_CURRENT_FRAME,

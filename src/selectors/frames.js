@@ -57,3 +57,11 @@ export function getNextFrameUUID (state) {
     ? state.frames.present.order.framesOrderArray[index + 1]
     : state.frames.present.activity.activeFrame;
 }
+
+export function canUndo (state) {
+  return state.frames.past.length > 0;
+}
+
+export function canRedo (state) {
+  return state.frames.future.length > 0;
+}
