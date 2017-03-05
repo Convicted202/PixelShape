@@ -62,9 +62,9 @@ export class StateConverter {
 
     width = converted.application.size.width;
     height = converted.application.size.height;
-    frames = converted.frames.collection;
+    frames = converted.frames.present.collection;
     // create modifiedArray from all frames
-    converted.frames.order.modifiedFramesArray = converted.frames.order.framesOrderArray.map(
+    converted.frames.present.order.modifiedFramesArray = converted.frames.present.order.framesOrderArray.map(
       (el, key) => ({ [el]: key })
     );
 
@@ -83,7 +83,7 @@ export class StateConverter {
     // to make sure if user loads this same project second time, it will have initial changes
     converted.application.projectGuid = uuid();
 
-    nums = converted.frames.order.framesOrderArray
+    nums = converted.frames.present.order.framesOrderArray
       .map(el => +el.match(/\d+$/)[0]);
 
     // this is to make new ids start with a distinct proper value

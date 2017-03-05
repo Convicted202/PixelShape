@@ -33,9 +33,9 @@ export const SerializationSchema = {
   _import: {
     'application.projectGuid': Hash.GUID,
     'application.size': Hash.SIZE,
-    'frames.activity.activeFrame': Hash.ACTIVE,
-    'frames.activity.fps': Hash.FPS,
-    'frames.order.framesOrderArray': Hash.ORDER,
-    'frames.collection': Hash.FRAMES
+    'frames.present.activity.activeFrame': Hash.ACTIVE,
+    'frames.present.activity.fps': Hash.FPS,
+    'frames.present.order.framesOrderArray': Hash.ORDER,
+    'frames.present.collection': Hash.FRAMES
   }
 };
