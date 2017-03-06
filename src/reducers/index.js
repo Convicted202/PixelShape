@@ -16,6 +16,10 @@ import {
   UPDATE_FRAMES_SIZE
 } from '../actions/frames';
 
+import {
+  SET_IMAGE_SIZE
+} from '../actions/application';
+
 import { UPLOAD_STORE } from '../actions/application';
 import { StateConverter } from '../statemanager/StateConverter';
 
@@ -36,7 +40,9 @@ const appReducer = combineReducers({
     ])
   }),
   panels,
-  application
+  application: undoable(application, {
+    filter: includeAction([SET_IMAGE_SIZE])
+  })
 });
 
 const rootReducer = (state, action) => {

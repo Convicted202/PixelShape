@@ -93,7 +93,7 @@ test('AbstractTool =>', (expect) => {
 
     coords = tool.getPixeledCoords(311, 207);
 
-    expect.deepEqual(coords, { x: 300, y: 190, naturalX: 31, naturalY: 20 }, 'Should truncate input coords to grid cell size')
+    expect.deepEqual(coords, { x: 300, y: 190, naturalX: 30, naturalY: 19 }, 'Should truncate input coords to grid cell size')
     expect.end();
   });
 
