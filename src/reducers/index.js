@@ -12,8 +12,7 @@ import {
   REMOVE_FRAME,
 
   UPDATE_FRAME_IMAGE_DATA,
-  UPDATE_FRAME_NAME,
-  UPDATE_FRAMES_SIZE
+  UPDATE_FRAME_NAME
 } from '../actions/frames';
 
 import {
@@ -32,16 +31,17 @@ import application from './application';
 const appReducer = combineReducers({
   tools,
   userPalette,
-  frames: undoable(frames, {
+  panels,
+
+  undoables: undoable(combineReducers({
+    frames,
+    application
+  }), {
     filter: includeAction([
       SET_CURRENT_FRAME, SET_FPS, ADD_FRAME, UPDATE_FRAME_IMAGE_DATA, MOVE_FRAME_RIGHT,
       MOVE_FRAME_LEFT, DUPLICATE_FRAME, REMOVE_FRAME, UPDATE_FRAME_IMAGE_DATA,
-      UPDATE_FRAME_NAME, UPDATE_FRAMES_SIZE
+      UPDATE_FRAME_NAME, SET_IMAGE_SIZE
     ])
-  }),
-  panels,
-  application: undoable(application, {
-    filter: includeAction([SET_IMAGE_SIZE])
   })
 });
 

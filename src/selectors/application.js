@@ -1,25 +1,27 @@
+export const getApplication = state => state.undoables.present.application;
+
 export function getProjectGuid (state) {
-  return state.application.present.projectGuid;
+  return getApplication(state).projectGuid;
 }
 
 export function getResetPaletteState (state) {
-  return state.application.present.resetPalette;
+  return getApplication(state).resetPalette;
 }
 
 export function getGridState (state) {
-  return state.application.present.grid;
+  return getApplication(state).grid;
 }
 
 export function getStretchState (state) {
-  return state.application.present.stretch;
+  return getApplication(state).stretch;
 }
 
 export function getCurrentAnchor (state) {
-  return state.application.present.anchor;
+  return getApplication(state).anchor;
 }
 
 export function getImageSize (state) {
-  return state.application.present.size;
+  return getApplication(state).size;
 }
 
 export function getImageSizeWidth (state) {
@@ -31,11 +33,11 @@ export function getImageSizeHeight (state) {
 }
 
 export function getPixelSize (state) {
-  return state.application.present.pixelSize;
+  return getApplication(state).pixelSize;
 }
 
 export function getOptimalPixelSize (state) {
-  return state.application.present.optimalPixelSize;
+  return getApplication(state).optimalPixelSize;
 }
 
 export function getSurfaceWidth (state) {
@@ -55,17 +57,17 @@ export function getUnscaledSurfaceHeight (state) {
 }
 
 export function getSpritesheetDownloadOption (state) {
-  return state.application.present.downloadOptions.includeSpritesheet;
+  return getApplication(state).downloadOptions.includeSpritesheet;
 }
 
 export function getGifDownloadOption (state) {
-  return state.application.present.downloadOptions.includeGif;
+  return getApplication(state).downloadOptions.includeGif;
 }
 
 export function getProjectDownloadOption (state) {
-  return state.application.present.downloadOptions.includeProject;
+  return getApplication(state).downloadOptions.includeProject;
 }
 
 export function getPaletteDownloadOption (state) {
-  return state.application.present.downloadOptions.includePalette;
+  return getApplication(state).downloadOptions.includePalette;
 }

@@ -6,9 +6,10 @@ import {
   DUPLICATE_FRAME,
   UPDATE_FRAME_NAME,
   REMOVE_FRAME,
-  UPDATE_FRAMES_SIZE,
   RESET_FRAMES_STATE
 } from '../../actions/frames';
+
+import { SET_IMAGE_SIZE } from '../../actions/application';
 
 import { expandImageData, copyImageData } from '../../utils/canvasUtils';
 
@@ -74,7 +75,7 @@ function framesCollection (state = framesCollectionInitialState(), action) {
 
       return { ...newState };
 
-    case UPDATE_FRAMES_SIZE:
+    case SET_IMAGE_SIZE:
       Object.keys(state).forEach(id => {
         framesCollectionObject[id] = {
           name: state[id].name,

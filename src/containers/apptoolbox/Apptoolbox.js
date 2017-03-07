@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import { ActionCreators } from 'redux-undo';
 
 import Apptoolbox from '../../components/apptoolbox/Apptoolbox';
-import { canRedo, canUndo } from '../../selectors/frames';
+import { canRedo, canUndo } from '../../selectors/timetravel';
 
 const mapStateToProps = state => ({
   canRedo: canRedo(state),

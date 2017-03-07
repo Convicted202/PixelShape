@@ -1,6 +1,9 @@
 import { StateSelector, SerializationSchema } from './StateSerialization';
 import { uuid, setInitialCounter } from '../utils/uuid';
 
+import { getApplication } from '../selectors/application';
+import { getFrames } from '../selectors/frames';
+
 export class StateConverter {
   // TODO: iData should be converted to Array containing ONLY HEX values
   // without # signs and without commas and then glued together into one string
@@ -60,13 +63,13 @@ export class StateConverter {
         subObj[hashes[hashes.length - 1]] = stateObj.app[SerializationSchema._import[path]];
       });
 
-    width = converted.application.size.width;
-    height = converted.application.size.height;
-    frames = converted.frames.present.collection;
+    width = getApplication(converted).size.width;
+    height = getApplication(converted).size.height;
+    frames = getFrames(converted).collection;
     // create modifiedArray from all frames
-    converted.frames.present.order.modifiedFramesArray = converted.frames.present.order.framesOrderArray.map(
-      (el, key) => ({ [el]: key })
-    );
+    getFrames(converted).order.modifiedFramesArray = getFrames(converted).order.framesOrderArray.map(
+        (el, key) => ({ [el]: key })
+      );
 
     Object.keys(frames)
       .forEach(frameId => {
@@ -81,9 +84,9 @@ export class StateConverter {
       });
 
     // to make sure if user loads this same project second time, it will have initial changes
-    converted.application.projectGuid = uuid();
+    getApplication(converted).projectGuid = uuid();
 
-    nums = converted.frames.present.order.framesOrderArray
+    nums = getFrames(converted).order.framesOrderArray
       .map(el => +el.match(/\d+$/)[0]);
 
     // this is to make new ids start with a distinct proper value
@@ -93,9 +96,18 @@ export class StateConverter {
   }
 
   static mergeImportedState (state, imported) {
-    const application = Object.assign({}, state.application, imported.application),
-          frames = Object.assign({}, state.frames, imported.frames);
+    const application = Object.assign({}, getApplication(state), getApplication(imported)),
+          frames = Object.assign({}, getFrames(state), getFrames(imported));
 
-    return Object.assign({}, state, { application, frames });
+    return Object.assign({}, state, {
+      undoables: {
+        present: {
+          frames,
+          application
+        },
+        past: [],
+        future: []
+      }
+    });
   }
 }

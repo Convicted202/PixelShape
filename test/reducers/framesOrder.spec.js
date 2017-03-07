@@ -12,9 +12,10 @@ import {
   duplicateFrame,
   removeFrameData,
   setFPS,
-  updateFramesSize,
   resetFramesState
 } from '../../src/actions/frames';
+
+import { updateSize } from '../../src/actions/application';
 
 const initialState = framesOrderInitialState();
 
@@ -128,14 +129,14 @@ test('framesOrder =>', (expect) => {
     expect.end();
   });
 
-  expect.test('::setFPS, ::updateFramesSize', (expect) => {
+  expect.test('::setFPS, ::updateSize', (expect) => {
     const expected = {
       framesOrderArray: ['frame_0', 'frame_1'],
       modifiedFramesArray: [{ frame_0: 0 }, { frame_1: 1 }]
     };
 
     expect.deepEqual(
-      framesOrder({ framesOrderArray: ['frame_0', 'frame_1'] }, updateFramesSize()),
+      framesOrder({ framesOrderArray: ['frame_0', 'frame_1'] }, updateSize()),
       expected,
       'Should mark all frames as modified when image size changes'
     );
