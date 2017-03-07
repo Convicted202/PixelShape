@@ -16,6 +16,7 @@ import {
 } from '../actions/frames';
 
 import {
+  SET_SURFACE_CONSTRAINTS,
   SET_IMAGE_SIZE
 } from '../actions/application';
 
@@ -38,10 +39,14 @@ const appReducer = combineReducers({
     application
   }), {
     filter: includeAction([
-      SET_CURRENT_FRAME, SET_FPS, ADD_FRAME, UPDATE_FRAME_IMAGE_DATA, MOVE_FRAME_RIGHT,
-      MOVE_FRAME_LEFT, DUPLICATE_FRAME, REMOVE_FRAME, UPDATE_FRAME_IMAGE_DATA,
-      UPDATE_FRAME_NAME, SET_IMAGE_SIZE
-    ])
+      ...[SET_CURRENT_FRAME, SET_FPS, ADD_FRAME, UPDATE_FRAME_IMAGE_DATA, MOVE_FRAME_RIGHT,
+      MOVE_FRAME_LEFT, DUPLICATE_FRAME, REMOVE_FRAME, UPDATE_FRAME_IMAGE_DATA, UPDATE_FRAME_NAME],
+
+      ...[SET_IMAGE_SIZE, SET_SURFACE_CONSTRAINTS]
+    ]),
+    // IMPORTANT NOTE: this was done with consideration that SET_SURFACE_CONSTRAINTS
+    // is fired as the very first action, so do not track initial state before it is fired
+    ignoreInitialState: true
   })
 });
 
