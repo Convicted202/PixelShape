@@ -6,11 +6,12 @@ import {
   DUPLICATE_FRAME,
   UPDATE_FRAME_NAME,
   REMOVE_FRAME,
-  UPDATE_FRAMES_SIZE,
   RESET_FRAMES_STATE
 } from '../../actions/frames';
 
-import { expandImageData } from '../../utils/canvasUtils';
+import { SET_IMAGE_SIZE } from '../../actions/application';
+
+import { expandImageData, copyImageData } from '../../utils/canvasUtils';
 
 function framesCollection (state = framesCollectionInitialState(), action) {
   let framesCollectionObject = {},
@@ -34,7 +35,7 @@ function framesCollection (state = framesCollectionInitialState(), action) {
 
       framesCollectionObject[action.frameUUID] = {
         ...chosenFrame,
-        naturalImageData: action.naturalImageData
+        naturalImageData: copyImageData(action.naturalImageData)
       };
 
       return {
@@ -43,11 +44,7 @@ function framesCollection (state = framesCollectionInitialState(), action) {
       };
 
     case DUPLICATE_FRAME:
-      const currentNaturalImgData = state[action.uuid].naturalImageData,
-            naturalImageData = new ImageData(currentNaturalImgData.width, currentNaturalImgData.height),
-            naturalDataCopy = new Uint8ClampedArray(currentNaturalImgData.data);
-
-      naturalImageData.data.set(naturalDataCopy);
+      const naturalImageData = copyImageData(state[action.uuid].naturalImageData);
 
       framesCollectionObject[action.id] = {
         name: `${state[action.uuid].name}_copy`,
@@ -78,7 +75,7 @@ function framesCollection (state = framesCollectionInitialState(), action) {
 
       return { ...newState };
 
-    case UPDATE_FRAMES_SIZE:
+    case SET_IMAGE_SIZE:
       Object.keys(state).forEach(id => {
         framesCollectionObject[id] = {
           name: state[id].name,

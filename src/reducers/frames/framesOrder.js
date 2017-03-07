@@ -8,9 +8,10 @@ import {
   DUPLICATE_FRAME,
   REMOVE_FRAME,
   SET_FPS,
-  UPDATE_FRAMES_SIZE,
   RESET_FRAMES_STATE
 } from '../../actions/frames';
+
+import { SET_IMAGE_SIZE } from '../../actions/application';
 
 import Immutable from '../../utils/immutableArray';
 
@@ -112,7 +113,7 @@ function framesOrder (state = framesOrderInitialState(), action) {
       };
 
     case SET_FPS:
-    case UPDATE_FRAMES_SIZE:
+    case SET_IMAGE_SIZE:
       // fps is stored in all frames so need to update all of them
       modifiedFramesArray = state.framesOrderArray.map(
         (el, key) => ({ [el]: key })

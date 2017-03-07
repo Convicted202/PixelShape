@@ -162,3 +162,12 @@ export const combineColorPaletteToCanvas = (colorsArr, colorHeight, colorWidth) 
 
   return resultCanvas;
 };
+
+export const copyImageData = imageData => {
+  const imageDataClone = new ImageData(imageData.width, imageData.height),
+        dataCopy = new Uint8ClampedArray(imageData.data);
+
+  imageDataClone.data.set(dataCopy);
+
+  return imageDataClone;
+};

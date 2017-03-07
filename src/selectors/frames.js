@@ -1,50 +1,54 @@
+export const getFrames = state => state.undoables.present.frames;
+
 export function getGifFramesData (state) {
-  return state.frames.activity.framesGifData;
+  return getFrames(state).activity.framesGifData;
 }
 
 export function getModifiedFramesArray (state) {
-  return state.frames.order.modifiedFramesArray;
+  return getFrames(state).order.modifiedFramesArray;
 }
 
 export function getFPS (state) {
-  return state.frames.activity.fps;
+  return getFrames(state).activity.fps;
 }
 
 export function getCurrentFrameUUID (state) {
-  return state.frames.activity.activeFrame;
+  return getFrames(state).activity.activeFrame;
 }
 
 export function getCurrentFrame (state) {
   const uuid = getCurrentFrameUUID(state);
-  return state.frames.collection[uuid];
+  return getFrames(state).collection[uuid];
 }
 
 export function getAllFrames (state) {
-  return state.frames.collection;
+  return getFrames(state).collection;
 }
 
 export function getFramesOrder (state) {
-  return state.frames.order.framesOrderArray;
+  return getFrames(state).order.framesOrderArray;
 }
 
 export function getCurrentFrameName (state) {
-  return state.frames.activity.activeFrame && getCurrentFrame(state).name;
+  return getFrames(state).activity.activeFrame && getCurrentFrame(state).name;
 }
 
 export function getFramesAmount (state) {
-  return state.frames.order.framesOrderArray.length;
+  return getFrames(state).order.framesOrderArray.length;
 }
 
 export function getCurrentFrameIndex (state) {
-  return state.frames.order.framesOrderArray.indexOf(state.frames.activity.activeFrame);
+  return getFrames(state).order.framesOrderArray.indexOf(
+    getCurrentFrameUUID(state)
+  );
 }
 
 export function getPreviousFrameUUID (state) {
   const index = getCurrentFrameIndex(state);
 
   return index > 0
-    ? state.frames.order.framesOrderArray[index - 1]
-    : state.frames.activity.activeFrame;
+    ? getFrames(state).order.framesOrderArray[index - 1]
+    : getFrames(state).activity.activeFrame;
 }
 
 export function getNextFrameUUID (state) {
@@ -52,6 +56,6 @@ export function getNextFrameUUID (state) {
         amount = getFramesAmount(state);
 
   return index < amount - 1
-    ? state.frames.order.framesOrderArray[index + 1]
-    : state.frames.activity.activeFrame;
+    ? getFrames(state).order.framesOrderArray[index + 1]
+    : getFrames(state).activity.activeFrame;
 }

@@ -1,59 +1,73 @@
+export const getApplication = state => state.undoables.present.application;
+
 export function getProjectGuid (state) {
-  return state.application.projectGuid;
+  return getApplication(state).projectGuid;
 }
 
 export function getResetPaletteState (state) {
-  return state.application.resetPalette;
+  return getApplication(state).resetPalette;
 }
 
 export function getGridState (state) {
-  return state.application.grid;
+  return getApplication(state).grid;
 }
 
 export function getStretchState (state) {
-  return state.application.stretch;
+  return getApplication(state).stretch;
 }
 
 export function getCurrentAnchor (state) {
-  return state.application.anchor;
+  return getApplication(state).anchor;
 }
 
 export function getImageSize (state) {
-  return state.application.size;
+  return getApplication(state).size;
+}
+
+export function getImageSizeWidth (state) {
+  return getImageSize(state).width;
+}
+
+export function getImageSizeHeight (state) {
+  return getImageSize(state).height;
 }
 
 export function getPixelSize (state) {
-  return state.application.pixelSize;
+  return getApplication(state).pixelSize;
+}
+
+export function getOptimalPixelSize (state) {
+  return getApplication(state).optimalPixelSize;
 }
 
 export function getSurfaceWidth (state) {
-  return state.application.size.width * state.application.pixelSize;
+  return getImageSizeWidth(state) * getPixelSize(state);
 }
 
 export function getSurfaceHeight (state) {
-  return state.application.size.height * state.application.pixelSize;
+  return getImageSizeHeight(state) * getPixelSize(state);
 }
 
 export function getUnscaledSurfaceWidth (state) {
-  return state.application.size.width * state.application.optimalPixelSize;
+  return getImageSizeHeight(state) * getOptimalPixelSize(state);
 }
 
 export function getUnscaledSurfaceHeight (state) {
-  return state.application.size.height * state.application.optimalPixelSize;
+  return getImageSizeHeight(state) * getOptimalPixelSize(state);
 }
 
 export function getSpritesheetDownloadOption (state) {
-  return state.application.downloadOptions.includeSpritesheet;
+  return getApplication(state).downloadOptions.includeSpritesheet;
 }
 
 export function getGifDownloadOption (state) {
-  return state.application.downloadOptions.includeGif;
+  return getApplication(state).downloadOptions.includeGif;
 }
 
 export function getProjectDownloadOption (state) {
-  return state.application.downloadOptions.includeProject;
+  return getApplication(state).downloadOptions.includeProject;
 }
 
 export function getPaletteDownloadOption (state) {
-  return state.application.downloadOptions.includePalette;
+  return getApplication(state).downloadOptions.includePalette;
 }

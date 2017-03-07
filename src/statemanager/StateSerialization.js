@@ -31,11 +31,11 @@ export const SerializationSchema = {
     [Hash.FRAMES]: 'framesCollection'
   },
   _import: {
-    'application.projectGuid': Hash.GUID,
-    'application.size': Hash.SIZE,
-    'frames.activity.activeFrame': Hash.ACTIVE,
-    'frames.activity.fps': Hash.FPS,
-    'frames.order.framesOrderArray': Hash.ORDER,
-    'frames.collection': Hash.FRAMES
+    'undoables.present.application.projectGuid': Hash.GUID,
+    'undoables.present.application.size': Hash.SIZE,
+    'undoables.present.frames.activity.activeFrame': Hash.ACTIVE,
+    'undoables.present.frames.activity.fps': Hash.FPS,
+    'undoables.present.frames.order.framesOrderArray': Hash.ORDER,
+    'undoables.present.frames.collection': Hash.FRAMES
   }
 };

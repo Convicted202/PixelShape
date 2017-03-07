@@ -49,6 +49,14 @@ class Apptoolbox extends Component {
     this.unsetState();
   }
 
+  executeUndo () {
+    if (this.props.canUndo) this.props.undo();
+  }
+
+  executeRedo () {
+    if (this.props.canRedo) this.props.redo();
+  }
+
   render () {
     return (
       <aside className="apptoolbox">
@@ -59,12 +67,14 @@ class Apptoolbox extends Component {
             doAction={this.openModal.bind(this, MODALS.NewProject)} />
           <AppToolButton
             btnTooltip="Undo"
+            disabled={!this.props.canUndo}
             width="30" height="30" icon="undo"
-            doAction={() => {}} />
+            doAction={this.executeUndo.bind(this)} />
           <AppToolButton
             btnTooltip="Redo"
+            disabled={!this.props.canRedo}
             width="30" height="30" icon="redo"
-            doAction={() => {}} />
+            doAction={this.executeRedo.bind(this)} />
           <AppToolButton
             btnTooltip="Download"
             width="30" height="30" icon="download"

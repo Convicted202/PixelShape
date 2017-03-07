@@ -1,5 +1,3 @@
-import { updateFramesSize } from './frames';
-
 export const SET_IMAGE_SIZE = 'APP:SET_SIZE';
 export const SET_SURFACE_CONSTRAINTS = 'APP:SET_SURFACE_CONSTRAINTS';
 export const TOGGLE_RESET_PALETTE = 'APP:TOGGLE_RESET_PALETTE';
@@ -13,10 +11,14 @@ export const TOGGLE_INCLUDE_SPRITESHEET = 'APP:TOGGLE_INCLUDE_SPRITESHEET';
 export const TOGGLE_INCLUDE_PROJECT = 'APP:TOGGLE_INCLUDE_PROJECT';
 export const TOGGLE_INCLUDE_PALETTE = 'APP:TOGGLE_INCLUDE_PALETTE';
 
-export const setImageSize = (width, height) => ({
+// anchor and stretch will be only used in frames reducer
+// application reducer needs to know only about width and height
+export const updateSize = (width, height, anchor, stretch) => ({
   type: SET_IMAGE_SIZE,
   width,
-  height
+  height,
+  anchor,
+  stretch
 });
 
 export const setSurfaceConstraints = (width, height) => ({
@@ -59,8 +61,8 @@ export const toggleIncludePalette = () => ({
 });
 
 export const processSizeChange = (width, height, stretch) => (dispatch, getState) => {
-  dispatch(setImageSize(width, height));
-  dispatch(updateFramesSize(width, height, getState().application.anchor, stretch));
+  const anchor = getState().undoables.present.application.anchor;
+  dispatch(updateSize(width, height, anchor, stretch));
 };
 
 export const getStore = () => (dispatch, getState) => getState();
