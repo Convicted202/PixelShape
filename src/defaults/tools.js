@@ -82,3 +82,17 @@ export default [
   //   icon: 'selectcrop'
   // }
 ];
+
+export const toolHotkeys = {
+  'Brush': 'b',
+  'HorzMirrorBrush': 'h',
+  'VertMirrorBrush': 'v',
+  'Bucket': 'f',
+  'ColorReplace': 'a',
+  'Eraser': 'e',
+  'Dropper': 'g',
+  'Rectangle': 'r',
+  'Ellipse': 'c',
+  'Lightener': 'l',
+  'Darkener': 'd'
+};

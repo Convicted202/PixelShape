@@ -1,7 +1,9 @@
 import './droptoolbutton.styl';
 
 import React, { Component } from 'react';
+import decorateWithKeyBindings from '../../helpers/KeyBindings';
 import classNames from 'classnames';
+import { toolHotkeys } from '../../defaults/tools';
 
 // TODO: might need to use more generic reusable Toolbutton.js component
 // for active button and dropdown buttons
@@ -13,6 +15,15 @@ class DropToolButton extends Component {
       activeTool: this.props.tool,
       activeIcon: this.props.icon
     };
+  }
+
+  componentDidMount () {
+    if (this.props.dropdownTools) {
+      this.props.dropdownTools.forEach(toolObj => {
+        this.bindKey(toolHotkeys[toolObj.tool], this.setActiveTool.bind(this, toolObj));
+      });
+    } else
+      this.bindKey(toolHotkeys[this.props.tool], this.props.setTool.bind(null, this.props.tool));
   }
 
   setActiveTool (toolObj) {
@@ -93,4 +104,4 @@ class DropToolButton extends Component {
   }
 }
 
-export default DropToolButton;
+export default decorateWithKeyBindings(DropToolButton);
