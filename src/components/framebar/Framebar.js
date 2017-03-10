@@ -1,6 +1,8 @@
 import './framebar.styl';
 
 import React, { Component } from 'react';
+import decorateWithKeyBindings from '../../helpers/KeyBindings';
+
 import FrameButton from '../framebutton/Framebutton';
 import FrameButtonBig from '../framebutton/Framebuttonbig';
 import FramesContainer from '../../containers/framescontainer/Framescontainer';
@@ -17,6 +19,14 @@ class Framebar extends Component {
       maximized: true
     };
     this.setFPS = debounce(this.props.setFPS, 300);
+
+    this.goLeft = this.goLeft.bind(this);
+    this.goRight = this.goRight.bind(this);
+
+    this.bindKeys({
+      'alt + left': this.goLeft,
+      'alt + right': this.goRight
+    });
   }
 
   componentWillReceiveProps (nextProps) {
@@ -108,12 +118,14 @@ class Framebar extends Component {
       <ul className="framebar__frames-controls framebar__frames-controls-big" key="mincontrols">
         <FrameButtonBig
           btnTooltip="Go left"
+          btnShortcut="(ALT + LEFT)"
           icon="left-min"
-          doAction={this.goLeft.bind(this)} />
+          doAction={this.goLeft} />
         <FrameButtonBig
           btnTooltip="Go right"
+          btnShortcut="(ALT + RIGHT)"
           icon="right-min"
-          doAction={this.goRight.bind(this)} />
+          doAction={this.goRight} />
       </ul>
     ];
   }
@@ -153,4 +165,4 @@ class Framebar extends Component {
   }
 }
 
-export default Framebar;
+export default decorateWithKeyBindings(Framebar);
