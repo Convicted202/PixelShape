@@ -43,7 +43,7 @@ class DropToolButton extends Component {
     );
 
     return (
-      <div className={classes} onClick={this.props.setTool.bind(null, this.state.activeTool)} data-tooltip={this.props.name}>
+      <div className={classes} onClick={this.props.setTool.bind(null, this.state.activeTool)} data-tooltip={this.props.name} data-shortcut={`(${toolHotkeys[this.props.tool]})`}>
         <svg className="toolbutton__icon" viewBox="0 0 24 24" width="40" height="40">
           <use xlinkHref={`#${this.state.activeIcon}`}></use>
         </svg>
@@ -66,7 +66,8 @@ class DropToolButton extends Component {
             key={key}
             className={classes}
             onClick={this.setActiveTool.bind(this, toolObj)}
-            data-tooltip={toolObj.name}>
+            data-tooltip={toolObj.name}
+            data-shortcut={`(${toolHotkeys[toolObj.tool]})`}>
             <svg className="toolbutton-dropdown__toolbutton__icon" viewBox="0 0 24 24" width="40" height="40">
               <use xlinkHref={`#${toolObj.icon}`}></use>
             </svg>

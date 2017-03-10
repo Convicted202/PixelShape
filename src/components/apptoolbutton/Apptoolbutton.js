@@ -13,7 +13,7 @@ const AppToolButton = props => {
   );
 
   return (
-    <li className={classes} onClick={props.doAction} data-tooltip={props.btnTooltip}>
+    <li className={classes} onClick={props.doAction} data-tooltip={props.btnTooltip} data-shortcut={props.btnShortcut} data-multiline-tooltip>
       <svg className="apptoolbutton__icon" viewBox="0 0 24 24" width={props.width} height={props.height}>
         <use xlinkHref={`#${props.icon}`}></use>
       </svg>

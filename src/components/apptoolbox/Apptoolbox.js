@@ -84,28 +84,34 @@ class Apptoolbox extends Component {
         <ul className="apptoolbox__buttons">
           <AppToolButton
             btnTooltip="New project"
+            btnShortcut="(ALT + N)"
             width="30" height="30" icon="new-project"
             doAction={this.openNewProject} />
           <AppToolButton
             btnTooltip="Undo"
+            btnShortcut="(CTRL + Z)"
             disabled={!this.props.canUndo}
             width="30" height="30" icon="undo"
             doAction={this.executeUndo} />
           <AppToolButton
             btnTooltip="Redo"
+            btnShortcut="(CTRL + Y)"
             disabled={!this.props.canRedo}
             width="30" height="30" icon="redo"
             doAction={this.executeRedo} />
           <AppToolButton
             btnTooltip="Download"
+            btnShortcut="(ALT + D)"
             width="30" height="30" icon="download"
             doAction={this.openDownloadProject} />
           <AppToolButton
             btnTooltip="Panels"
+            btnShortcut="(ALT + P)"
             width="30" height="30" icon="panels"
             doAction={this.openCustomizePanels} />
           <AppToolButton
             btnTooltip="Settings"
+            btnShortcut="(ALT + S)"
             width="30" height="30" icon="settings"
             doAction={this.openSettings} />
         </ul>
