@@ -12,8 +12,7 @@ class FramesContainer extends Component {
 
     this.initializeGifWorker();
     this.state = {
-      frameAdded: false,
-      fps: 2
+      frameAdded: false
     };
   }
 
@@ -66,7 +65,7 @@ class FramesContainer extends Component {
   componentDidUpdate () {
     if (this.state.frameAdded) {
       this._addButton.scrollIntoView();
-      this.setState({frameAdded: false});
+      this.setState({ frameAdded: false });
     }
   }
 

@@ -3,6 +3,7 @@ import ModalWindow from '../../modalwindow/Modalwindow';
 import ToggleCheckbox from '../../togglecheckbox/Togglecheckbox';
 
 import StateLoader from '../../../statemanager/StateLoader';
+import { projectExtension } from '../../../defaults/constants';
 
 import './newproject.styl';
 
@@ -82,7 +83,7 @@ class NewProjectModal extends Component {
             <input
               id="project-import"
               type="file"
-              accept=".pxlsh"
+              accept={projectExtension}
               ref={input => this._input = input}
               style={{ display: 'none' }}
               onChange={this.handleUpload.bind(this)} />

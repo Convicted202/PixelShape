@@ -7,6 +7,8 @@ import { combineImageDataToCanvas, combineColorPaletteToCanvas } from '../../../
 import { getAllActiveColors } from '../../../utils/colorUtils';
 import StateLoader from '../../../statemanager/StateLoader';
 
+import { Files } from '../../../defaults/constants';
+
 class DownloadProjectModal extends Component {
   constructor (props) {
     super(props);
@@ -20,12 +22,12 @@ class DownloadProjectModal extends Component {
 
   prepareProject () {
     const state = this.props.getProjectState();
-    return StateLoader.prepareForDownload(state, 'project.pxlsh');
+    return StateLoader.prepareForDownload(state, Files.NAME.PROJECT);
   }
 
   prepareGif () {
     const combinedData = this.combineGifData();
-    return Downloader.prepareGIFBlobAsync(combinedData, 'myGif.gif');
+    return Downloader.prepareGIFBlobAsync(combinedData, Files.NAME.ANIMATION);
   }
 
   prepareSpritesheet () {
@@ -38,7 +40,7 @@ class DownloadProjectModal extends Component {
         spritesImageDataArray[0].width,
         spritesImageDataArray[0].height
       ),
-      'sprites.png'
+      Files.NAME.SPRITES
     );
   }
 
@@ -52,7 +54,7 @@ class DownloadProjectModal extends Component {
         100,
         500
       ),
-      'palette.png'
+      Files.NAME.PALETTE
     );
   }
 
@@ -65,7 +67,7 @@ class DownloadProjectModal extends Component {
     if (this.props.includeSpritesheet) blobs.push(this.prepareSpritesheet());
     if (!blobs.length) return;
 
-    Downloader.asZIP(blobs);
+    Downloader.asZIP(blobs, Files.NAME.PACKAGE);
     this.props.closeModal();
   }
 

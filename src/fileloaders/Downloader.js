@@ -1,11 +1,7 @@
 import FileSaver from 'file-saver';
 import JSZip from 'jszip';
 
-const Type = {
-  JSON: 'application/json',
-  GIF: 'image/gif',
-  PNG: 'image/png'
-};
+import { Files } from '../defaults/constants';
 
 const toBlobPolyfill = (canvas, callback, type, quality) => {
   let binStr = atob(canvas.toDataURL(type, quality).split(',')[1]),
@@ -17,7 +13,7 @@ const toBlobPolyfill = (canvas, callback, type, quality) => {
 
   callback(
     new Blob([arr], {
-      type: type || Type.PNG
+      type: type || Files.MIMETYPE.PNG
     })
   );
 };
@@ -44,7 +40,7 @@ export default class Downloader {
         bytes[i] = data.charCodeAt(i);
 
       resolve({
-        blob: new Blob([new Uint8Array(bytes)], { type: Type.GIF }),
+        blob: new Blob([new Uint8Array(bytes)], { type: Files.MIMETYPE.GIF }),
         name
       });
     });
@@ -55,7 +51,7 @@ export default class Downloader {
       const json = JSON.stringify(data);
 
       resolve({
-        blob: new Blob([json], { type: Type.JSON }),
+        blob: new Blob([json], { type: Files.MIMETYPE.JSON }),
         name
       });
     });
@@ -68,7 +64,7 @@ export default class Downloader {
           blob,
           name
         });
-      }, Type.PNG);
+      }, Files.MIMETYPE.PNG);
     });
   }
 
@@ -98,7 +94,7 @@ export default class Downloader {
     );
   }
 
-  static asZIP (asyncFileArr /* [{name: ..., blob: ...}] */, name = 'PixelShapeApp.zip') {
+  static asZIP (asyncFileArr /* [{name: ..., blob: ...}] */, name = 'myZip.zip') {
     const zip = new JSZip();
 
     Promise.all(asyncFileArr)
