@@ -1,7 +1,6 @@
 import test from 'blue-tape';
 import sinon from 'sinon';
-import Boundshape from 'modules/boundshape/Boundshape';
-import RenderingContext2d from '../mocks/RenderingContext2d.mock';
+import Boundshape from '../../src/modules/boundshape/Boundshape';
 
 let boundshape;
 
@@ -27,7 +26,7 @@ test('Boundshape =>', (expect) => {
     before();
 
     boundshape.onMouseDown(100, 100);
-    expect.ok(boundshape.drawing, 'Should toggle drawing mode on');
+    expect.ok(boundshape.mouseDown, 'Should toggle drawing mode on');
     expect.ok(boundshape.coords.x0 === 100 && boundshape.coords.y0 === 100,
       'Should set inital [left, top] values');
     expect.end();
@@ -41,7 +40,7 @@ test('Boundshape =>', (expect) => {
     boundshape.onMouseMove(100, 100);
     expect.notOk(boundshape.update.called, 'Should toggle drawing mode for rendering context');
 
-    boundshape.drawing = true;
+    boundshape.mouseDown = true;
     boundshape.onMouseMove(100, 100);
     expect.ok(boundshape._buffer.clearRect.called, 'Should clear buffer context on each mouse move');
     expect.ok(boundshape.update.calledWith(boundshape._buffer), 'Should redraw shape on buffer on each mouse move');
@@ -52,7 +51,7 @@ test('Boundshape =>', (expect) => {
     before();
 
     boundshape.update = sinon.spy();
-
+    boundshape.mouseDown = true;
     boundshape.onMouseUp(100, 100);
     expect.notOk(boundshape.drawing, 'Should toggle drawing mode off');
     expect.ok(boundshape.update.calledWith(boundshape._ctx) && boundshape._buffer.clearRect.called, 'Should do final draw on rendering context and reset buffer context');

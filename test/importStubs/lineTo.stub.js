@@ -1,5 +1,5 @@
 import sinon from 'sinon';
-import * as lineToOriginal from 'utils/lineTo';
+import * as lineToOriginal from '../../src/utils/lineTo';
 
 const lineTo = sinon.stub(lineToOriginal, 'default', cb => cb());
 

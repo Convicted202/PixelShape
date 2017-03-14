@@ -1,7 +1,14 @@
+# deps + build
 node_modules
+dist
+
+# coverage info
+.nyc_output
+coverage
 
 Thumbs.db
 
+# npm logging info
 *.log
 *.diff
 *.err

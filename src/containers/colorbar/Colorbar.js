@@ -1,10 +1,10 @@
 import {connect} from 'react-redux';
 
-import {getCustomColors, getCurrentColor, getTempColor} from 'selectors';
-import {addColor} from 'actions/palette';
-import {setColor} from 'actions/tools';
+import {getCustomColors, getCurrentColor, getTempColor} from '../../selectors';
+import {addColor} from '../../actions/palette';
+import {setColor} from '../../actions/tools';
 
-import Colorbar from 'components/colorbar/Colorbar';
+import Colorbar from '../../components/colorbar/Colorbar';
 
 const mapStateToProps = state => ({
   userColors: getCustomColors(state),

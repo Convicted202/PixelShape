@@ -1,5 +1,5 @@
 import Boundshape from '../boundshape/Boundshape';
-import {ellipse} from 'utils/ellipseCircle';
+import {ellipse} from '../../utils/ellipseCircle';
 
 class Ellipse extends Boundshape {
   constructor (...args) {

@@ -1,4 +1,4 @@
-import * as Selectors from 'selectors';
+import * as Selectors from '../selectors';
 
 const Hash = {
   GUID: 'guid',
@@ -30,13 +30,12 @@ export const SerializationSchema = {
     [Hash.ORDER]: 'framesOrder',
     [Hash.FRAMES]: 'framesCollection'
   },
-  // should contain TWO props of a state
   _import: {
-    'application.projectGuid': Hash.GUID,
-    'application.size': Hash.SIZE,
-    'frames.activeFrame': Hash.ACTIVE,
-    'frames.fps': Hash.FPS,
-    'frames.framesOrderArray': Hash.ORDER,
-    'frames.framesCollectionObject': Hash.FRAMES
+    'undoables.present.application.projectGuid': Hash.GUID,
+    'undoables.present.application.size': Hash.SIZE,
+    'undoables.present.frames.activity.activeFrame': Hash.ACTIVE,
+    'undoables.present.frames.activity.fps': Hash.FPS,
+    'undoables.present.frames.order.framesOrderArray': Hash.ORDER,
+    'undoables.present.frames.collection': Hash.FRAMES
   }
 };

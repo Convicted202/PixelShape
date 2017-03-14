@@ -1,7 +1,6 @@
 import test from 'blue-tape';
 import sinon from 'sinon';
-import Dropper from 'modules/dropper/Dropper';
-import RenderingContext2d from '../mocks/RenderingContext2d.mock';
+import Dropper from '../../src/modules/dropper/Dropper';
 
 let dropper;
 
@@ -13,24 +12,6 @@ const before = () => {
 };
 
 test('Dropper =>', (expect) => {
-  expect.test('::handleBufferBrushMove', (expect) => {
-    before();
-
-    dropper.useGhostStateOn = sinon.spy();
-    dropper.clearPixelCell = sinon.spy();
-    dropper.drawPixelCell = sinon.spy();
-
-    dropper.handleBufferBrushMove(100, 100);
-    expect.ok(
-      dropper.useGhostStateOn.calledWith(dropper._buffer)
-      && dropper.clearPixelCell.calledWith(dropper._buffer)
-      && dropper.drawPixelCell.calledWith(dropper._buffer),
-      'Should operate with buffer context only');
-    expect.ok(
-      dropper._buffer.save.called && dropper._buffer.restore.called, 'Should save and restore buffers state before and after drawing respectively');
-    expect.end();
-  });
-
   expect.skip('::getUnderlyingColor', (expect) => {
     before();
 
@@ -53,11 +34,6 @@ test('Dropper =>', (expect) => {
   expect.test('::onMouseMove', (expect) => {
     before();
 
-    dropper.handleBufferBrushMove = sinon.spy();
-
-    dropper.onMouseMove(100, 100);
-    expect.ok(dropper.handleBufferBrushMove.called && !dropper.storeCallback.called, 'Should only handle ghost movement when mouseDown flag is set to false');
-
     dropper.mouseDown = true;
     dropper.onMouseMove(100, 100);
     expect.ok(dropper.storeCallback.called, 'Should process color with callback modifying store');
@@ -68,7 +44,7 @@ test('Dropper =>', (expect) => {
     before();
 
     dropper.handleBufferBrushMove = sinon.spy();
-
+    dropper.mouseDown = true;
     dropper.onMouseUp(100, 100);
     expect.notOk(dropper.mouseDown, 'Should stop processing color on mouseUp');
     expect.ok(dropper.storeCallback.called, 'Should process color with callback modifying store');

@@ -1,5 +1,11 @@
-import { getPixelFromImageData, getColor, putColor } from './colorUtils';
-import { ANCHORS } from 'defaults/defaults';
+import {
+  getPixelFromImageData,
+  getColor,
+  putColor,
+  stringToRGBA,
+  getBlackWhiteContrastColor
+} from './colorUtils';
+import { ANCHORS } from '../defaults/defaults';
 
 // TODO: write tests for all of these
 
@@ -43,7 +49,7 @@ export const drawGrid = (context, space, gutter) => {
   context.stroke();
 };
 
-const createCanvas = (width, height) => {
+export const createCanvas = (width, height) => {
   const canvas = document.createElement('canvas');
 
   canvas.width = width;
@@ -114,3 +120,54 @@ export const expandImageData = (imageData, width, height, anchor = 'oo', stretch
   stretch
     ? resizeImageData(imageData, width, height)
     : extendImageData(imageData, width, height, anchor);
+
+export const combineImageDataToCanvas = (imageDataArr, imageDataWidth, imageDataHeight) => {
+  let tmpCanvas = createCanvas(imageDataWidth, imageDataHeight),
+      tmpContext = tmpCanvas.getContext('2d'),
+      resultCanvas = createCanvas(imageDataArr.length * imageDataWidth, imageDataHeight),
+      rContext = resultCanvas.getContext('2d');
+
+  imageDataArr.forEach((data, i) => {
+    tmpContext.putImageData(data, 0, 0);
+    rContext.drawImage(
+      tmpCanvas,
+      i * imageDataWidth,
+      0,
+      imageDataWidth,
+      imageDataHeight
+    );
+  });
+
+  return resultCanvas;
+};
+
+export const combineColorPaletteToCanvas = (colorsArr, colorHeight, colorWidth) => {
+  let resultCanvas = createCanvas(colorWidth, colorsArr.length * colorHeight),
+      rContext = resultCanvas.getContext('2d');
+
+  colorsArr.forEach((color, i) => {
+    rContext.fillStyle = color;
+    rContext.fillRect(
+      0,
+      i * colorHeight,
+      colorWidth,
+      (i + 1) * colorHeight
+    );
+
+    rContext.textAlign = 'center';
+    rContext.font = '36px Arial';
+    rContext.fillStyle = getBlackWhiteContrastColor(stringToRGBA(color));
+    rContext.fillText(color, colorWidth / 2, (i + 1 / 2) * colorHeight + 15);
+  });
+
+  return resultCanvas;
+};
+
+export const copyImageData = imageData => {
+  const imageDataClone = new ImageData(imageData.width, imageData.height),
+        dataCopy = new Uint8ClampedArray(imageData.data);
+
+  imageDataClone.data.set(dataCopy);
+
+  return imageDataClone;
+};

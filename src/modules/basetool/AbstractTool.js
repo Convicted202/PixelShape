@@ -1,9 +1,11 @@
-import { fillRectImageData, stringToRGBA } from 'utils/colorUtils';
+import { fillRectImageData, stringToRGBA } from '../../utils/colorUtils';
 
 const ACTION = {
   DRAW: 'fillRect',
   CLEAR: 'clearRect'
 };
+
+const getCellCount = (val, cellSize) => val / cellSize | 0;
 
 class AbstractTool {
   constructor () {
@@ -12,7 +14,7 @@ class AbstractTool {
       size: 1,
       pixelSize: 20,
       color: '#000000',
-      transparent: '#000000',
+      transparent: [0, 0, 0, 0],
       alpha: 1,
       compositeOperation: 'source-over',
       tool: 'abstract',
@@ -52,6 +54,10 @@ class AbstractTool {
     Object.assign(this.state, state);
   }
 
+  applyPixelSize (pixelSize) {
+    this.state.pixelSize = pixelSize;
+  }
+
   useStateOn (ctx) {
     ctx.lineWidth = this.size;
     ctx.fillStyle = this.state.color;
@@ -69,21 +75,16 @@ class AbstractTool {
   getPixeledCoords (x, y) {
     if (typeof x === 'undefined' || typeof y === 'undefined') return false;
     // shift x and y half a brush size and get how much grid pixels are in it
-    const timesX = x / this.state.pixelSize | 0,
-          timesY = y / this.state.pixelSize | 0,
-          pixelShift = this.state.size / 2 | 0,
-          roundedVals = {
-            x: timesX - pixelShift,
-            y: timesY - pixelShift
-          };
-    // const timesX = Math.floor((x) / this.state.pixelSize),
-    //       timesY = Math.floor((y) / this.state.pixelSize);
+    const pixelShift = this.state.size / 2 | 0,
+          xCell = getCellCount(x, this.state.pixelSize),
+          yCell = getCellCount(y, this.state.pixelSize);
 
     return {
-      x: roundedVals.x * this.state.pixelSize,
-      y: roundedVals.y * this.state.pixelSize,
-      naturalX: roundedVals.x,
-      naturalY: roundedVals.y
+      x: (xCell - pixelShift) * this.state.pixelSize,
+      y: (yCell - pixelShift) * this.state.pixelSize,
+      // these should be perfect mappings from surface coords to natural image data coords
+      naturalX: xCell - pixelShift,
+      naturalY: yCell - pixelShift
     };
   }
 
@@ -91,12 +92,11 @@ class AbstractTool {
     const coords = this.getPixeledCoords(x, y);
     let color;
 
-    if (!coords) return;
+    if (!coords || x < 0 || y < 0) return;
 
-    color = action === ACTION.DRAW ? this.state.color : this.state.transparent;
+    color = action === ACTION.DRAW ? stringToRGBA(this.state.color) : this.state.transparent;
 
     ctx[action](coords.x, coords.y, this.size, this.size);
-    color = stringToRGBA(color);
 
     if (ctx === this._ctx) {
       fillRectImageData(
@@ -123,6 +123,18 @@ class AbstractTool {
     this.useStateOn(ctx);
   }
 
+  handleGhostPixelMove (x, y) {
+    // "ghost" moving
+    // on each move clear previous pixel and draw current
+    if (!this._buffer) return;
+    this._buffer.save();
+    this.useGhostStateOn(this._buffer);
+    this.clearPixelCell(this._buffer, this.buf_x, this.buf_y);
+    this.drawPixelCell(this._buffer, x, y);
+    this._buffer.restore();
+    [this.buf_x, this.buf_y] = [x, y];
+  }
+
   storeCallback () {
     throw Error('Store callback was not provided');
   }
@@ -137,6 +149,10 @@ class AbstractTool {
 
   onMouseUp () {
     throw Error('Tool mouseUp event not implemented');
+  }
+
+  cancelMouseDown () {
+    this.mouseDown = false;
   }
 }
 

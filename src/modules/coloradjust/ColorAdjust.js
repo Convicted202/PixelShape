@@ -1,7 +1,5 @@
 import AbstractTool from '../basetool/AbstractTool';
-import { getContextColor, darkenLightenColor, stringToRGBA, colorsEqual } from 'utils/colorUtils';
-
-const lightenPersentage = 0.01;
+import { getContextColor, darkenLightenColor, colorsEqual } from '../../utils/colorUtils';
 
 // TODO: need to write tests for this and prior to that separate common functionality
 // from this module and brush-likes to another module
@@ -9,20 +7,9 @@ const lightenPersentage = 0.01;
 class ColorAdjust extends AbstractTool {
   constructor (...args) {
     super(...args);
-    this.transparent = [...stringToRGBA(this.state.transparent).slice(0, -1), 0];
+    this.shadingPercentage = 0;
     [this.x, this.y] = [null, null];
     [this.buf_x, this.buf_y] = [null, null];
-  }
-
-  handleBufferBrushMove (x, y) {
-    // "ghost" moving
-    // on each move clear previous pixel and draw current
-    this._buffer.save();
-    this.useGhostStateOn(this._buffer);
-    this.clearPixelCell(this._buffer, this.buf_x, this.buf_y);
-    this.drawPixelCell(this._buffer, x, y);
-    this._buffer.restore();
-    [this.buf_x, this.buf_y] = [x, y];
   }
 
   onMouseDown (x, y) {
@@ -32,7 +19,7 @@ class ColorAdjust extends AbstractTool {
   }
 
   onMouseMove (x, y) {
-    this.handleBufferBrushMove(x, y);
+    this.handleGhostPixelMove(x, y);
     // actual drawing
     if (!this.mouseDown) return;
     this.draw(this._ctx, this.x, this.y);
@@ -41,6 +28,7 @@ class ColorAdjust extends AbstractTool {
 
   /* eslint-disable no-unused-vars */
   onMouseUp (x, y) {
+    if (!this.mouseDown) return;
     this.mouseDown = false;
     [this.x, this.y] = [null, null];
   }
@@ -50,7 +38,7 @@ class ColorAdjust extends AbstractTool {
   getShadedColor (ctx, x, y, percentage) {
     const color = getContextColor(ctx, x, y);
 
-    if (colorsEqual(this.transparent, color)) return false;
+    if (colorsEqual(this.state.transparent, color)) return false;
 
     return darkenLightenColor(color, percentage);
   }
@@ -79,7 +67,7 @@ class ColorAdjust extends AbstractTool {
       for (j = 0; j < stateSize; j++) {
         partialX = x + (i - halfSize) * this.state.pixelSize;
         partialY = y + (j - halfSize) * this.state.pixelSize;
-        color = this.getShadedColor(ctx, partialX, partialY, lightenPersentage);
+        color = this.getShadedColor(ctx, partialX, partialY, this.shadingPercentage);
 
         if (color) {
           ctx.fillStyle = color;

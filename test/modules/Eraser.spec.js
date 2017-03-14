@@ -1,9 +1,8 @@
 import test from 'blue-tape';
 import sinon from 'sinon';
-import Brush from 'modules/brush/Brush';
-import Eraser from 'modules/eraser/Eraser';
+import Brush from '../../src/modules/brush/Brush';
+import Eraser from '../../src/modules/eraser/Eraser';
 import lineTo from '../importStubs/lineTo.stub';
-import RenderingContext2d from '../mocks/RenderingContext2d.mock';
 
 let eraser;
 

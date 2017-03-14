@@ -1,6 +1,6 @@
 import AbstractTool from '../basetool/AbstractTool';
-import floodFill from 'utils/floodFill';
-import { resizeImageData } from 'utils/canvasUtils';
+import floodFill from '../../utils/floodFill';
+import { resizeImageData } from '../../utils/canvasUtils';
 
 class Bucket extends AbstractTool {
   constructor (...args) {
@@ -8,16 +8,18 @@ class Bucket extends AbstractTool {
   }
 
   onMouseDown (x, y) {
-    this.filling = true;
+    this.mouseDown = true;
     this.draw(this._ctx, x, y);
   }
 
-  onMouseMove (/* x, y */) {
-    this.filling = false;
+  onMouseMove (x, y) {
+    this.handleGhostPixelMove(x, y);
+    this.mouseDown = false;
   }
 
   onMouseUp (/* x, y */) {
-    this.filling = false;
+    if (!this.mouseDown) return;
+    this.mouseDown = false;
   }
 
   draw (ctx, x, y) {

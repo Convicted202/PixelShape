@@ -4,6 +4,16 @@
 *
   box-sizing: border-box
 
+  &::-webkit-scrollbar
+    width:  0.5em
+    height: 0.5em
+
+  &::-webkit-scrollbar-thumb
+    background: #708090
+
+  &::-webkit-scrollbar-track
+    background: #a9b3bd
+
 body, html, #root
   width: 100%
   height: 100%
@@ -53,9 +63,9 @@ input[type=range]::-ms-thumb
 
 [data-tooltip]
   &:before
-    content: attr(data-tooltip)
+    content: attr(data-tooltip) ' ' attr(data-shortcut)
     position: absolute
-    white-space: nowrap
+    white-space: pre
     padding: 3px 6px
     font-size: 0.8em
     border-radius: 4px
@@ -67,6 +77,10 @@ input[type=range]::-ms-thumb
     opacity: 0
     text-transform: capitalize
     transition: opacity .2s
+
+  &[data-multiline-tooltip]
+    &:before
+      content: attr(data-tooltip) "\A" attr(data-shortcut)
 
   &:hover:before
     opacity: 1

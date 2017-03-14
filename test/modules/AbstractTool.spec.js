@@ -1,7 +1,6 @@
 import test from 'blue-tape'
 import sinon from 'sinon';
-import AbstractTool from 'modules/basetool/AbstractTool';
-import RenderingContext2d from '../mocks/RenderingContext2d.mock';
+import AbstractTool from '../../src/modules/basetool/AbstractTool';
 
 let tool, context;
 
@@ -87,7 +86,8 @@ test('AbstractTool =>', (expect) => {
 
     let coords;
 
-    tool.applyState({ size: 2, pixelSize: 10 });
+    tool.applyState({ size: 2 });
+    tool.applyPixelSize(10);
 
     expect.false(tool.getPixeledCoords(), 'Should return false on empty args');
 
@@ -117,7 +117,57 @@ test('AbstractTool =>', (expect) => {
     expect.ok(tool.getPixeledCoords.called, 'Should truncate coords before clearing');
     expect.ok(context.clearRect.called, 'Should clear pixel cell with provided coordinates');
     expect.end();
-  })
+  });
+
+  expect.test('::handleGhostPixelMove', (expect) => {
+    before();
+
+    tool.useGhostStateOn = sinon.spy();
+    tool.clearPixelCell = sinon.spy();
+    tool.drawPixelCell = sinon.spy();
+
+    tool.handleGhostPixelMove(100, 100);
+    expect.false(tool.useGhostStateOn.called, 'Should do nothing if buffer is not defined on tool');
+
+    tool._assignBufferContext(context);
+    tool.handleGhostPixelMove(100, 100);
+    expect.ok(
+      tool.useGhostStateOn.calledWith(tool._buffer)
+      && tool.clearPixelCell.calledWith(tool._buffer)
+      && tool.drawPixelCell.calledWith(tool._buffer),
+      'Should operate with buffer context only');
+    expect.ok(
+      tool._buffer.save.called && tool._buffer.restore.called, 'Should save and restore buffers state before and after drawing respectively');
+    expect.end();
+  });
+
+  expect.test('::storeCallback', (expect) => {
+    before();
+
+    expect.throws(tool.storeCallback, 'Should throw if not implemented in child');
+    expect.end();
+  });
+
+  expect.test('::onMouseDown', (expect) => {
+    before();
+
+    expect.throws(tool.onMouseDown, 'Should throw if not implemented in child');
+    expect.end();
+  });
+
+  expect.test('::onMouseMove', (expect) => {
+    before();
+
+    expect.throws(tool.onMouseMove, 'Should throw if not implemented in child');
+    expect.end();
+  });
+
+  expect.test('::onMouseUp', (expect) => {
+    before();
+
+    expect.throws(tool.onMouseUp, 'Should throw if not implemented in child');
+    expect.end();
+  });
 
   expect.end();
 });

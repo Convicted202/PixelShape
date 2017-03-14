@@ -1,24 +1,38 @@
 import './togglecheckbox.styl';
 
-import React from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 
-const ToggleCheckbox = props => {
-  const classes = classNames(
-    'togglecheckbox',
-    props.className
-  );
+// this is needed to reference input from label
+// so we will increase it in constructor to keep unique
+let id = 0;
 
-  return (
-    <div className={classes}>
-      <input
-        className="togglecheckbox__switch"
-        type="checkbox"
-        checked={props.value}
-        onChange={props.onChange} />
-      <span>{props.children}</span>
-    </div>
-  );
-};
+class ToggleCheckbox extends Component {
+  constructor (...props) {
+    id++;
+    super(...props);
+    this.state = { id };
+  }
+
+  render () {
+    const classes = classNames(
+      'togglecheckbox',
+      this.props.className
+    );
+
+    return (
+      <div className={classes}>
+        <input
+          className="togglecheckbox-checkbox"
+          type="checkbox"
+          id={`togglecheckbox-${this.state.id}`}
+          checked={this.props.value}
+          onChange={this.props.onChange} />
+        <label className="togglecheckbox-checkbox__switch" htmlFor={`togglecheckbox-${this.state.id}`} />
+        <span className="togglecheckbox-checkbox__text">{this.props.children}</span>
+      </div>
+    );
+  }
+}
 
 export default ToggleCheckbox;

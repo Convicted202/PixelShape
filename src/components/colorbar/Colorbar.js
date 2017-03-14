@@ -1,10 +1,10 @@
 import './colorbar.styl';
 
 import React, { Component } from 'react';
-import Coloritem from 'components/coloritem/Coloritem';
-import Colorpicker from 'components/colorpicker/Colorpicker';
+import Coloritem from '../coloritem/Coloritem';
+import Colorpicker from '../colorpicker/Colorpicker';
 
-import colors from 'defaults/palette';
+import colors from '../../defaults/palette';
 
 class Colorbar extends Component {
   getPalette (colors) {
@@ -25,7 +25,11 @@ class Colorbar extends Component {
   }
 
   getUserColorPalette () {
-    return this.getPalette(this.props.userColors);
+    return (
+      <div className="colorbar__user-palette-wrapper">
+        {this.getPalette(this.props.userColors)}
+      </div>
+    );
   }
 
   render () {

@@ -1,18 +1,50 @@
 import { connect } from 'react-redux';
 
-import { getGifFramesData, getFramesOrder } from 'selectors';
-import { downloadStore } from 'actions/application';
+import {
+  getGifFramesData,
+  getFramesOrder,
+  getAllFrames,
+  getSpritesheetDownloadOption,
+  getGifDownloadOption,
+  getProjectDownloadOption,
+  getPaletteDownloadOption
+} from '../../selectors';
 
-import DownloadProjectModal from 'components/modals/Downloadproject';
+import {
+  getStore,
+  toggleIncludeGif,
+  toggleIncludeSpritesheet,
+  toggleIncludeProject,
+  toggleIncludePalette
+} from '../../actions/application';
+
+import DownloadProjectModal from '../../components/modals/Downloadproject/Downloadproject';
 
 const mapStateToProps = state => ({
   gifFramesData: getGifFramesData(state),
-  framesOrder: getFramesOrder(state)
+  framesOrder: getFramesOrder(state),
+  framesCollection: getAllFrames(state),
+  includeSpritesheet: getSpritesheetDownloadOption(state),
+  includeGif: getGifDownloadOption(state),
+  includeProject: getProjectDownloadOption(state),
+  includePalette: getPaletteDownloadOption(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  downloadProject (fileName) {
-    return dispatch(downloadStore(fileName));
+  getProjectState () {
+    return dispatch(getStore());
+  },
+  toggleIncludeGif () {
+    return dispatch(toggleIncludeGif());
+  },
+  toggleIncludeSpritesheet () {
+    return dispatch(toggleIncludeSpritesheet());
+  },
+  toggleIncludeProject () {
+    return dispatch(toggleIncludeProject());
+  },
+  toggleIncludePalette () {
+    return dispatch(toggleIncludePalette());
   }
 });
 

@@ -4,10 +4,14 @@ import {
   TOGGLE_RESET_PALETTE,
   TOGGLE_GRID,
   TOGGLE_STRETCH,
-  SET_EXPAND_ANCHOR
-} from 'actions/application';
+  SET_EXPAND_ANCHOR,
+  TOGGLE_INCLUDE_GIF,
+  TOGGLE_INCLUDE_SPRITESHEET,
+  TOGGLE_INCLUDE_PROJECT,
+  TOGGLE_INCLUDE_PALETTE
+} from '../actions/application';
 
-import { uuid } from 'utils/uuid';
+import { uuid } from '../utils/uuid';
 
 // TODO: move this to defaults
 const defaultConsts = {
@@ -32,7 +36,13 @@ const initialState = {
   resetPalette: false,
   grid: false,
   stretch: false,
-  anchor: 'oo'
+  anchor: 'oo',
+  downloadOptions: {
+    includeGif: true,
+    includeSpritesheet: true,
+    includeProject: true,
+    includePalette: true
+  }
 };
 
 function getActualConstraints (width, height) {
@@ -44,7 +54,8 @@ function getActualConstraints (width, height) {
 
 function application (state = initialState, action) {
   let constraints = {},
-      pixelSize = 0;
+      pixelSize = 0,
+      downloadOptions;
 
   switch (action.type) {
     case SET_IMAGE_SIZE:
@@ -54,7 +65,16 @@ function application (state = initialState, action) {
       if (action.width * pixelSize > constraints.width) pixelSize = constraints.width / action.width;
       if (action.height * pixelSize > constraints.height) pixelSize = constraints.height / action.height;
 
-      return Object.assign({}, state, { pixelSize, size: { width: action.width, height: action.height } });
+      pixelSize |= 0;
+
+      return {
+        ...state,
+        pixelSize,
+        size: {
+          width: action.width,
+          height: action.height
+        }
+      };
     case SET_SURFACE_CONSTRAINTS:
       pixelSize = state.optimalPixelSize;
       constraints = getActualConstraints(action.width, action.height);
@@ -62,21 +82,37 @@ function application (state = initialState, action) {
       if (state.size.width * pixelSize > constraints.width) pixelSize = constraints.width / state.size.width;
       if (state.size.height * pixelSize > constraints.height) pixelSize = constraints.height / state.size.height;
 
-      return Object.assign({}, state, {
+      pixelSize |= 0;
+
+      return {
+        ...state,
         pixelSize,
         surfaceConstraints: {
           width: action.width,
           height: action.height
         }
-      });
+      };
     case TOGGLE_RESET_PALETTE:
-      return Object.assign({}, state, { resetPalette: !state.resetPalette });
+      return { ...state, resetPalette: !state.resetPalette };
     case TOGGLE_GRID:
-      return Object.assign({}, state, { grid: !state.grid });
+      return { ...state, grid: !state.grid };
     case TOGGLE_STRETCH:
-      return Object.assign({}, state, { stretch: !state.stretch });
+      return { ...state, stretch: !state.stretch };
     case SET_EXPAND_ANCHOR:
-      return Object.assign({}, state, { anchor: action.anchor });
+      return { ...state, anchor: action.anchor };
+
+    case TOGGLE_INCLUDE_GIF:
+      downloadOptions = { ...state.downloadOptions, includeGif: !state.downloadOptions.includeGif };
+      return { ...state, downloadOptions };
+    case TOGGLE_INCLUDE_SPRITESHEET:
+      downloadOptions = { ...state.downloadOptions, includeSpritesheet: !state.downloadOptions.includeSpritesheet };
+      return { ...state, downloadOptions };
+    case TOGGLE_INCLUDE_PALETTE:
+      downloadOptions = { ...state.downloadOptions, includePalette: !state.downloadOptions.includePalette };
+      return { ...state, downloadOptions };
+    case TOGGLE_INCLUDE_PROJECT:
+      downloadOptions = { ...state.downloadOptions, includeProject: !state.downloadOptions.includeProject };
+      return { ...state, downloadOptions };
     default:
       return state;
   }

@@ -19,22 +19,25 @@ class Boundshape extends AbstractTool {
   }
 
   onMouseDown (x, y) {
-    this.drawing = true;
+    this.mouseDown = true;
     this.coords.x0 = x;
     this.coords.y0 = y;
   }
 
   onMouseMove (x, y) {
-    if (!this.drawing) return;
-    // TODO: implenet cleaning of only needed part
+    if (!this.mouseDown) {
+      this.handleGhostPixelMove(x, y);
+      return;
+    }
+    // TODO: implement cleaning of only needed part
     this._buffer.clearRect(0, 0, this._buffer.canvas.width, this._buffer.canvas.height);
     this.update(this._buffer, x, y);
   }
 
   onMouseUp (x, y) {
-    this.drawing = false;
+    this.mouseDown = false;
     this.update(this._ctx, x, y);
-    // TODO: implenet cleaning of only needed part
+    // TODO: implement cleaning of only needed part
     this._buffer.clearRect(0, 0, this._buffer.canvas.width, this._buffer.canvas.height);
     this.clearCoords();
   }

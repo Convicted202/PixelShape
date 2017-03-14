@@ -1,9 +1,9 @@
 import {connect} from 'react-redux';
 
 import {setTool} from '../../actions/tools';
-import {getTool, getToolbarVisibility} from 'selectors';
+import {getTool, getToolbarVisibility} from '../../selectors';
 
-import Toolbar from 'components/toolbar/Toolbar';
+import Toolbar from '../../components/toolbar/Toolbar';
 
 const mapStateToProps = state => ({
   tool: getTool(state),

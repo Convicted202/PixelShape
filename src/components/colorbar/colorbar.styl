@@ -2,6 +2,10 @@
 
 .colorbar
   padding: 5px
+  user-select: none
+
+  &:hover
+    user-select: auto
 
   &__default-palette
     padding-bottom: 10px
@@ -13,7 +17,12 @@
     padding-bottom: 10px
     box-shadow: 0 1px 0 #384f58
 
+    &-wrapper
+      overflow: auto
+      max-height: 160px
+
   &__label
     padding: 8px
     padding-bottom: 10px
     color: colors['greyblue']
+    user-select: none

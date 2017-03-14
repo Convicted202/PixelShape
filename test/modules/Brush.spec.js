@@ -1,8 +1,7 @@
 import test from 'blue-tape';
 import sinon from 'sinon';
-import Brush from 'modules/brush/Brush';
+import Brush from '../../src/modules/brush/Brush';
 import lineTo from '../importStubs/lineTo.stub';
-import RenderingContext2d from '../mocks/RenderingContext2d.mock';
 
 let brush;
 
@@ -16,24 +15,6 @@ const before = () => {
 };
 
 test('Brush =>', (expect) => {
-  expect.test('::handleBufferBrushMove', (expect) => {
-    before();
-
-    brush.useGhostStateOn = sinon.spy();
-    brush.clearPixelCell = sinon.spy();
-    brush.drawPixelCell = sinon.spy();
-
-    brush.handleBufferBrushMove(100, 100);
-    expect.ok(
-      brush.useGhostStateOn.calledWith(brush._buffer)
-      && brush.clearPixelCell.calledWith(brush._buffer)
-      && brush.drawPixelCell.calledWith(brush._buffer),
-      'Should operate with buffer context only');
-    expect.ok(
-      brush._buffer.save.called && brush._buffer.restore.called, 'Should save and restore buffers state before and after drawing respectively');
-    expect.end();
-  });
-
   expect.test('::onMouseDown', (expect) => {
     before();
 
@@ -48,12 +29,12 @@ test('Brush =>', (expect) => {
   expect.test('::onMouseMove', (expect) => {
     before();
 
-    brush.handleBufferBrushMove = sinon.spy();
+    brush.handleGhostPixelMove = sinon.spy();
     brush.draw = sinon.spy();
 
     brush.mouseDown = false;
     brush.onMouseMove(100, 100);
-    expect.ok(brush.handleBufferBrushMove.called, 'Should draw ghost on buffer whenever mouse moves');
+    expect.ok(brush.handleGhostPixelMove.called, 'Should draw ghost on buffer whenever mouse moves');
     expect.notOk(brush.draw.called, 'Should not start drawing on rendering context if mouseDown flag is not truthy');
 
     brush.mouseDown = true;
@@ -66,7 +47,7 @@ test('Brush =>', (expect) => {
     before();
 
     brush.draw = sinon.spy();
-
+    brush.mouseDown = true;
     brush.onMouseUp(100, 100);
     expect.notOk(brush.mouseDown, 'Should set mouseDown flag to false');
     expect.ok(brush.draw.calledWith(brush._ctx), 'Should finish drawing on rendering context');

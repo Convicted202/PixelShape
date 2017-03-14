@@ -1,9 +1,10 @@
 import './framescontainer.styl';
 
 import React, { Component } from 'react';
-import Frame from 'components/frame/Frame';
+import classNames from 'classnames';
+import Frame from '../frame/Frame';
 
-const Worker = require('worker!workers/generateGif.worker.js');
+const Worker = require('worker!../../workers/generateGif.worker.js');
 
 class FramesContainer extends Component {
   constructor (...args) {
@@ -11,8 +12,7 @@ class FramesContainer extends Component {
 
     this.initializeGifWorker();
     this.state = {
-      frameAdded: false,
-      fps: 2
+      frameAdded: false
     };
   }
 
@@ -41,6 +41,7 @@ class FramesContainer extends Component {
           uuid={uuid}
           height={this.props.imageSize.height}
           width={this.props.imageSize.width}
+          stylesToCenter={this.stylesToCenter.bind(this)}
           isActive={uuid === this.props.currentUUID}
           index={index + 1}
           setActive={this.props.setCurrentFrame.bind(this, uuid)}
@@ -64,7 +65,7 @@ class FramesContainer extends Component {
   componentDidUpdate () {
     if (this.state.frameAdded) {
       this._addButton.scrollIntoView();
-      this.setState({frameAdded: false});
+      this.setState({ frameAdded: false });
     }
   }
 
@@ -99,12 +100,41 @@ class FramesContainer extends Component {
     this.setState({ frameAdded: true });
   }
 
+  stylesToCenter () {
+    const root = this,
+          getRatio = (val1, val2) => val1 > val2 ? 1 : val1 / val2;
+
+    const getWidth = () => 100 * getRatio(root.props.imageSize.width, root.props.imageSize.height) + '%';
+
+    const getPadding = () => {
+      const vertical = 50 * (1 - getRatio(root.props.imageSize.height, root.props.imageSize.width)) + '%';
+      return `${vertical} 0`;
+    };
+
+    return {
+      height: '100%',
+      width: getWidth(),
+      padding: getPadding()
+    };
+  }
+
   render () {
+    const classes = classNames(
+      'framescontainer',
+      {
+        'hidden': this.props.hidden
+      }
+    );
+
     return (
-      <div className="framescontainer">
+      <div className={classes}>
         <div className="framescontainer__gif-container">
           <div className="framescontainer__gif">
-            <img src="" ref={img => this._gifImg = img} />
+            <div
+              className="framescontainer__gif-image"
+              style={this.stylesToCenter()} >
+              <img src="" ref={img => this._gifImg = img} />
+            </div>
             <span className="framescontainer__gif-fps">{this.props.fps}fps</span>
           </div>
         </div>

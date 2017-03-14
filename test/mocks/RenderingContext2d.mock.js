@@ -1,4 +1,5 @@
 import sinon from 'sinon';
+import ImageData from './ImageData.mock';
 
 const methods = [
   'fillRect',     'clearRect',
@@ -17,7 +18,7 @@ class RenderingContext2d {
   constructor() {
     this.canvas = { width: 100, height: 100 };
   }
-  getImageData(x, y, w, h) { return { data: new Array(w * h * 4), width: 100, height: 100 } }
+  getImageData(x, y, w, h) { return new ImageData(w || 100, h || 100) }
   createImageData() { return []; }
 };
 

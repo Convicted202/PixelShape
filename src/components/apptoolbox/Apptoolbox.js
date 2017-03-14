@@ -1,12 +1,14 @@
 import './apptoolbox.styl';
 
 import React, { Component } from 'react';
-import AppToolButton from 'components/apptoolbutton/Apptoolbutton';
+import decorateWithKeyBindings from '../../helpers/KeyBindings';
 
-import NewProjectModal from 'containers/modals/Newproject';
-import DownloadProjectModal from 'containers/modals/Downloadproject';
-import CustomizePanelsModal from 'containers/modals/Customizepanels';
-import SettingsModal from 'containers/modals/Settings';
+import AppToolButton from '../apptoolbutton/Apptoolbutton';
+
+import NewProjectModal from '../../containers/modals/Newproject';
+import DownloadProjectModal from '../../containers/modals/Downloadproject';
+import CustomizePanelsModal from '../../containers/modals/Customizepanels';
+import SettingsModal from '../../containers/modals/Settings';
 
 const MODALS = {
   NewProject: 'newProjectShow',
@@ -26,6 +28,25 @@ class Apptoolbox extends Component {
       [MODALS.Settings]: false
     };
     this.state = Object.assign({}, this.initialModalState);
+
+    this.executeUndo = this.executeUndo.bind(this);
+    this.executeRedo = this.executeRedo.bind(this);
+    this.openNewProject = this.openModal.bind(this, MODALS.NewProject);
+    this.openDownloadProject = this.openModal.bind(this, MODALS.DownloadProject);
+    this.openCustomizePanels = this.openModal.bind(this, MODALS.CustomizePanels);
+    this.openSettings = this.openModal.bind(this, MODALS.Settings);
+
+    this.closeModal = this.closeModal.bind(this);
+
+    this.bindKeys({
+      'ctrl + z': this.executeUndo,
+      'ctrl + y': this.executeRedo,
+      'alt + n': this.openNewProject,
+      'alt + d': this.openDownloadProject,
+      'alt + p': this.openCustomizePanels,
+      'alt + s': this.openSettings,
+      'esc': this.closeModal
+    });
   }
 
   setStateFlag (flag) {
@@ -49,55 +70,76 @@ class Apptoolbox extends Component {
     this.unsetState();
   }
 
+  executeUndo () {
+    if (this.props.canUndo) this.props.undo();
+  }
+
+  executeRedo () {
+    if (this.props.canRedo) this.props.redo();
+  }
+
   render () {
     return (
       <aside className="apptoolbox">
         <ul className="apptoolbox__buttons">
           <AppToolButton
             btnTooltip="New project"
+            btnShortcut="(ALT + N)"
             width="30" height="30" icon="new-project"
-            doAction={this.openModal.bind(this, MODALS.NewProject)} />
+            doAction={this.openNewProject} />
           <AppToolButton
             btnTooltip="Undo"
+            btnShortcut="(CTRL + Z)"
+            disabled={!this.props.canUndo}
             width="30" height="30" icon="undo"
-            doAction={() => {}} />
+            doAction={this.executeUndo} />
           <AppToolButton
             btnTooltip="Redo"
+            btnShortcut="(CTRL + Y)"
+            disabled={!this.props.canRedo}
             width="30" height="30" icon="redo"
-            doAction={() => {}} />
+            doAction={this.executeRedo} />
           <AppToolButton
             btnTooltip="Download"
+            btnShortcut="(ALT + D)"
             width="30" height="30" icon="download"
-            doAction={this.openModal.bind(this, MODALS.DownloadProject)} />
+            doAction={this.openDownloadProject} />
           <AppToolButton
             btnTooltip="Panels"
+            btnShortcut="(ALT + P)"
             width="30" height="30" icon="panels"
-            doAction={this.openModal.bind(this, MODALS.CustomizePanels)} />
+            doAction={this.openCustomizePanels} />
           <AppToolButton
             btnTooltip="Settings"
+            btnShortcut="(ALT + S)"
             width="30" height="30" icon="settings"
-            doAction={this.openModal.bind(this, MODALS.Settings)} />
+            doAction={this.openSettings} />
         </ul>
 
-        <div className="modalContainer"></div>
+        <div
+          className="modalLayer"
+          style={{
+            display: this.state.newProjectShow || this.state.downloadProjectShow || this.state.customizePanelsShow || this.state.settingsShow ? 'block' : 'none'
+          }}></div>
+
         <NewProjectModal
           isShown={this.state.newProjectShow}
-          closeModal={this.closeModal.bind(this)} />
+          closeModal={this.closeModal} />
 
         <DownloadProjectModal
           isShown={this.state.downloadProjectShow}
-          closeModal={this.closeModal.bind(this)} />
+          closeModal={this.closeModal} />
 
         <CustomizePanelsModal
           isShown={this.state.customizePanelsShow}
-          closeModal={this.closeModal.bind(this)} />
+          closeModal={this.closeModal} />
 
         <SettingsModal
           isShown={this.state.settingsShow}
-          closeModal={this.closeModal.bind(this)} />
+          closeModal={this.closeModal} />
       </aside>
     );
   }
 }
 
-export default Apptoolbox;
+export default decorateWithKeyBindings(Apptoolbox);

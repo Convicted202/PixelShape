@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ModalWindow from 'components/modalwindow/Modalwindow';
-import ToggleCheckbox from 'components/togglecheckbox/Togglecheckbox';
+import ModalWindow from '../../modalwindow/Modalwindow';
+import ToggleCheckbox from '../../togglecheckbox/Togglecheckbox';
 
 class CustomizePanelModal extends Component {
   constructor (props) {

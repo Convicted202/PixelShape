@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 
-import { getResetPaletteState } from 'selectors';
+import { getResetPaletteState } from '../../selectors';
 
-import { toggleResetPalette, uploadStore } from 'actions/application';
-import { resetUserColors } from 'actions/palette';
-import { resetFramesState } from 'actions/frames';
+import { toggleResetPalette, uploadStore } from '../../actions/application';
+import { resetUserColors } from '../../actions/palette';
+import { resetFramesState } from '../../actions/frames';
 
-import NewProjectModal from 'components/modals/Newproject';
+import NewProjectModal from '../../components/modals/Newproject/Newproject';
 
 const mapStateToProps = state => ({
   resetPaletteOn: getResetPaletteState(state)

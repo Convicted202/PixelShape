@@ -1,7 +1,16 @@
 language: node_js
 node_js:
-  - "6"
+- '6'
 install:
-  - npm install
+- npm install
 script:
-  - npm test
+- npm test
+- npm run build
+after_script:
+- npm run coverage
+after_success:
+- bash ./deploy/deploy.sh
+env:
+  global:
+  - COMMIT_AUTHOR_EMAIL: alexander.yanovych@gmail.com
+  - secure: Bve/tWo5/Vo+L9ghj1xojiqaDrE6WgLXbKoB/f0qwZzJL20U2BQIPGFP2GUcZ9cyInPQqG7orjPeON2ZbdF9XRUcaN0pacF+iVrD5rsKDFZ/M0xM3SJBQFi7yGyT5qhVE5t/aR0tJj6+KXXCgMMqda+Uesai/C0PrQgFLS6Ifx7ogjZQyvE/7tz59IY2Jwl5UICPuwhHor3BGMBfRfuheMqPlaGqgeda4LKkW//QNo/yyO9hR7UiZ27OhrArODbz3CaVsNAlb2FzUfgdZV0ibIatBPttF+iN7OM51oxxYEP7pQcgD78/H2GxRDYm3+Gcj2YqI2xa9gQ4dOA5djTodCMDkeznFJZCYeDNWRNbVNWRed2mwuuDgmzScHDk5p06qq5sIFLB61PNST9NtvRpW6GXVZLmPC6bTUs/r6HvvJm/magTMSzvuV+QkD961/rOuo1+TTFG0x7j6dkhyFLdjmO+jtmOTzY5Iodf/TK9nJzbS8jdehoh1uVqklFZ9coDrsvF7ygoSQ3FU+SLko0YNgbsov4J7mpqUP7T3/7aPlZRYpmK8jfoQOwekwVeq4W0LdoyIIysa+mE6rVWwsB6WhpcRdonheN/EaqAlJQ8IRtBI5pAT5BeRJ935jKTVYajeyqgf4bbWtjFta4NKCo/La80lb+ejqgPXAFE4rchCOw=
