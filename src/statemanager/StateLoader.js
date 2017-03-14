@@ -28,7 +28,7 @@ class StateLoader {
   }
 
   uploadGif (gif, callback) {
-    const loader = GifLoader({ gif });
+    const loader = new GifLoader({ gif });
 
     loader.load()
       .then(frames => {

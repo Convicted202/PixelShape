@@ -96,16 +96,16 @@ export class StateConverter {
   }
 
   static createStateFromFramesData (frames, fps, width, height) {
-    let converted = {}, frame, id;
+    let converted = {}, id;
 
     const surrogate = {
       guid: uuid(),
-      fps: fps,
-      active: null,
+      fps,
       size: {
         width,
         height
       },
+      active: null,
       order: [],
       collection: {}
     };
@@ -119,7 +119,7 @@ export class StateConverter {
       surrogate.collection[id] = {
         name: 'default_' + i,
         naturalImageData: frame.data
-      }
+      };
     });
 
     surrogate.active = id;
