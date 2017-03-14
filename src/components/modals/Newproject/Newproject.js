@@ -24,9 +24,11 @@ class NewProjectModal extends Component {
   }
 
   handleUpload () {
-    const files = this._input.files;
+    const file = this._input.files[0],
+          callback = this.onFileLoaded.bind(this);
 
-    StateLoader.upload(files[0], this.onFileLoaded.bind(this));
+    if (file.type.match(/image\/gif/)) StateLoader.uploadGif(file, callback);
+    if (file.name.match(projectExtension)) StateLoader.upload(file, callback);
   }
 
   getFileNotification () {
@@ -83,7 +85,7 @@ class NewProjectModal extends Component {
             <input
               id="project-import"
               type="file"
-              accept={projectExtension}
+              accept={[projectExtension, '.gif'].join()}
               ref={input => this._input = input}
               style={{ display: 'none' }}
               onChange={this.handleUpload.bind(this)} />
@@ -99,6 +101,8 @@ class NewProjectModal extends Component {
             { this.getFileNotification() }
           </div>
         </div>
+
+        <div className="newproject-import__warning">You are allowed to load only files of <strong>.gif</strong> and <strong>.pxlsh</strong> formats</div>
       </ModalWindow>
     );
   }
