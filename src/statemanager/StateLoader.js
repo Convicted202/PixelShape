@@ -33,7 +33,7 @@ class StateLoader {
     loader.load()
       .then(frames => {
         const frame = frames[0],
-              fps = Math.round(100 / frame.delay),
+              fps = Math.min(Math.round(100 / frame.delay), 24),
               width = frame.data.width,
               height = frame.data.height;
 
