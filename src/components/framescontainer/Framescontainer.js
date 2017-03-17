@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import Frame from '../frame/Frame';
 
+import WorkerPool from '../../workers/workerPool';
 const Worker = require('worker!../../workers/generateGif.worker.js');
 
 class FramesContainer extends Component {
@@ -17,19 +18,32 @@ class FramesContainer extends Component {
   }
 
   initializeGifWorker () {
-    this.animationFrames = null;
-    this.worker = new Worker();
-    this.worker.addEventListener('message', event => {
+    this.workerPool = new WorkerPool({
+      amount: 5,
+      worker: Worker
+    });
+
+    this.workerPool.spawnWorkers();
+
+    this.animatedParts = {};
+
+    this.workerPool.addEventListener('message', event => {
       let gif = '';
 
-      this.props.updateFrameGIFData(event.data.frameUUID, event.data.frameData);
-      gif = this.getOrderedGif();
-      this._gifImg.src = `data:image/gif;base64,${window.btoa(gif)}`;
+      this.animatedParts[event.data.frameUUID] = event.data.frameData;
+
+      if (Object.keys(this.animatedParts).length === this.props.framesOrder.length) {
+        gif = this.getOrderedGif();
+        this._gifImg.src = `data:image/gif;base64,${window.btoa(gif)}`;
+
+        Object.keys(this.animatedParts)
+          .forEach(uuid => this.props.updateFrameGIFData(uuid, this.animatedParts[uuid]));
+      }
     });
   }
 
   getOrderedGif () {
-    return this.props.framesOrder.map(el => this.props.gifFramesData[el]).join('');
+    return this.props.framesOrder.map(el => this.animatedParts[el]).join('');
   }
 
   getFrames () {
@@ -83,7 +97,7 @@ class FramesContainer extends Component {
       .forEach(frameObj => {
         const id = Object.keys(frameObj)[0];
 
-        this.worker.postMessage({
+        this.workerPool.postMessage({
           frameUUID: id,
           frameNum: frameObj[id],
           framesLength: gifLength,
