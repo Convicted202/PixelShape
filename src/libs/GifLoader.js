@@ -1,3 +1,5 @@
+import ImageDataExtended from '../utils/imageData';
+
 // Generic functions
 var bitsToNum = function (ba) {
     return ba.reduce(function (s, n) {
@@ -350,15 +352,9 @@ var GifLoader = function ( opts ) {
     var options = {
         //viewport position
         vp_l: 0,
-        vp_t: 0,
-        vp_w: null,
-        vp_h: null,
-        //canvas sizes
-        c_w: null,
-        c_h: null
+        vp_t: 0
     };
     for (var i in opts ) { options[i] = opts[i] }
-    if (options.vp_w && options.vp_h) options.is_vp = true;
 
     var stream;
     var hdr;
@@ -393,14 +389,13 @@ var GifLoader = function ( opts ) {
             parseGIF(stream, handler);
         }
         catch (err) {
+            console.log(err);
             doLoadError('parse');
         }
     };
 
     var setSizes = function(w, h) {
-        tmpCanvas.width = w;
-        tmpCanvas.height = h;
-        tmpCanvas.getContext('2d').setTransform(1, 0, 0, 1, 0, 0);
+        imageData = new ImageDataExtended(w, h);
     };
 
     var doLoadError = function (originOfError) {
@@ -435,7 +430,7 @@ var GifLoader = function ( opts ) {
     };
 
     var doImg = function (img) {
-        if (!frame) frame = tmpCanvas.getContext('2d');
+        if (!frame) frame = imageData;
 
         var currIdx = frames.length;
 
@@ -504,6 +499,13 @@ var GifLoader = function ( opts ) {
 
     var doNothing = function () {};
 
+    var trackProgress = function (fn) {
+        return function (block) {
+            fn(block);
+            step_callback(stream.pos, stream.data.length);
+        };
+    };
+
     var handler = {
         hdr: doHdr,
         gce: doGCE,
@@ -513,7 +515,7 @@ var GifLoader = function ( opts ) {
             // TODO: Is there much point in actually supporting iterations?
             NETSCAPE: doNothing
         },
-        img: doImg,
+        img: trackProgress(doImg),
         eof: function (block) {
             pushFrame();
             loading = false;
@@ -529,13 +531,16 @@ var GifLoader = function ( opts ) {
         }
     };
 
-    var tmpCanvas = document.createElement('canvas');
+    var imageData;
     var load_callback = false;
+    var step_callback = false;
     var error_callback = false;
 
     return {
-        load: function () {
+        load: function (callback) {
             return new Promise((resolve, reject) => {
+
+                step_callback = callback || doNothing;
 
                 load_callback = resolve;
                 error_callback = reject || doNothing;

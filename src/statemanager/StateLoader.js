@@ -27,10 +27,10 @@ class StateLoader {
       .then(callback);
   }
 
-  uploadGif (gif, callback) {
+  uploadGif (gif, callback, stepCallback) {
     const loader = new GifLoader({ gif });
 
-    loader.load()
+    loader.load(stepCallback)
       .then(frames => {
         const frame = frames[0],
               fps = Math.min(Math.round(100 / frame.delay), 24),
