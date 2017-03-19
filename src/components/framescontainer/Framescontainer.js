@@ -13,7 +13,8 @@ class FramesContainer extends Component {
 
     this.initializeGifWorker();
     this.state = {
-      frameAdded: false
+      frameAdded: false,
+      loading: false
     };
   }
 
@@ -32,12 +33,15 @@ class FramesContainer extends Component {
 
       this.animatedParts[event.data.frameUUID] = event.data.frameData;
 
+      this.props.updateFrameGIFData(event.data.frameUUID, event.data.frameData)
+
       if (Object.keys(this.animatedParts).length === this.props.framesOrder.length) {
         gif = this.getOrderedGif();
+        this.endLoading();
         this._gifImg.src = `data:image/gif;base64,${window.btoa(gif)}`;
 
-        Object.keys(this.animatedParts)
-          .forEach(uuid => this.props.updateFrameGIFData(uuid, this.animatedParts[uuid]));
+        // Object.keys(this.animatedParts)
+        //   .forEach(uuid => this.props.updateFrameGIFData(uuid, this.animatedParts[uuid]));
       }
     });
   }
@@ -65,6 +69,8 @@ class FramesContainer extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (this.props.modifiedFrames !== nextProps.modifiedFrames) {
+      this.startLoading();
+
       this.generateGif(
         nextProps.modifiedFrames,
         nextProps.framesCollection,
@@ -81,6 +87,29 @@ class FramesContainer extends Component {
       this._addButton.scrollIntoView();
       this.setState({ frameAdded: false });
     }
+  }
+
+  startLoading () {
+    this.setState({ loading: true });
+  }
+
+  endLoading () {
+    this.setState({ loading: false });
+  }
+
+  getGifImage () {
+    if (this.state.loading) return (
+      <div className="framescontainer__gif-loading"></div>
+    );
+
+    return [
+      <div
+        className="framescontainer__gif-image"
+        style={this.stylesToCenter()} >
+        <img src="" ref={img => this._gifImg = img} />
+      </div>,
+      <span className="framescontainer__gif-fps">{this.props.fps}fps</span>
+    ];
   }
 
   generateGif (
@@ -144,12 +173,7 @@ class FramesContainer extends Component {
       <div className={classes}>
         <div className="framescontainer__gif-container">
           <div className="framescontainer__gif">
-            <div
-              className="framescontainer__gif-image"
-              style={this.stylesToCenter()} >
-              <img src="" ref={img => this._gifImg = img} />
-            </div>
-            <span className="framescontainer__gif-fps">{this.props.fps}fps</span>
+            { this.getGifImage() }
           </div>
         </div>
         <div className="framescontainer__frames">
