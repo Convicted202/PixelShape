@@ -33,7 +33,7 @@ class FramesContainer extends Component {
 
       this.animatedParts[event.data.frameUUID] = event.data.frameData;
 
-      this.props.updateFrameGIFData(event.data.frameUUID, event.data.frameData)
+      this.props.updateFrameGIFData(event.data.frameUUID, event.data.frameData);
 
       if (Object.keys(this.animatedParts).length === this.props.framesOrder.length) {
         gif = this.getOrderedGif();
@@ -98,17 +98,20 @@ class FramesContainer extends Component {
   }
 
   getGifImage () {
-    if (this.state.loading) return (
-      <div className="framescontainer__gif-loading"></div>
-    );
+    if (this.state.loading) {
+      return (
+        <div className="framescontainer__gif-loading"></div>
+      );
+    }
 
     return [
       <div
+        key="image"
         className="framescontainer__gif-image"
         style={this.stylesToCenter()} >
         <img src="" ref={img => this._gifImg = img} />
       </div>,
-      <span className="framescontainer__gif-fps">{this.props.fps}fps</span>
+      <span key="fps" className="framescontainer__gif-fps">{this.props.fps}fps</span>
     ];
   }
 
