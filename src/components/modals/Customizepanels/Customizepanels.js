@@ -25,13 +25,19 @@ class CustomizePanelModal extends Component {
 
         <ToggleCheckbox
           value={this.props.toolbarVisible}
-          onChange={this.props.toggleToolbar.bind(this)}>Show toolbar</ToggleCheckbox>
+          onChange={this.props.toggleToolbar.bind(this)}>
+          Show toolbar
+        </ToggleCheckbox>
         <ToggleCheckbox
           value={this.props.sidebarVisible}
-          onChange={this.props.toggleSidebar.bind(this)}>Show sidebar</ToggleCheckbox>
+          onChange={this.props.toggleSidebar.bind(this)}>
+          Show sidebar
+        </ToggleCheckbox>
         <ToggleCheckbox
           value={this.props.framebarVisible}
-          onChange={this.props.toggleFramebar.bind(this)}>Show framebar</ToggleCheckbox>
+          onChange={this.props.toggleFramebar.bind(this)}>
+          Show framebar
+        </ToggleCheckbox>
 
       </ModalWindow>
     );

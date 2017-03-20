@@ -37,5 +37,14 @@ export const SerializationSchema = {
     'undoables.present.frames.activity.fps': Hash.FPS,
     'undoables.present.frames.order.framesOrderArray': Hash.ORDER,
     'undoables.present.frames.collection': Hash.FRAMES
+  },
+
+  _framesImport: {
+    'undoables.present.application.projectGuid': 'guid',
+    'undoables.present.application.size': 'size',
+    'undoables.present.frames.activity.activeFrame': 'active',
+    'undoables.present.frames.activity.fps': 'fps',
+    'undoables.present.frames.order.framesOrderArray': 'order',
+    'undoables.present.frames.collection': 'collection'
   }
 };

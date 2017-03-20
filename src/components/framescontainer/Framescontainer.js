@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import Frame from '../frame/Frame';
 
+import WorkerPool from '../../workers/workerPool';
 const Worker = require('worker!../../workers/generateGif.worker.js');
 
 class FramesContainer extends Component {
@@ -12,19 +13,30 @@ class FramesContainer extends Component {
 
     this.initializeGifWorker();
     this.state = {
-      frameAdded: false
+      frameAdded: false,
+      loading: false
     };
   }
 
   initializeGifWorker () {
-    this.animationFrames = null;
-    this.worker = new Worker();
-    this.worker.addEventListener('message', event => {
+    this.workerPool = new WorkerPool({
+      amount: 5,
+      worker: Worker
+    });
+
+    this.workerPool.spawnWorkers();
+
+    this.workerPool.addEventListener('message', event => {
       let gif = '';
 
       this.props.updateFrameGIFData(event.data.frameUUID, event.data.frameData);
-      gif = this.getOrderedGif();
-      this._gifImg.src = `data:image/gif;base64,${window.btoa(gif)}`;
+
+      // update the actual gif image when all parts processed
+      if (event.data.currentPart === event.data.partsTotal - 1) {
+        this.endLoading();
+        gif = this.getOrderedGif();
+        this._gifImg.src = `data:image/gif;base64,${window.btoa(gif)}`;
+      }
     });
   }
 
@@ -51,6 +63,8 @@ class FramesContainer extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (this.props.modifiedFrames !== nextProps.modifiedFrames) {
+      if (nextProps.modifiedFrames.length > 3) this.startLoading();
+
       this.generateGif(
         nextProps.modifiedFrames,
         nextProps.framesCollection,
@@ -69,6 +83,32 @@ class FramesContainer extends Component {
     }
   }
 
+  startLoading () {
+    this.setState({ loading: true });
+  }
+
+  endLoading () {
+    this.setState({ loading: false });
+  }
+
+  getGifImage () {
+    if (this.state.loading) {
+      return (
+        <div className="framescontainer__gif-loading"></div>
+      );
+    }
+
+    return [
+      <div
+        key="image"
+        className="framescontainer__gif-image"
+        style={this.stylesToCenter()} >
+        <img src="" ref={img => this._gifImg = img} />
+      </div>,
+      <span key="fps" className="framescontainer__gif-fps">{this.props.fps}fps</span>
+    ];
+  }
+
   generateGif (
     modified = this.props.modifiedFrames,
     collection = this.props.framesCollection,
@@ -79,11 +119,13 @@ class FramesContainer extends Component {
   ) {
     const gifLength = order.length;
 
+    this.workerPool.startOver(modified.length);
+
     modified
       .forEach(frameObj => {
         const id = Object.keys(frameObj)[0];
 
-        this.worker.postMessage({
+        this.workerPool.postMessage({
           frameUUID: id,
           frameNum: frameObj[id],
           framesLength: gifLength,
@@ -130,12 +172,7 @@ class FramesContainer extends Component {
       <div className={classes}>
         <div className="framescontainer__gif-container">
           <div className="framescontainer__gif">
-            <div
-              className="framescontainer__gif-image"
-              style={this.stylesToCenter()} >
-              <img src="" ref={img => this._gifImg = img} />
-            </div>
-            <span className="framescontainer__gif-fps">{this.props.fps}fps</span>
+            { this.getGifImage() }
           </div>
         </div>
         <div className="framescontainer__frames">

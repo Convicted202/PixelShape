@@ -76,3 +76,52 @@
         bottom: 0
         margin: auto
         fill: inherit
+
+
+.framescontainer__gif-loading
+  position: relative
+  width: 70px
+  height: 20px
+  top: calc(50% - 10px)
+  left: calc(50% - 35px)
+
+  &:after
+    content: "LOADING"
+    color: #fff
+    font-family: Roboto
+    font-weight: 200
+    font-size: 16px
+    position: absolute
+    width: 100%
+    height: 20px
+    line-height: 20px
+    left: 0
+    top: 0
+    background-color: #1b2631
+    z-index: 1
+
+  &:before
+    content: ""
+    position: absolute
+    background-color: #fff
+    top: -5px
+    left: 0px
+    height: 30px
+    width: 0px
+    z-index: 0
+    opacity: 1
+    transform-origin:  100% 0%
+    animation: framesloader 5s ease-in-out infinite
+
+@keyframes framesloader
+  0%
+    width: 0px
+  70%
+    width: 100%
+    opacity: 1
+  90%
+    opacity: 0
+    width: 100%
+  100%
+    opacity: 0
+    width: 0px

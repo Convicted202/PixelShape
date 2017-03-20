@@ -112,7 +112,9 @@ class SettingsModal extends Component {
             <ToggleCheckbox
               className="settings__dimensions-edit__ratio"
               value={false}
-              onChange={() => {}}>Keep ratio</ToggleCheckbox>
+              onChange={() => {}}>
+              Keep ratio
+            </ToggleCheckbox>
           </div>
           <div className="settings__dimensions-modifiers">
             <CanvasAnchors
@@ -121,12 +123,16 @@ class SettingsModal extends Component {
             <ToggleCheckbox
               className="settings__dimensions-modifiers__stretch"
               value={this.props.stretchOn}
-              onChange={this.props.toggleStretch.bind(this)}>Stretch</ToggleCheckbox>
+              onChange={this.props.toggleStretch.bind(this)}>
+              Stretch
+            </ToggleCheckbox>
           </div>
         </div>
         <ToggleCheckbox
           value={this.props.gridShown}
-          onChange={this.props.toggleGrid.bind(this)}>Show grid</ToggleCheckbox>
+          onChange={this.props.toggleGrid.bind(this)}>
+          Show grid
+        </ToggleCheckbox>
 
       </ModalWindow>
     );

@@ -1,5 +1,5 @@
 import { StateSelector, SerializationSchema } from './StateSerialization';
-import { uuid, setInitialCounter } from '../utils/uuid';
+import { uuid, setInitialCounter, uniqueId } from '../utils/uuid';
 
 import { getApplication } from '../selectors/application';
 import { getFrames } from '../selectors/frames';
@@ -91,6 +91,58 @@ export class StateConverter {
 
     // this is to make new ids start with a distinct proper value
     setInitialCounter(Math.max(...nums) + 1);
+
+    return converted;
+  }
+
+  static createStateFromFramesData (frames, fps, width, height) {
+    let converted = {}, id;
+
+    const surrogate = {
+      guid: uuid(),
+      fps,
+      size: {
+        width,
+        height
+      },
+      active: null,
+      order: [],
+      collection: {}
+    };
+
+    setInitialCounter(0);
+
+    frames.forEach((frame, i) => {
+      id = uniqueId();
+
+      surrogate.order.push(id);
+      surrogate.collection[id] = {
+        name: 'default_' + i,
+        naturalImageData: frame.data
+      };
+    });
+
+    surrogate.active = id;
+
+    Object.keys(SerializationSchema._import)
+      .forEach(path => {
+        let hashes = path.split('.'),
+            subObj = converted;
+
+        // go deep through all path to the last hash
+        hashes.forEach((hash, i) => {
+          subObj[hash] = subObj[hash] || {};
+          if (i !== hashes.length - 1)
+            subObj = subObj[hash];
+        });
+
+        // assign value to a key, equal to the last hash
+        subObj[hashes[hashes.length - 1]] = surrogate[SerializationSchema._framesImport[path]];
+      });
+
+    getFrames(converted).order.modifiedFramesArray = getFrames(converted).order.framesOrderArray.map(
+        (el, key) => ({ [el]: key })
+      );
 
     return converted;
   }
