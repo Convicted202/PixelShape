@@ -26,28 +26,22 @@ class FramesContainer extends Component {
 
     this.workerPool.spawnWorkers();
 
-    this.animatedParts = {};
-
     this.workerPool.addEventListener('message', event => {
       let gif = '';
 
-      this.animatedParts[event.data.frameUUID] = event.data.frameData;
-
       this.props.updateFrameGIFData(event.data.frameUUID, event.data.frameData);
 
-      if (Object.keys(this.animatedParts).length === this.props.framesOrder.length) {
-        gif = this.getOrderedGif();
+      // update the actual gif image when all parts processed
+      if (event.data.currentPart === event.data.partsTotal - 1) {
         this.endLoading();
+        gif = this.getOrderedGif();
         this._gifImg.src = `data:image/gif;base64,${window.btoa(gif)}`;
-
-        // Object.keys(this.animatedParts)
-        //   .forEach(uuid => this.props.updateFrameGIFData(uuid, this.animatedParts[uuid]));
       }
     });
   }
 
   getOrderedGif () {
-    return this.props.framesOrder.map(el => this.animatedParts[el]).join('');
+    return this.props.framesOrder.map(el => this.props.gifFramesData[el]).join('');
   }
 
   getFrames () {
@@ -69,7 +63,7 @@ class FramesContainer extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (this.props.modifiedFrames !== nextProps.modifiedFrames) {
-      this.startLoading();
+      if (nextProps.modifiedFrames.length > 3) this.startLoading();
 
       this.generateGif(
         nextProps.modifiedFrames,
@@ -124,6 +118,8 @@ class FramesContainer extends Component {
     fps = this.props.fps
   ) {
     const gifLength = order.length;
+
+    this.workerPool.startOver(modified.length);
 
     modified
       .forEach(frameObj => {

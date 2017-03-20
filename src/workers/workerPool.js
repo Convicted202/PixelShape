@@ -1,5 +1,5 @@
 const workerPool = {}, messageQueue = [];
-let workerIds = [];
+let workerIds = [], partsTotal = 0, currentPart = 0;
 
 export default class WorkerPool {
   constructor ({ amount, worker }) {
@@ -18,8 +18,6 @@ export default class WorkerPool {
         workerIds.push(v);
 
         if (messageQueue.length) this.postMessage(messageQueue.pop());
-
-        if (this.freeWorkers.length === this.amount - 1) console.log('done!');
       });
 
       return v;
@@ -47,11 +45,22 @@ export default class WorkerPool {
   addEventListener (event, callback) {
     Object.keys(workerPool)
       .forEach(i =>
-        workerPool[i].worker.addEventListener(event, callback)
+        workerPool[i].worker.addEventListener(event, e => {
+          // updating current progress to keep track from outside
+          e.data.partsTotal = partsTotal;
+          e.data.currentPart = currentPart++;
+          callback(e);
+        })
       );
   }
 
   get freeWorkers () {
     return workerIds;
+  }
+
+  // these two needed to set initial state to track percentage of work done
+  startOver (length) {
+    currentPart = 0;
+    partsTotal = length;
   }
 }
