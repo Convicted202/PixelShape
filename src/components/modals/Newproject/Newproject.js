@@ -105,7 +105,9 @@ class NewProjectModal extends Component {
 
         <ToggleCheckbox
           value={this.props.resetPaletteOn}
-          onChange={this.props.toggleResetPalette.bind(this)}>Reset palette</ToggleCheckbox>
+          onChange={this.props.toggleResetPalette.bind(this)}>
+          Reset palette
+        </ToggleCheckbox>
 
         <div className="newproject-import">
           <div className="newproject-import__upload">

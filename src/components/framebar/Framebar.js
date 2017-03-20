@@ -112,7 +112,8 @@ class Framebar extends Component {
   getMinimizedControls () {
     return [
       <div className="framebar__frame-counter" key="mincounter">
-        <span>{ this.props.currentFrameIndex + 1 }</span> of <span>{ this.props.framesCount }</span>
+        <span>{ this.props.currentFrameIndex + 1 } of </span>
+        <span>{ this.props.framesCount }</span>
       </div>,
 
       <ul className="framebar__frames-controls framebar__frames-controls-big" key="mincontrols">

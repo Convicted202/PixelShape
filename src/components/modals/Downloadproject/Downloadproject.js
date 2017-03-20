@@ -85,16 +85,24 @@ class DownloadProjectModal extends Component {
 
         <ToggleCheckbox
           value={this.props.includeGif}
-          onChange={this.props.toggleIncludeGif.bind(this)}>Include gif</ToggleCheckbox>
+          onChange={this.props.toggleIncludeGif.bind(this)}>
+          Include gif
+        </ToggleCheckbox>
         <ToggleCheckbox
           value={this.props.includeSpritesheet}
-          onChange={this.props.toggleIncludeSpritesheet.bind(this)}>Include spritesheet</ToggleCheckbox>
+          onChange={this.props.toggleIncludeSpritesheet.bind(this)}>
+          Include spritesheet
+        </ToggleCheckbox>
         <ToggleCheckbox
           value={this.props.includePalette}
-          onChange={this.props.toggleIncludePalette.bind(this)}>Include custom palette</ToggleCheckbox>
+          onChange={this.props.toggleIncludePalette.bind(this)}>
+          Include custom palette
+        </ToggleCheckbox>
         <ToggleCheckbox
           value={this.props.includeProject}
-          onChange={this.props.toggleIncludeProject.bind(this)}>Include project</ToggleCheckbox>
+          onChange={this.props.toggleIncludeProject.bind(this)}>
+          Include project
+        </ToggleCheckbox>
 
       </ModalWindow>
     );
