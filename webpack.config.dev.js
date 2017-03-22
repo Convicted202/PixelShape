@@ -3,7 +3,10 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
-  entry: './src/index.js',
+  entry: [
+    './src/polyfills/index.js',
+    './src/index.js',
+  ],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
