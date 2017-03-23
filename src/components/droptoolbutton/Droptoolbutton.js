@@ -15,6 +15,8 @@ class DropToolButton extends Component {
       activeTool: this.props.tool,
       activeIcon: this.props.icon
     };
+    this.dropdownLength = this.props.dropdownTools && this.props.dropdownTools.length;
+    this.toolWidth = 70;
   }
 
   componentDidMount () {
@@ -79,7 +81,9 @@ class DropToolButton extends Component {
   getDropDown () {
     if (this.props.dropdownTools) {
       return (
-        <ul className="toolbutton-dropdown">
+        <ul
+          className="toolbutton-dropdown"
+          style={{ width: `${this.dropdownLength * this.toolWidth}px` }}>
           { this.getDropdownTools() }
         </ul>
       );

@@ -38,7 +38,7 @@
       display: inline-flex
 
   &-dropdown
-    left: 65px
+    left: 90px
     list-style: none
     padding-left: 0
     position: absolute
@@ -46,13 +46,23 @@
 
     &:before
       content: ''
+      position: absolute
       height: 0
       width: 0
+      left: -20px
       margin-top: 25px
       border: 10px solid #264653
       border-top-color: transparent
       border-left-color: transparent
       border-bottom-color: transparent
+
+    // just to make sure that ul won't hide when we're between tool and dropdown ul
+    &:after
+      content: ''
+      position: absolute
+      width: 20px
+      height: 70px
+      left: -20px
 
     &__toolbutton
       width: 70px
