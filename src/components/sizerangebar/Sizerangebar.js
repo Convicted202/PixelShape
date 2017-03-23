@@ -19,8 +19,10 @@ class Sizerangebar extends Component {
     this.setState({ isActive: true });
   }
 
-  onMouseUp () {
+  onMouseUp (ev) {
     this.setState({ isActive: false });
+    /* UNFORTUNATELY IE11 DOESN'T HANDLE ONCHANGE EVENT, SO NEED TO SUBSCRIBE TO ONMOUSEUP AS WELL */
+    this.onChange(ev);
   }
 
   render () {

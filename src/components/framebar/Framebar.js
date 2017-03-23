@@ -76,6 +76,8 @@ class Framebar extends Component {
           ref={s => this._fpsSlider = s}
           type="range" step="1" min="1" max="24"
           value={this.state.fps}
+          /* UNFORTUNATELY IE11 DOESN'T HANDLE ONCHANGE EVENT, SO NEED TO SUBSCRIBE TO ONMOUSEUP AS WELL */
+          onMouseUp={this.onChange.bind(this)}
           onChange={this.onChange.bind(this)} />
       </div>,
 

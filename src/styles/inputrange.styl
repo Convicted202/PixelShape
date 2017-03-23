@@ -1,0 +1,67 @@
+rangetrack(height, color)
+  -webkit-appearance: none
+  height: height
+  width: 90%
+  margin: 0 auto
+  display: block
+  background-color: color
+  outline: none
+
+rangethumb(size, background, border)
+  -webkit-appearance: none
+  height: size
+  width: size
+  border: 2px solid border
+  background-color: background
+  border-radius: 50%
+  cursor: pointer
+
+// a mixin to be used for crossbrowser input[type=range] styling
+inputrange(trackheight, trackcolor, thumbsize, thumbcolor, thumbbordercolor)
+  & input[type=range]
+    -webkit-appearance: none
+    width: 90%
+    padding: 0
+    margin: 0
+    height: thumbsize + 2px
+    background: transparent
+
+    &:focus
+      outline: none
+
+    // styling TRACK
+    &::-webkit-slider-runnable-track
+      rangetrack(trackheight, trackcolor)
+
+    &::-moz-range-track
+      rangetrack(trackheight, trackcolor)
+
+    &::-ms-track
+      rangetrack(trackheight, trackcolor)
+      background: transparent
+      color: transparent
+      // this is a hack to prevent TRACK from cutting part of THUMB
+      // making TRACK the same height as a THUMB by providing transparent border half the size of a THUMB
+      border-color: transparent
+      border-width: round(thumbsize / 2) 0
+
+    &::-ms-fill-lower
+      background-color: trackcolor
+      border-radius: 10px
+
+    &::-ms-fill-upper
+      background-color: trackcolor
+      border-radius: 10px
+    // end styling TRACK
+
+    // styling THUMB
+    &::-webkit-slider-thumb
+      rangethumb(thumbsize, thumbcolor, thumbbordercolor)
+      margin-top: -(thumbsize / 2 - trackheight / 2)
+
+    &::-moz-range-thumb
+      rangethumb(thumbsize, thumbcolor, thumbbordercolor)
+
+    &::-ms-thumb
+      rangethumb(thumbsize, thumbcolor, thumbbordercolor)
+    // end styling THUMB
