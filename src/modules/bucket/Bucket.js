@@ -1,6 +1,5 @@
 import AbstractTool from '../basetool/AbstractTool';
 import floodFill from '../../utils/floodFill';
-import { resizeImageData } from '../../utils/canvasUtils';
 
 class Bucket extends AbstractTool {
   constructor (...args) {
@@ -13,6 +12,8 @@ class Bucket extends AbstractTool {
   }
 
   onMouseMove (x, y) {
+    // size other than 1 should not be applicable to bucket tool; so resetting to minimum
+    this.state.size = 1;
     this.handleGhostPixelMove(x, y);
     this.mouseDown = false;
   }
@@ -23,14 +24,10 @@ class Bucket extends AbstractTool {
   }
 
   draw (ctx, x, y) {
-    // fill surface context imageData
-    floodFill(ctx, this.state.color, x, y);
-    // and update naturalImageData for the active frame by resizing surface context to natural dimension
-    this._naturalImageData = resizeImageData(
-      ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height),
-      this._naturalImageData.width,
-      this._naturalImageData.height
-    );
+    const coords = this.getPixeledCoords(x, y);
+    // no need to worry about drawing on the real context, since Surface will react to changes
+    // made to this._naturalImageData when time
+    floodFill(this._naturalImageData, this.state.color, coords.naturalX, coords.naturalY);
   }
 }
 

@@ -27,10 +27,8 @@ const getPixelPosition = (imageData, direction, pixelIndex) => {
 /**
 * https://en.wikipedia.org/wiki/Flood_fill
 */
-export default (context, fillColor, x, y) => {
+export default (imageData, fillColor, x, y) => {
   const queue = [],
-        baseCanvas = context.canvas,
-        imageData = context.getImageData(0, 0, baseCanvas.width, baseCanvas.height),
         rgbaColor = hexToRGBA(stringToHex(fillColor));
 
   [x, y] = [Math.round(x), Math.round(y)];
@@ -57,6 +55,4 @@ export default (context, fillColor, x, y) => {
       );
     }
   }
-
-  context.putImageData(imageData, 0, 0);
 };

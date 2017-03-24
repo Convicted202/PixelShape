@@ -5,7 +5,6 @@ import {
   getPixelFromImageData,
   getColor
 } from '../../utils/colorUtils';
-import { resizeImageData } from '../../utils/canvasUtils';
 
 class ColorReplace extends AbstractTool {
   constructor (...args) {
@@ -18,6 +17,8 @@ class ColorReplace extends AbstractTool {
   }
 
   onMouseMove (x, y) {
+    // size other than 1 should not be applicable to color replacement tool; so resetting to minimum
+    this.state.size = 1;
     this.handleGhostPixelMove(x, y);
     this.mouseDown = false;
   }
@@ -28,18 +29,12 @@ class ColorReplace extends AbstractTool {
   }
 
   draw (ctx, x, y) {
+    // take image data to retrieve current color
     const imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height),
           index = getPixelFromImageData(imageData, x | 0, y | 0),
           color = getColor(imageData, index);
 
-    replaceColor(imageData, color, stringToRGBA(this.state.color));
-    ctx.putImageData(imageData, 0, 0);
-
-    this._naturalImageData = resizeImageData(
-      imageData,
-      this._naturalImageData.width,
-      this._naturalImageData.height
-    );
+    replaceColor(this._naturalImageData, color, stringToRGBA(this.state.color));
   }
 }
 
