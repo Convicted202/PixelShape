@@ -43,14 +43,11 @@ const config = {
       }
     ]
   },
-  resolve: {
-    modulesDirectories: [
-      'node_modules',
-      'src'
-    ]
-  },
   plugins: [
     ExtractStyl,
+    new webpack.ProvidePlugin({
+      Promise: 'imports?this=>global!exports?global.Promise!es6-promise/auto'
+    }),
     new HtmlWebpackPlugin({
       title: 'PixelEdit',
       template: 'src/index.html',

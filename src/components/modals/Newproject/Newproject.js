@@ -44,6 +44,9 @@ class NewProjectModal extends Component {
           callback = this.onFileLoaded.bind(this),
           stepCallback = this.onStep.bind(this);
 
+    // IE11 fix
+    if (!file) return;
+
     this.startLoading();
     if (file.type.match(/image\/gif/)) StateLoader.uploadGif(file, callback, stepCallback);
     if (file.name.match(projectExtension)) StateLoader.upload(file, callback);
