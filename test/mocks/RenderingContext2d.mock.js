@@ -15,8 +15,8 @@ const methods = [
 ];
 
 class RenderingContext2d {
-  constructor() {
-    this.canvas = { width: 100, height: 100 };
+  constructor(width = 100, height = 100) {
+    this.canvas = { width, height };
   }
   getImageData(x, y, w, h) { return new ImageData(w || 100, h || 100) }
   createImageData() { return []; }
