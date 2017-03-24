@@ -6,9 +6,8 @@ install:
 script:
 - npm test
 - npm run build
-after_script:
-- npm run coverage
 after_success:
+- npm run coverage
 - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 - bash ./deploy/deploy.sh
 env:
