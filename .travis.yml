@@ -9,6 +9,7 @@ script:
 after_script:
 - npm run coverage
 after_success:
+- cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 - bash ./deploy/deploy.sh
 env:
   global:
