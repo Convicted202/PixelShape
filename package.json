@@ -36,6 +36,8 @@
   "license": "MIT",
   "devDependencies": {
     "@eleks/eslint-config-eleks": "^0.1.1",
+    "File": "^0.10.2",
+    "atob": "^2.0.3",
     "babel-cli": "^6.16.0",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
@@ -57,6 +59,7 @@
     "exports-loader": "^0.6.4",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
+    "filereader": "^0.10.3",
     "html-webpack-plugin": "^2.22.0",
     "imports-loader": "^0.7.1",
     "nyc": "^10.1.2",
@@ -68,7 +71,9 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^2.3.1",
     "tap-spec": "^4.1.1",
+    "tiny-worker": "^2.0.3",
     "url-loader": "^0.5.7",
+    "w3c-blob": "0.0.1",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.15.1",
     "worker-loader": "^0.7.1"

@@ -16,7 +16,11 @@ const methods = [
 
 class RenderingContext2d {
   constructor(width = 100, height = 100) {
-    this.canvas = { width, height };
+    this.canvas = {
+      width,
+      height,
+      toDataURL: (type, quality) => "data:image/png;base64,iVBORw0"
+    };
   }
   getImageData(x, y, w, h) { return new ImageData(w || 100, h || 100) }
   createImageData() { return []; }

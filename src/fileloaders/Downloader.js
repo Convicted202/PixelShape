@@ -68,24 +68,6 @@ export default class Downloader {
     });
   }
 
-  static prepareAndDownloadCanvasAsPNG (canvas, name = 'myPng.png') {
-    Downloader
-      .prepareCanvasBlobAsync(canvas, name)
-      .then(blobObj => FileSaver.saveAs(blobObj.blob, name));
-  }
-
-  static prepareAndDownloadAsGIF (data, name = 'myGif.gif') {
-    Downloader
-      .prepareGIFBlobAsync(data, name)
-      .then(blobObj => FileSaver.saveAs(blobObj.blob, name));
-  }
-
-  static prepareAndDownloadAsJSON (data, name = 'myJSON.json') {
-    Downloader
-      .prepareJSONBlobAsync(data, name)
-      .then(blobObj => FileSaver.saveAs(blobObj.blob, name));
-  }
-
   static asFiles (asyncFileArr /* [{name: ..., blob: ...}] */) {
     asyncFileArr.forEach(promise =>
       promise.then(blobObj =>

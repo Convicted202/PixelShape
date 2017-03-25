@@ -24,6 +24,11 @@ export default class WorkerPool {
     });
   }
 
+  terminateWorkers () {
+    Object.keys(workerPool)
+      .forEach(id => workerPool[id].worker.terminate());
+  }
+
   executeWhenAvailable (callback, data) {
     if (workerIds.length) return callback(workerIds.pop());
 
