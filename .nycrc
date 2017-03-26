@@ -5,6 +5,8 @@
   "exclude": [
     "src/components/**",
     "src/containers/**",
+    "src/polyfills/**",
+    "src/helpers/**",
     "src/libs/**"
   ],
   "require": [
