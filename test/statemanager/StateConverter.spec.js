@@ -14,15 +14,16 @@ let state = {
       },
       frames: {
         activity: {
-          activeFrame: 'xyz',
+          activeFrame: 'unique0',
           fps: 10
         },
         order: {
-          framesOrderArray: ['a1'],
+          framesOrderArray: ['unique0'],
           modifiedFramesArray: ''
         },
         collection: {
-          a1: {
+          unique0: {
+            name: 'default_0',
             naturalImageData: {
               data: new Uint8ClampedArray([32, 64, 128, 255]),
               width: 1,
@@ -37,15 +38,16 @@ let state = {
 
 let converted = {
   guid: 'abc',
-  active: 'xyz',
+  active: 'unique0',
   size: {
     width: 1,
     height: 1
   },
   fps: 10,
-  order: ['a1'],
+  order: ['unique0'],
   frames: {
-    a1: {
+    unique0: {
+      name: 'default_0',
       naturalImageData: {
         // hardcoded; taken from deflate compression of [32, 64, 128, 255] Uint8Array
         data: [ 120, 156, 83, 112, 104, 248, 15, 0, 3, 67, 1, 224 ],
@@ -54,7 +56,7 @@ let converted = {
       }
     }
   }
-}
+};
 
 test('StateConverter =>', (expect) => {
   expect.test('::convertToExport', (expect) => {
@@ -74,6 +76,25 @@ test('StateConverter =>', (expect) => {
     newState.undoables.present.frames.order.modifiedFramesArray = '';
 
     expect.deepEqual(newState, state, 'Should deserialize converted state to aplicable to redux');
+    expect.end();
+  });
+
+  expect.test('::createStateFromFramesData', (expect) => {
+
+    let newState = StateConverter.createStateFromFramesData(
+      [{
+        data: new ImageData(new Uint8ClampedArray([32, 64, 128, 255]), 1, 1),
+        delay: 13
+      }],
+      10,
+      1,
+      1
+    );
+
+    newState.undoables.present.application.projectGuid = 'abc';
+    newState.undoables.present.frames.order.modifiedFramesArray = '';
+
+    expect.deepEqual(newState, state, 'Should convert frame data to a state aplicable to redux');
     expect.end();
   });
 

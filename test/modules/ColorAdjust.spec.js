@@ -87,7 +87,27 @@ test('ColorAdjust =>', (expect) => {
   expect.test('::adjustPixelGroup', (expect) => {
     before();
 
+    coloradjust.saveState = sinon.spy();
+    coloradjust.restoreState = sinon.spy();
+    coloradjust.getShadedColor = sinon.spy();
+
+    coloradjust.adjustPixelGroup(coloradjust._ctx, 10, 10, 2, '#efefef');
+    expect.ok(coloradjust.saveState.calledWith(coloradjust._ctx), 'Should save state before adjusting');
+    expect.ok(coloradjust.restoreState.calledWith(coloradjust._ctx), 'Should restore state after adjusting');
+    expect.equal(coloradjust.getShadedColor.callCount, 4, 'Should shade color for all pixels in square of 2x2');
+
+    coloradjust.getShadedColor = () => '#efefef';
+    coloradjust.drawPixelCell = sinon.spy();
+    coloradjust.adjustPixelGroup(coloradjust._ctx, 10, 10, 2, '#efefef');
+    expect.ok(coloradjust.drawPixelCell.calledWith(coloradjust._ctx), 'Should draw pixel on canvas after calculating shading color')
+    expect.end();
+  });
+
+  expect.test('::draw', (expect) => {
+    before();
+
     coloradjust.adjustPixelGroup = sinon.spy();
+
     coloradjust.draw(coloradjust._ctx, 10, 10);
     expect.ok(coloradjust.adjustPixelGroup.called, 'Should adjust all pixel in group when draw is called');
     expect.end();

@@ -50,5 +50,16 @@ test('ColorReplace =>', (expect) => {
     expect.end();
   });
 
+  expect.test('::draw', (expect) => {
+    before();
+
+    colorreplace.state.color = '#ffffff';
+    colorreplace._naturalImageData = new ImageData(new Uint8ClampedArray([0, 0, 0, 255]), 1, 1);
+    colorreplace._ctx.getImageData = () => new ImageData(new Uint8ClampedArray([0, 0, 0, 255]), 1, 1);
+    colorreplace.draw(colorreplace._ctx, 1, 1);
+    expect.deepEqual(colorreplace._naturalImageData.data, new Uint8ClampedArray([255, 255, 255, 255]), 'Should replace all pixels in given imageData with the state color');
+    expect.end();
+  });
+
   expect.end();
 });
