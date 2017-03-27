@@ -41,11 +41,12 @@ test('framesOrder =>', (expect) => {
   });
 
   expect.test('::addFrame', (expect) => {
+    const action = addFrame(32, 32);
     expect.deepEqual(
-      framesOrder({ framesOrderArray: ['frame_0'] }, addFrame('frame_1')),
+      framesOrder({ framesOrderArray: ['frame_0'] }, action),
       {
-        framesOrderArray: ['frame_0', 'frame_1'],
-        modifiedFramesArray: [{ frame_0: 0 }, { frame_1: 1 }]
+        framesOrderArray: ['frame_0', action.id],
+        modifiedFramesArray: [{ frame_0: 0 }, { [action.id]: 1 }]
       },
       'Should append a new frame uuid to the end');
     expect.end();
@@ -95,11 +96,12 @@ test('framesOrder =>', (expect) => {
   });
 
   expect.test('::duplicateFrame', (expect) => {
+    const action = duplicateFrame('frame_0');
     expect.deepEqual(
-      framesOrder({ framesOrderArray: ['frame_0', 'frame_1'] }, duplicateFrame('frame_0')),
+      framesOrder({ framesOrderArray: ['frame_0', 'frame_1'] }, action),
       {
-        framesOrderArray: ['frame_0', 'frame_2', 'frame_1'],
-        modifiedFramesArray: [{ frame_0: 0 }, { frame_2: 1 }]
+        framesOrderArray: ['frame_0', action.id, 'frame_1'],
+        modifiedFramesArray: [{ frame_0: 0 }, { [action.id]: 1 }]
       },
       'Should insert a new frame in the list and create modifiedFramesArray with current and inserted frames');
     expect.end();
