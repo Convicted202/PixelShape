@@ -24,7 +24,7 @@ let state = {
         collection: {
           a1: {
             naturalImageData: {
-              data: new Uint8ClampedArray([0, 0, 0, 0]),
+              data: new Uint8ClampedArray([32, 64, 128, 255]),
               width: 1,
               height: 1
             }
@@ -47,7 +47,8 @@ let converted = {
   frames: {
     a1: {
       naturalImageData: {
-        data: [0, 0, 0, 0],
+        // hardcoded; taken from deflate compression of [32, 64, 128, 255] Uint8Array
+        data: [ 120, 156, 83, 112, 104, 248, 15, 0, 3, 67, 1, 224 ],
         width: 1,
         height: 1
       }

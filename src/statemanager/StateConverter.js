@@ -4,14 +4,32 @@ import { uuid, setInitialCounter, uniqueId } from '../utils/uuid';
 import { getApplication } from '../selectors/application';
 import { getFrames } from '../selectors/frames';
 
+import ImageDataCompressor from './ImageDataCompressor';
+
 export class StateConverter {
-  // TODO: iData should be converted to Array containing ONLY HEX values
-  // without # signs and without commas and then glued together into one string
+  static hydrateOnImport (fromObj, toObj, schemaType) {
+    Object.keys(schemaType)
+      .forEach(path => {
+        let hashes = path.split('.'),
+            subObj = toObj;
+
+        // go deep through all path to the last hash
+        hashes.forEach((hash, i) => {
+          subObj[hash] = subObj[hash] || {};
+          if (i !== hashes.length - 1)
+            subObj = subObj[hash];
+        });
+
+        // assign value to a key, equal to the last hash
+        subObj[hashes[hashes.length - 1]] = fromObj[schemaType[path]];
+      });
+  }
+
   static convertToExport (stateData) {
     const stateClone = JSON.parse(JSON.stringify(stateData)),
           converted = { meta: {}, app: {} };
 
-    let frames, size, iData, iDataLength;
+    let frames, size;
 
     // attach metadata
     Object.keys(SerializationSchema.meta)
@@ -27,18 +45,14 @@ export class StateConverter {
 
     frames = converted.app.frames;
     size = converted.app.size;
-    iDataLength = size.height * size.width * 4;
 
     Object.keys(frames)
       .forEach(frameId => {
-        iData = frames[frameId].naturalImageData.data;
-
-        // iData from converted is now an Object since we used JSON.stringify on TypedArray
-        // => convert it to Array
-        iData.length = iDataLength;
-        iData = Array.from(Array.prototype.slice.call(iData, 0));
-
-        frames[frameId].naturalImageData.data = iData;
+        frames[frameId].naturalImageData.data = ImageDataCompressor.compress(
+          frames[frameId].naturalImageData,
+          size.width,
+          size.height
+        );
       });
 
     return converted;
@@ -47,21 +61,7 @@ export class StateConverter {
   static convertToImport (stateObj) {
     let converted = {}, width, height, frames, nums;
 
-    Object.keys(SerializationSchema._import)
-      .forEach(path => {
-        let hashes = path.split('.'),
-            subObj = converted;
-
-        // go deep through all path to the last hash
-        hashes.forEach((hash, i) => {
-          subObj[hash] = subObj[hash] || {};
-          if (i !== hashes.length - 1)
-            subObj = subObj[hash];
-        });
-
-        // assign value to a key, equal to the last hash
-        subObj[hashes[hashes.length - 1]] = stateObj.app[SerializationSchema._import[path]];
-      });
+    StateConverter.hydrateOnImport(stateObj.app, converted, SerializationSchema._import);
 
     width = getApplication(converted).size.width;
     height = getApplication(converted).size.height;
@@ -73,14 +73,11 @@ export class StateConverter {
 
     Object.keys(frames)
       .forEach(frameId => {
-        let iData = frames[frameId].naturalImageData.data;
-
-        // first convert iData from Object to Uint8ClampedArray
-        // then create ImageData from it
-        iData.length = width * height * 4;
-        iData = new ImageData(new Uint8ClampedArray(iData), width, height);
-
-        frames[frameId].naturalImageData = iData;
+        frames[frameId].naturalImageData = ImageDataCompressor.decompress(
+          frames[frameId].naturalImageData,
+          width,
+          height
+        );
       });
 
     // to make sure if user loads this same project second time, it will have initial changes
@@ -124,21 +121,7 @@ export class StateConverter {
 
     surrogate.active = id;
 
-    Object.keys(SerializationSchema._import)
-      .forEach(path => {
-        let hashes = path.split('.'),
-            subObj = converted;
-
-        // go deep through all path to the last hash
-        hashes.forEach((hash, i) => {
-          subObj[hash] = subObj[hash] || {};
-          if (i !== hashes.length - 1)
-            subObj = subObj[hash];
-        });
-
-        // assign value to a key, equal to the last hash
-        subObj[hashes[hashes.length - 1]] = surrogate[SerializationSchema._framesImport[path]];
-      });
+    StateConverter.hydrateOnImport(surrogate, converted, SerializationSchema._framesImport);
 
     getFrames(converted).order.modifiedFramesArray = getFrames(converted).order.framesOrderArray.map(
         (el, key) => ({ [el]: key })
