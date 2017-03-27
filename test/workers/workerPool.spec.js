@@ -6,11 +6,13 @@ import WorkerPool from '../../src/workers/workerPool';
 let pool,
     onMessageSpy = sinon.spy();
 
-let worker = Worker.bind(null, () => {
-  self.onmessage = ev => {
-    onMessageSpy(ev.data);
-  };
-});
+let worker = function() {
+  return new Worker(function () {
+    self.onmessage = ev => {
+      postMessage(ev);
+    };
+  });
+}
 
 const before = () => {
   pool = new WorkerPool({
@@ -50,6 +52,27 @@ test('WorkerPool =>', (expect) => {
     expect.equal(pool.freeWorkers.length, 4, 'Should reduce number of free workers');
     pool.terminateWorkers();
     expect.end();
+  });
+
+  expect.test('::addEventListener, ::postMessage, ::startOver', (expect) => {
+    const fn = () => new Promise((resolve, reject) => {
+      before();
+
+      pool.spawnWorkers();
+
+      pool.startOver(5);
+
+      pool.addEventListener('message', (e) => {
+        resolve(e.data);
+      });
+
+      pool.postMessage("Communicating");
+    });
+
+    return fn().then(e => {
+      expect.deepEqual(e, { data: 'Communicating', partsTotal: 5, currentPart: 0 }, 'Should be able to communicate with a free worker')
+      pool.terminateWorkers();
+    });
   });
 
   expect.end();
