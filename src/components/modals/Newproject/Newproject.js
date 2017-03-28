@@ -87,7 +87,7 @@ class NewProjectModal extends Component {
       this.props.uploadProject(this.state.importedData);
     else {
       if (this.props.resetPaletteOn) this.props.resetUserColors();
-      this.props.resetFramesState();
+      this.props.resetFramesState(this.props.imageSize.width, this.props.imageSize.height);
     }
     this.dropImportedFile();
     this.props.closeModal();

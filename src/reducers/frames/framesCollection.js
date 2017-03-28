@@ -92,14 +92,7 @@ function framesCollection (state = framesCollectionInitialState(), action) {
       return { ...framesCollectionObject };
 
     case RESET_FRAMES_STATE:
-      let id;
-
-      newState = { ...framesCollectionInitialState() };
-      id = Object.keys(newState)[0];
-
-      newState[id].naturalImageData = new ImageData(defaults.frameSize.naturalWidth, defaults.frameSize.naturalHeight);
-
-      return newState;
+      return { ...framesCollectionInitialState(action.width, action.height) };
 
     default:
       return state;

@@ -81,7 +81,7 @@ test('framesCollection =>', (expect) => {
   });
 
   expect.test('::resetFramesState', (expect) => {
-    const action = resetFramesState(uuid),
+    const action = resetFramesState(),
           next = framesCollection(initialState, action);
 
     expect.deepEqual(next, initialState, 'Should completely reset collection to initial');

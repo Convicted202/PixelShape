@@ -80,8 +80,10 @@ export const setFPS = fps => ({
   fps
 });
 
-export const resetFramesState = () => ({
-  type: RESET_FRAMES_STATE
+export const resetFramesState = (width, height) => ({
+  type: RESET_FRAMES_STATE,
+  width,
+  height
 });
 
 export const removeFrame = uuid => (dispatch, getState) => {

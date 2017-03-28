@@ -19,10 +19,10 @@ export const framesOrderInitialState = () => ({
   modifiedFramesArray: [{[id]: 0}]
 });
 
-export const framesCollectionInitialState = () => ({
+export const framesCollectionInitialState = (width = defaults.frameSize.naturalWidth, height = defaults.frameSize.naturalHeight) => ({
   [id]: {
     name: `${defaults.frameName}0`,
-    naturalImageData: new ImageData(defaults.frameSize.naturalWidth, defaults.frameSize.naturalHeight)
+    naturalImageData: new ImageData(width, height)
   }
 });
 
