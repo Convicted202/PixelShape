@@ -57,6 +57,18 @@ export default class Downloader {
     });
   }
 
+  static prepareHTMLBlobAsync (dataHTML, name) {
+    return new Promise(resolve => {
+      const serializer = new XMLSerializer(),
+            html = serializer.serializeToString(dataHTML);
+
+      resolve({
+        blob: new Blob([html], { type: Files.MIMETYPE.HTML }),
+        name
+      });
+    });
+  }
+
   static prepareCanvasBlobAsync (canvas, name) {
     return new Promise(resolve => {
       toBlob(canvas)(blob => {

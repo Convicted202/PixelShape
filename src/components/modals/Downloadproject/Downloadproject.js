@@ -3,11 +3,13 @@ import ModalWindow from '../../modalwindow/Modalwindow';
 import ToggleCheckbox from '../../togglecheckbox/Togglecheckbox';
 
 import Downloader from '../../../fileloaders/Downloader';
-import { combineImageDataToCanvas, combineColorPaletteToCanvas } from '../../../utils/canvasUtils';
+import { combineImageDataToCanvas } from '../../../utils/canvasUtils';
 import { getAllActiveColors } from '../../../utils/colorUtils';
 import StateLoader from '../../../statemanager/StateLoader';
 
 import { Files } from '../../../defaults/constants';
+
+import generatePalette from '../../../htmlgenerators/paletteGenerator';
 
 class DownloadProjectModal extends Component {
   constructor (props) {
@@ -48,11 +50,10 @@ class DownloadProjectModal extends Component {
     const spritesImageDataArray = this.props.framesOrder.map(
       el => this.props.framesCollection[el].naturalImageData
     );
-    return Downloader.prepareCanvasBlobAsync(
-      combineColorPaletteToCanvas(
-        getAllActiveColors(spritesImageDataArray),
-        100,
-        500
+
+    return Downloader.prepareHTMLBlobAsync(
+      generatePalette(
+        getAllActiveColors(spritesImageDataArray)
       ),
       Files.NAME.PALETTE
     );
